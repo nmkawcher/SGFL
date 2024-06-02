@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sgfl_sales/app/core/widget/custom_btn.dart';
@@ -27,14 +28,44 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         Expanded(
+          DropdownSearch<ProductModel>(
+            popupProps: PopupProps.menu(
+              constraints:  const BoxConstraints.tightFor(height:250),
+              containerBuilder: (context, child) {
+                return Container(
+                  padding: const EdgeInsets.all(16),
+                  child: child,
+                );
+              },
+              menuProps: MenuProps(
+                  clipBehavior: Clip.antiAlias,
+                  elevation: 8,
+                  borderRadius: BorderRadius.circular(16)
+              ),
+            ),
+            dropdownDecoratorProps: DropDownDecoratorProps(
+              baseStyle: const TextStyle(fontSize: 14),
+              dropdownSearchDecoration: InputDecoration(
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                labelText: 'Add Product',
+                prefixIcon: const Icon(Icons.water_drop, color: AppColors.orange,),
+                labelStyle: const TextStyle(fontSize: 16),
+                contentPadding: const EdgeInsets.all(18),
+              ),
+            ),
+            items: ProductModel.productList,
+            itemAsString: (ProductModel product) => '${product.productName!} - Liter ${product.productPrice.toString()} ${appLocalization.tk}',
+            onChanged: (value){},
+          ),
+          const SizedBox(height: 16),
+          Expanded(
              child: ListView.builder(
                padding: EdgeInsets.only(bottom: Get.height * 0.1),
                 itemCount: ProductModel.productList.length,
                  itemBuilder: (context, index) => requisitionItemUI1(index),
              )
          ),
-         DefaultAppBtn(title: 'Next', onClick: (){
+          DefaultAppBtn(title: 'Next', onClick: (){
            Get.toNamed(Routes.REQUISITION_Information);
          })
         ],

@@ -55,7 +55,7 @@ class RequisitionSummaryView extends BaseView<RequisitionController> {
                   padding: const EdgeInsets.only(left: 8, right: 8, top:4, bottom: 8),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.primary.withOpacity(0.25)),
+                    border: Border.all(color: AppColors.primary.withOpacity(0.4)),
                   ),
                   child: Column(
                     children: [

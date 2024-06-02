@@ -28,7 +28,7 @@ class RequisitionInformationView extends BaseView<RequisitionController> {
       margin: const EdgeInsets.only(left: 16, right: 16, top: 24),
       child: Column(
         children: [
-          DropdownSearch<LocationModel>(
+         DropdownSearch<LocationModel>(
             popupProps: PopupProps.menu(
               constraints:  const BoxConstraints.tightFor(height:250),
               containerBuilder: (context, child) {
