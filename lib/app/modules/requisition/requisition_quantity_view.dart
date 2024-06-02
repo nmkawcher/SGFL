@@ -23,32 +23,13 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
   @override
   Widget body(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 8, right: 8, top: 24, bottom: 24),
+      margin: const EdgeInsets.only(left: 8, right: 8, top: 16, bottom: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-         TextFormField(
-           controller: controller.searchTextController,
-           style: const TextStyle(color: AppColors.textColor, fontSize: 18),
-           decoration: const InputDecoration(
-               filled: true,
-               fillColor: AppColors.grayLight2,
-               suffixIcon: Padding(
-                 padding: EdgeInsets.only(right: 16),
-                 child: Icon(Icons.search, color: AppColors.textColor),
-               ),
-               hintStyle: TextStyle(color: AppColors.textColor, fontSize: 16),
-               contentPadding: EdgeInsets.only(left: 24, top: 18, bottom: 18),
-               hintText: "Search Product",
-               border: OutlineInputBorder(
-                   borderRadius: BorderRadius.all(Radius.circular(32)),
-                   borderSide: BorderSide.none
-               )
-             )
-         ),
-         const SizedBox(height: 24),
          Expanded(
              child: ListView.builder(
+               padding: EdgeInsets.only(bottom: Get.height * 0.1),
                 itemCount: ProductModel.productList.length,
                  itemBuilder: (context, index) => requisitionItemUI1(index),
              )

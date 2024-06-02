@@ -26,23 +26,56 @@ class RequisitionSummaryView extends BaseView<RequisitionController> {
   @override
   Widget body(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 8, right: 8, top: 32),
-      child: Stack(
+      margin: const EdgeInsets.only(left: 8, right: 8, top: 8, bottom: 24),
+      child: Column(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children:  [
-              requisitionSummaryTable(),
-              const SizedBox(height: 16),
-              const Text('Address: Dhaka', style: TextStyle(fontSize: 14,color: AppColors.textColor)),
-              Text('Note: $txt', style: const TextStyle(fontSize: 14, color: AppColors.gray)),
-              const Text('Date: 12 Aug 2024', style: TextStyle(fontSize: 14, color: AppColors.gray)),
-              const Text('Total Price: 120000 Tk.', style: TextStyle(fontSize: 14, color: AppColors.gray, fontWeight: FontWeight.bold)),
-            ],
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.only(bottom: Get.height * 0.1),
+              children:  [
+                requisitionSummaryTable(),
+                Container(
+                  height: 40,
+                  margin: const EdgeInsets.only(top: 8),
+                  padding: const EdgeInsets.only(left: 24, right: 24),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.grayLight),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('# Total Price', style: TextStyle(fontSize: 14, color: AppColors.gray)),
+                      Text('120000 Tk.', style: TextStyle(fontSize: 14, color: AppColors.textColor)),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 40),
+                  padding: const EdgeInsets.only(left: 8, right: 8, top:4, bottom: 8),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.primary.withOpacity(0.25)),
+                  ),
+                  child: Column(
+                    children: [
+                      const ListTile(
+                        dense: true,
+                        visualDensity: VisualDensity.compact,
+                        contentPadding: EdgeInsets.zero,
+                        trailing: Icon(Icons.location_on_rounded, color: AppColors.primary, size: 24),
+                        title: Text('Shipping Address', style: TextStyle(fontSize: 12, color: AppColors.gray)),
+                        subtitle: Text('Sarulia, Demra Dhaka', style: TextStyle(fontSize: 14,color: AppColors.textColor)),
+                      ),
+                      const Divider(color: AppColors.grayLight,thickness: 0.5),
+                      Text(txt, textAlign: TextAlign.start, style: const TextStyle(fontSize: 12, color: AppColors.gray)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-          Positioned(bottom: 32, left: 8, right: 8,
-            child: DefaultAppBtn(title: appLocalization.submit, onClick: (){})
-          )
+          DefaultAppBtn(title: appLocalization.submit, onClick: (){})
         ],
       )
     );

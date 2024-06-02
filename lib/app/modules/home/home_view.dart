@@ -16,7 +16,7 @@ class HomeView extends BaseView<HomeController> {
   Widget body(BuildContext context) {
     return ElevatedButton(
         onPressed: (){
-          Get.toNamed(Routes.REQUISITION_Quantity);
+          Get.toNamed(Routes.PRODUCTS);
         }, child: const Text('Requisition')
     );
   }
