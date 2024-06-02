@@ -1,0 +1,32 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude: [ ios/**, android/**, test/** ]
+  plugins:
+    - dart_code_metrics
+
+  errors:
+    empty_constructor_bodies: error
+    missing_required_param: error
+    always_use_package_imports: error
+    avoid_types_as_parameter_names: error
+    close_sinks: error
+    unnecessary_statements: warning
+    non_constant_identifier_names: warning
+
+linter:
+  rules:
+    camel_case_types: true
+    #    prefer_double_quotes: true
+    avoid_empty_else: true
+    constant_identifier_names: false
+    use_key_in_widget_constructors: false
+    avoid_print: false
+    file_names: false
+
+#     avoid-unused-parameters:
+#       severity: warning
+
+
+
+#   severity -> none, style, performance, warning, error.
