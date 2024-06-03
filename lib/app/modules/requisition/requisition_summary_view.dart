@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sgfl_sales/app/data/model/product_model.dart';
 import '../../core/values/app_colors.dart';
+import '../../core/widget/custom_app_bar.dart';
 import '../../core/widget/custom_btn.dart';
 import '/app/core/base/base_view.dart';
 import 'requisition_controller.dart';
@@ -15,12 +16,7 @@ class RequisitionSummaryView extends BaseView<RequisitionController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      iconTheme: const IconThemeData(color: AppColors.colorWhite),
-      title: const Text("Summary", style: TextStyle(color: AppColors.colorWhite)),
-      centerTitle: true,
-      backgroundColor: AppColors.primary,
-    );
+    return const CustomAppBar(title:"Summary");
   }
 
   @override
@@ -59,13 +55,13 @@ class RequisitionSummaryView extends BaseView<RequisitionController> {
                   ),
                   child: Column(
                     children: [
-                      const ListTile(
+                      ListTile(
                         dense: true,
                         visualDensity: VisualDensity.compact,
                         contentPadding: EdgeInsets.zero,
-                        trailing: Icon(Icons.location_on_rounded, color: AppColors.primary, size: 24),
-                        title: Text('Shipping Address', style: TextStyle(fontSize: 12, color: AppColors.gray)),
-                        subtitle: Text('Sarulia, Demra Dhaka', style: TextStyle(fontSize: 14,color: AppColors.textColor)),
+                        trailing: AppColors.circleIconBG(AppColors.primary, Icons.location_on_rounded) ,
+                        title: const Text('Shipping Address', style: TextStyle(fontSize: 12, color: AppColors.gray)),
+                        subtitle: const Text('Sarulia, Demra Dhaka', style: TextStyle(fontSize: 14,color: AppColors.textColor)),
                       ),
                       const Divider(color: AppColors.grayLight,thickness: 0.5),
                       Text(txt, textAlign: TextAlign.start, style: const TextStyle(fontSize: 12, color: AppColors.gray)),

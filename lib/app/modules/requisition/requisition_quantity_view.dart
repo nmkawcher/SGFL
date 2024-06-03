@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sgfl_sales/app/core/widget/custom_btn.dart';
 import 'package:sgfl_sales/app/data/model/product_model.dart';
 import '../../core/values/app_colors.dart';
+import '../../core/widget/custom_app_bar.dart';
 import '../../routes/app_pages.dart';
 import '/app/core/base/base_view.dart';
 import 'requisition_controller.dart';
@@ -13,12 +14,7 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      iconTheme: const IconThemeData(color: AppColors.colorWhite),
-      title: const Text("Requisition", style: TextStyle(color: AppColors.colorWhite)),
-      centerTitle: true,
-      backgroundColor: AppColors.primary,
-    );
+    return const CustomAppBar(title:"Requisition");
   }
 
   @override
@@ -28,43 +24,16 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          DropdownSearch<ProductModel>(
-            popupProps: PopupProps.menu(
-              constraints:  const BoxConstraints.tightFor(height:250),
-              containerBuilder: (context, child) {
-                return Container(
-                  padding: const EdgeInsets.all(16),
-                  child: child,
-                );
-              },
-              menuProps: MenuProps(
-                  clipBehavior: Clip.antiAlias,
-                  elevation: 8,
-                  borderRadius: BorderRadius.circular(16)
-              ),
-            ),
-            dropdownDecoratorProps: DropDownDecoratorProps(
-              baseStyle: const TextStyle(fontSize: 14),
-              dropdownSearchDecoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                labelText: 'Add Product',
-                prefixIcon: const Icon(Icons.water_drop, color: AppColors.orange,),
-                labelStyle: const TextStyle(fontSize: 16),
-                contentPadding: const EdgeInsets.all(18),
-              ),
-            ),
-            items: ProductModel.productList,
-            itemAsString: (ProductModel product) => '${product.productName!} - Liter ${product.productPrice.toString()} ${appLocalization.tk}',
-            onChanged: (value){},
-          ),
+          searchBar(),
           const SizedBox(height: 16),
           Expanded(
-             child: ListView.builder(
+             child: ListView.separated(
                padding: EdgeInsets.only(bottom: Get.height * 0.1),
-                itemCount: ProductModel.productList.length,
-                 itemBuilder: (context, index) => requisitionItemUI1(index),
+               itemCount: ProductModel.productList.length,
+               itemBuilder: (context, index) => requisitionItemUI(index),
+               separatorBuilder: (BuildContext context, int index) =>const SizedBox(height: 8),
              )
-         ),
+          ),
           DefaultAppBtn(title: 'Next', onClick: (){
            Get.toNamed(Routes.REQUISITION_Information);
          })
@@ -73,126 +42,92 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
     );
   }
 
-  Widget requisitionItemUI1(int index) {
-    return Card(
-               elevation: 2,
-               clipBehavior: Clip.antiAliasWithSaveLayer,
-               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-               child: Stack(
-                 clipBehavior: Clip.none,
-                 children: [
-                   ListTile(
-                       tileColor: AppColors.pageBackground,
-                       focusColor: AppColors.Yellow.withOpacity(0.2),
-                       onTap: () {},
-                       title: Text(ProductModel.productList[index].productName!,
-                         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textColor),
-                       ),
-                       subtitle: Row(
-                         children: [
-                           Text(ProductModel.productList[index].productUnit!,
-                             style: const TextStyle(fontSize: 14, color: AppColors.gray),
-                           ),
-                           const SizedBox(width: 4),
-                           Text('${ProductModel.productList[index].productPrice.toString()} ${appLocalization.tk}',
-                             style: const TextStyle(fontSize: 14,color: AppColors.primary),
-                           ),
-                         ],
-                       ),
-                       trailing: SizedBox(
-                         width: 100,height: 40,
-                         child: TextFormField(
-                             maxLength: 8,
-                             textAlign: TextAlign.center,
-                             keyboardType: TextInputType.number,
-                             textAlignVertical: TextAlignVertical.center,
-                             style: const TextStyle(color: AppColors.textColor, fontSize: 16),
-                             decoration: const InputDecoration(
-                                 counterText: '',
-                                 filled: true,
-                                 isDense: true,
-                                 hintText:"Quantity",
-                                 hintStyle: TextStyle(color: AppColors.textColor, fontSize: 14),
-                                 border: OutlineInputBorder(
-                                   borderSide: BorderSide.none,
-                                   borderRadius: BorderRadius.all(Radius.circular(8)),
-                                 )
-                             )
-                         ),
-                       )
-                   ),
-                   Positioned(
-                     right: 2, top: 2,
-                     child: GestureDetector(onTap: (){},
-                         child: const Icon(Icons.cancel_rounded,color: AppColors.gray58, size: 18)
-                     )
-                   )
-                 ],
-               ),
-             );
-  }
-
-  Widget requisitionItemUI2(int index) {
-    return Card(
-      elevation: 2,
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      color: AppColors.red,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Row(
+  Widget requisitionItemUI(int index) {
+    return Container(
+      decoration: AppColors.defaultDecoration(color:AppColors.primary, radius: 8),
+      child: Stack(
+        clipBehavior: Clip.none,
         children: [
-          Expanded(
-            flex: 1,
-            child: ListTile(
-                tileColor: AppColors.pageBackground,
-                focusColor: AppColors.Yellow.withOpacity(0.2),
-                onTap: () {},
-                title: Text(ProductModel.productList[index].productName!,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textColor),
-                ),
-                subtitle: Row(
-                  children: [
-                    Text(ProductModel.productList[index].productUnit!,
-                      style: const TextStyle(fontSize: 14, color: AppColors.gray),
-                    ),
-                    const SizedBox(width: 4),
-                    Text('${ProductModel.productList[index].productPrice.toString()} ${appLocalization.tk}',
-                      style: const TextStyle(fontSize: 14,color: AppColors.primary),
-                    ),
-                  ],
-                ),
-                trailing: SizedBox(
-                  width: 100,height: 40,
-                  child: TextFormField(
-                      maxLength: 8,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      textAlignVertical: TextAlignVertical.center,
-                      style: const TextStyle(color: AppColors.textColor, fontSize: 16),
-                      decoration: const InputDecoration(
-                          counterText: '',
-                          filled: true,
-                          isDense: true,
-                          hintText:"Quantity",
-                          hintStyle: TextStyle(color: AppColors.textColor, fontSize: 14),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                          )
-                      )
+          ListTile(
+              tileColor: AppColors.pageBackground,
+              focusColor: AppColors.Yellow.withOpacity(0.2),
+              onTap: () {},
+              title: Text(ProductModel.productList[index].productName!,
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textColor),
+              ),
+              subtitle: Row(
+                children: [
+                  Text(ProductModel.productList[index].productUnit!,
+                    style: const TextStyle(fontSize: 14, color: AppColors.gray),
                   ),
-                )
-            ),
+                  const SizedBox(width: 4),
+                  Text('${ProductModel.productList[index].productPrice.toString()} ${appLocalization.tk}',
+                    style: const TextStyle(fontSize: 14,color: AppColors.primary),
+                  ),
+                ],
+              ),
+              trailing: SizedBox(
+                width: 100,height: 40,
+                child: TextFormField(
+                    maxLength: 8,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                    textAlignVertical: TextAlignVertical.center,
+                    style: const TextStyle(color: AppColors.textColor, fontSize: 16),
+                    decoration: const InputDecoration(
+                        counterText: '',
+                        filled: true,
+                        isDense: true,
+                        hintText:"Quantity",
+                        hintStyle: TextStyle(color: AppColors.textColor, fontSize: 14),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        )
+                    )
+                ),
+              )
           ),
-          Container(
-            margin: const EdgeInsets.only(right: 8, left: 8),
-            color: AppColors.red,
-            child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.delete,color: AppColors.pageBackground, size: 24),
-            ),
+          Positioned(
+              right: 2, top: 2,
+              child: GestureDetector(onTap: (){},
+                  child: const Icon(Icons.cancel_rounded,color: AppColors.gray58, size: 18)
+              )
           )
         ],
       ),
+    );
+  }
+
+  Widget searchBar(){
+    return DropdownSearch<ProductModel>(
+      popupProps: PopupProps.menu(
+        constraints:  const BoxConstraints.tightFor(height:250),
+        containerBuilder: (context, child) {
+          return Container(
+            padding: const EdgeInsets.all(16),
+            child: child,
+          );
+        },
+        menuProps: MenuProps(
+            clipBehavior: Clip.antiAlias,
+            elevation: 8,
+            borderRadius: BorderRadius.circular(16)
+        ),
+      ),
+      dropdownDecoratorProps: DropDownDecoratorProps(
+        baseStyle: const TextStyle(fontSize: 14),
+        dropdownSearchDecoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+          labelText: 'Add Product',
+          prefixIcon: const Icon(Icons.water_drop, color: AppColors.orange,),
+          labelStyle: const TextStyle(fontSize: 16),
+          contentPadding: const EdgeInsets.all(18),
+        ),
+      ),
+      items: ProductModel.productList,
+      itemAsString: (ProductModel product) => '${product.productName!} - Liter ${product.productPrice.toString()} ${appLocalization.tk}',
+      onChanged: (value){},
     );
   }
 

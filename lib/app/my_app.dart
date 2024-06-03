@@ -28,6 +28,7 @@ class _MyAppState extends State<MyApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: _getSupportedLocal(),
       theme: ThemeData(
+        useMaterial3: false,
         primarySwatch: AppColors.colorPrimarySwatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         brightness: Brightness.light,

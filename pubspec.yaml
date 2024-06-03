@@ -26,6 +26,7 @@ dependencies:
   shared_preferences: ^2.2.3
   flutter_displaymode: ^0.6.0
   dropdown_search: ^5.0.6
+  easy_stepper: ^0.8.5
 
 dev_dependencies:
   flutter_test:

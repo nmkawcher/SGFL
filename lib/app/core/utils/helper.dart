@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
+import '../../data/local/preference/preference_manager.dart';
 
 class Helper {
 
@@ -57,5 +60,25 @@ class Helper {
     numbers.forEach((key, value) => number = number.replaceAll(key, value));
     return number;
   }
+
+ /* static void downloadBill({ required String value, required String fileName, ProgressCallback? onReceiveProgress})async{
+    final PreferenceManager preference = getx.Get.find(tag: (PreferenceManager).toString());
+    var customerId = await preference.getString(PreferenceManager.keyUser);
+    String urlPath = '${ApiEndPoint.billDownload}/$value/$customerId';
+    print('>>>>>>>>>>>>>$customerId');
+    try {
+
+      final dir = await getTemporaryDirectory();
+      final file = await File('${dir.path}/link3 bill $fileName.pdf').create();
+      if (!dir.existsSync()) {dir.createSync();}
+      await Dio().download(urlPath, file.path, onReceiveProgress:onReceiveProgress);
+      OpenFile.open(file.path);
+
+      print('File downloaded and saved at: ${file.path}');
+    } catch (e) {
+      print('Error while downloading and saving the file: $e');
+    }
+
+  }*/
 
 }

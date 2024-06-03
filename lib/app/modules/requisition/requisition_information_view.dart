@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../core/widget/custom_app_bar.dart';
 import '../../data/model/location_model.dart';
 import '/app/core/base/base_view.dart';
 import '../../core/values/app_colors.dart';
@@ -14,12 +15,7 @@ class RequisitionInformationView extends BaseView<RequisitionController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      iconTheme: const IconThemeData(color: AppColors.colorWhite),
-      title: const Text("Information", style: TextStyle(color: AppColors.colorWhite)),
-      centerTitle: true,
-      backgroundColor: AppColors.primary,
-    );
+    return const CustomAppBar(title:"Information");
   }
 
   @override

@@ -39,7 +39,7 @@ class LoginController extends BaseController {
   void saveLoginData() async {
     if (validationKey.currentState!.validate()) {
       validationKey.currentState!.save();
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.HOME_Customer);
     }
   }
 
