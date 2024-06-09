@@ -22,7 +22,7 @@ class SplashScreenController extends BaseController {
       if(token.isNotEmpty) {
         Get.offAllNamed(Routes.HOME_Customer);
       } else {
-        Get.offAllNamed(Routes.LOGIN);
+        Get.offAllNamed(Routes.HOME_Customer);
       }
     });
   }
