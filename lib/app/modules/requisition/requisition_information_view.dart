@@ -2,6 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/widget/custom_app_bar.dart';
+import '../../data/model/depot_model.dart';
 import '../../data/model/location_model.dart';
 import '/app/core/base/base_view.dart';
 import '../../core/values/app_colors.dart';
@@ -15,62 +16,66 @@ class RequisitionInformationView extends BaseView<RequisitionController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return const CustomAppBar(title:"Information");
+    return const CustomAppBar(title:"Depot Details");
   }
 
   @override
   Widget body(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(left: 16, right: 16, top: 24),
-      child: Column(
-        children: [
-         DropdownSearch<LocationModel>(
-            popupProps: PopupProps.menu(
-              constraints:  const BoxConstraints.tightFor(height:250),
-              containerBuilder: (context, child) {
-                return Container(
-                  padding: const EdgeInsets.all(16),
-                  child: child,
-                );
-              },
-              menuProps: MenuProps(
-                  clipBehavior: Clip.antiAlias,
-                  elevation: 8,
-                  borderRadius: BorderRadius.circular(16)
-              ),
-            ),
-            dropdownDecoratorProps: DropDownDecoratorProps(
-              baseStyle: const TextStyle(fontSize: 14),
-              dropdownSearchDecoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                labelText: 'Shipping Address',
-                prefixIcon: const Icon(Icons.location_on_rounded, color: AppColors.primary,),
-                labelStyle: const TextStyle(fontSize: 16),
-                contentPadding: const EdgeInsets.all(18),
-              ),
-            ),
-            validator: (LocationModel? value) => value == null ?  appLocalization.requiredField : null,
-            items: LocationModel.locationList,
-            itemAsString: (LocationModel location) => location.locationName!,
-            onChanged: (value){},
-          ),
-         const SizedBox(height: 16),
-          DefaultInputFiled(
-            txtController: controller.notedController,
-            labelText: appLocalization.details,
-            maxLine: 4,
-            onChanged: (String value) {},
-            marginBottom: 24,
-          ),
-          const SizedBox(height: 32),
-          DefaultAppBtn(
-            title: appLocalization.next,
-            textSize:16,
-            onClick: () {Get.toNamed(Routes.REQUISITION_Summary);},
-          )
-        ],
-      )
+    return Obx((){
+      return ListView.separated(
+          padding:const EdgeInsets.only(left: 8, right: 8, top: 16, bottom: 24),
+          itemCount: controller.depotList.length,
+          itemBuilder:(context, index)=> depotItem(controller.depotList[index], index),
+          separatorBuilder: (BuildContext context, int index) =>const SizedBox(height: 8),
+      );
+    });
+  }
+
+
+  @override
+  Widget? bottomNavigationBar() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: DefaultAppBtn(
+          title: appLocalization.next,
+          onClick: () {Get.toNamed(Routes.REQUISITION_Quantity);}
+      ),
     );
+  }
+
+
+  Widget depotItem(DepotModel depot, int index){
+    return Obx((){
+      var isSelected = controller.selectedDepot.value == index;
+      return GestureDetector(
+        onTap: (){ controller.selectedDepot.value = index;},
+        child: Container(
+          padding: const EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 10),
+          decoration: AppColors.defaultDecoration(isSelected: isSelected,radius: 8),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Icon(Icons.location_on_rounded, color: AppColors.primary, size: 24),
+              const SizedBox(width: 8),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text( depot.depotName!, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16)),
+                  const SizedBox(height: 4),
+                  Text(depot.depotAddress!,style: const TextStyle(fontSize: 12, color: AppColors.gray)),
+                ],
+              ),
+              const Spacer(),
+              Icon(isSelected ?
+              Icons.check_circle_rounded : Icons.circle_outlined,
+                  color: isSelected ? AppColors.red : AppColors.grayLight1,
+                  size: 20
+              ),
+            ],
+          ),
+        ),
+      );
+    });
   }
 
 }

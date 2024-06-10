@@ -16,6 +16,7 @@ abstract class AppColors {
   static const Color colorDarkBlue = Color(0xFF13A203);
   static const Color colorDarkBlue2 = Color(0xFF38D620);
   static const Color grayLight = Color(0xFFBBBFCD);
+  static const Color grayLight1 = Color(0xFFE3DFDF);
   static const Color grayLight2 = Color(0xFFC4C6D0);
   static const Color gray = Color(0xFF838383);
   static const Color gray58 = Color(0xFF989898);
@@ -23,7 +24,7 @@ abstract class AppColors {
   static const Color greenDark= Color(0xFF086100);
   static const Color green= Color(0xFF34B829);
   static const Color greenLight= Color(0xFFE6FFE6);
-  static const Color red= Color(0xFFDD0000);
+  static const Color red= Color(0xFFF54748);
   static const Color orange= Color(0xFFFFA621);
   static const Color Yellow= Color(0xFFFFEA00);
 
@@ -34,7 +35,7 @@ abstract class AppColors {
   static const Color colorWhite = Color(0xFFFFFFFF);
   static const Color lightGreyColor = Color(0xFFC4C4C4);
   static const Color errorColor = Color(0xFFAB0B0B);
-  static const Color colorDark = Color(0xFF323232);
+  static const Color colorDark = Color(0xFF353638);
   static const Color colorTeal = Color(0xFF00EDFF);
 
   static Color statusColor(String value) => statusColorMap[value] ?? primary;
@@ -45,13 +46,19 @@ abstract class AppColors {
     'shipping': gray
   };
 
-  static defaultDecoration({Color color = grayLight, double radius = 16}) =>  BoxDecoration(
+  static defaultDecoration({
+    Color color = grayLight1,
+    Color bgColor = Colors.transparent,
+    double radius = 12,
+    bool isSelected = false
+  }) =>  BoxDecoration(
       borderRadius: BorderRadius.circular(radius),
-      border: Border.all(color: color)
+      border: Border.all(color: isSelected ? AppColors.red: color),
+      color: bgColor
   );
 
   static circleIconBG(Color color, IconData icon) => CircleAvatar(
-    backgroundColor: color.withOpacity(0.30),
+    backgroundColor: color.withOpacity(0.20),
     child: Icon(icon, color: color),
   );
 

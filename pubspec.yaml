@@ -27,6 +27,7 @@ dependencies:
   flutter_displaymode: ^0.6.0
   dropdown_search: ^5.0.6
   easy_stepper: ^0.8.5
+  input_quantity: ^2.3.4
 
 dev_dependencies:
   flutter_test:

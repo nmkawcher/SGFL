@@ -52,7 +52,7 @@ class DefaultAppBtn extends GetView {
           style: TextStyle(
               color: isFillBtn ? textColor : backgroundColor,
               fontSize: textSize,
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.w500
           ),
         ),
       ),

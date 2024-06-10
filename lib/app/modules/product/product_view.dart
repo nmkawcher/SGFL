@@ -18,65 +18,79 @@ class ProductView extends BaseView<ProductController> {
   @override
   Widget body(BuildContext context) {
     return Obx((){
-      return Container(
-        margin: const EdgeInsets.only(left: 8, right: 8, top: 16, bottom: 24),
-        child: Column(
-          children: [
-            Expanded(
-              child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                      mainAxisExtent: 70
-                  ),
-                  itemCount: controller.productList.length,
-                  itemBuilder: (context, index)=> productItemUi(controller.productList[index])
-              ),
-            ),
-            DefaultAppBtn(
-                title: appLocalization.submit,
-                onClick: (){Get.toNamed(Routes.REQUISITION_Quantity);}
-            )
-          ],
-        ),
+      return GridView.builder(
+        padding: const EdgeInsets.only(left: 8, right: 8, top: 16, bottom: 24),
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
+              childAspectRatio: 2.5
+          ),
+          itemCount: controller.productList.length,
+          itemBuilder: (context, index)=> productItemUi(controller.productList[index])
       );
     });
+  }
+
+  @override
+  Widget? bottomNavigationBar() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: DefaultAppBtn(
+          title: appLocalization.submit,
+          onClick: (){Get.toNamed(Routes.REQUISITION_Information);}
+      ),
+    );
   }
 
   Widget productItemUi(ProductModel product) {
-    return Obx((){
-      var selectValue = product.isSelect ?? false.obs;
-      return Container(
-        decoration: BoxDecoration(
-           color: selectValue.isFalse ? AppColors.primary.withOpacity(0.2) : AppColors.pageBackground,
-            borderRadius: BorderRadius.circular(4)
-        ),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(8),
-        child: ListTile(
-          onTap: () {
-            product.isSelect?.value = !selectValue.value;
-
-          },
-          tileColor: AppColors.pageBackground,
-          focusColor: AppColors.primary.withOpacity(0.2),
-          leading: AppColors.circleIconBG(AppColors.orange, Icons.water_drop_outlined),
-          title: Text(product.productName!,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textColor),
-          ),
-          subtitle: Row(
-            children: [
-              Text(product.productUnit!, style: const TextStyle(fontSize: 10, color: AppColors.gray)),
-              const SizedBox(width: 4),
-              Text('${product.productPrice.toString()} ${appLocalization.tk}', style: const TextStyle(fontSize: 10,color: AppColors.primary),
-              ),
-            ],
-          ),
+    return Obx(() {
+      return GestureDetector(
+        onTap: (){product.isSelected.value = !product.isSelected.value;},
+        child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                color: AppColors.grayShed,
+                borderRadius: BorderRadius.circular(4),
+                border: Border.all(
+                    color: product.isSelected.isTrue
+                        ? AppColors.red
+                        :Colors.transparent
+                )
+            ),
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                AppColors.circleIconBG(AppColors.orange, Icons.water_drop_outlined),
+                const SizedBox(width: 8),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(product.productName!, overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textColor),
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(product.productUnit!, style: const TextStyle(
+                            fontSize: 10, color: AppColors.gray)),
+                        const SizedBox(width: 4),
+                        Text('${product.productPrice.toString()} ${appLocalization
+                            .tk}', style: const TextStyle(
+                            fontSize: 10, color: AppColors.primary),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            )
         ),
       );
     });
-
   }
-
 }

@@ -5,8 +5,6 @@ import 'package:sgfl_sales/app/modules/product/product_binding.dart';
 import 'package:sgfl_sales/app/modules/product/product_view.dart';
 import 'package:sgfl_sales/app/modules/requisition/requisition_binding.dart';
 import 'package:sgfl_sales/app/modules/requisition/requisition_information_view.dart';
-import 'package:sgfl_sales/app/modules/requisition/requisition_summary_view.dart';
-
 import '../modules/home/home_binding.dart';
 import '../modules/home/customer_home/customer_home_view.dart';
 import '../modules/login/login_binding.dart';
@@ -46,11 +44,6 @@ class AppPages {
     GetPage(
       name: _Paths.REQUISITION_Information,
       page: () => RequisitionInformationView(),
-      binding: RequisitionBinding(),
-    ),
-    GetPage(
-      name: _Paths.REQUISITION_Summary,
-      page: () => RequisitionSummaryView(),
       binding: RequisitionBinding(),
     ),
     GetPage(
