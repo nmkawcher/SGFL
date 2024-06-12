@@ -55,7 +55,7 @@ class ProductView extends BaseView<ProductController> {
                 borderRadius: BorderRadius.circular(4),
                 border: Border.all(
                     color: product.isSelected.isTrue
-                        ? AppColors.red
+                        ? AppColors.orange
                         :Colors.transparent
                 )
             ),

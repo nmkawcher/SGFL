@@ -7,13 +7,12 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
 
   var orderStatus = 'pending'.obs;
   late TabController tabController;
-  final unselectedColor = const Color(0xff5f6368);
   final tabs = [const Tab(text: 'Pending'), const Tab(text: 'Processing'), const Tab(text: 'Completed'),];
 
   @override
   void onInit() {
     super.onInit();
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: tabs.length, vsync: this);
   }
 
 

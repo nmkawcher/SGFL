@@ -68,7 +68,7 @@ class RequisitionInformationView extends BaseView<RequisitionController> {
               const Spacer(),
               Icon(isSelected ?
               Icons.check_circle_rounded : Icons.circle_outlined,
-                  color: isSelected ? AppColors.red : AppColors.grayLight1,
+                  color: isSelected ? AppColors.orange : AppColors.grayLight1,
                   size: 20
               ),
             ],

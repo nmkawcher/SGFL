@@ -14,6 +14,7 @@ abstract class Routes {
   static const REQUISITION_Information = _Paths.REQUISITION_Information;
   static const REQUISITION_Summary = _Paths.REQUISITION_Summary;
   static const NOTIFICATION = _Paths.NOTIFICATION;
+  static const ORDERDetails = _Paths.ORDERDetails;
 }
 
 abstract class _Paths {
@@ -23,6 +24,7 @@ abstract class _Paths {
   static const SPLASH_SCREEN ='/splash';
   static const PRODUCTS = '/products';
   static const ORDER = '/order';
+  static const ORDERDetails = '/order_details';
   static const REQUISITION_Quantity = '/requisition_quantity';
   static const REQUISITION_Information = '/requisition_information';
   static const REQUISITION_Summary = '/requisition_summary';

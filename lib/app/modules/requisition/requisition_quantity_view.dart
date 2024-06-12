@@ -47,67 +47,55 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
   }
 
   Widget requisitionItemUI(int index) {
-    return Dismissible(
-      key: UniqueKey(),
-      direction: DismissDirection.horizontal,
-      onDismissed: (direction) {},
-      background: Container(
-        alignment: Alignment.centerRight,
-        padding: const EdgeInsets.only(right: 16),
-        decoration: AppColors.defaultDecoration(radius: 8,color: AppColors.red,bgColor: AppColors.red),
-        child: const Icon(Icons.delete, color: AppColors.colorWhite),
-      ),
-
-      child: Container(
-        decoration: AppColors.defaultDecoration(radius: 8),
-        margin: const EdgeInsets.only(bottom: 8),
-        child: ListTile(
-            tileColor: AppColors.pageBackground,
-            focusColor: AppColors.Yellow.withOpacity(0.2),
-            title: Text(ProductModel.productList[index].productName!,
-              style: const TextStyle(fontSize: 16, color: AppColors.textColor),
-            ),
-            subtitle: Row(
-              children: [
-                Text(ProductModel.productList[index].productUnit!,
-                  style: const TextStyle(fontSize: 12, color: AppColors.gray),
-                ),
-                const SizedBox(width: 4),
-                Text('${ProductModel.productList[index].productPrice.toString()} ${appLocalization.tk}',
-                  style: const TextStyle(fontSize: 12,color: AppColors.primary),
-                ),
-              ],
-            ),
-            leading: AppColors.circleIconBG(AppColors.primary, Icons.water_drop),
-            trailing: InputQty(
-              qtyFormProps: const QtyFormProps(
-                style: TextStyle(fontSize: 18, color: AppColors.colorWhite),
-                cursorColor: AppColors.colorWhite,
-                cursorWidth: 1
+    return Container(
+      decoration: AppColors.defaultDecoration(radius: 8),
+      margin: const EdgeInsets.only(bottom: 8),
+      child: ListTile(
+          tileColor: AppColors.pageBackground,
+          focusColor: AppColors.Yellow.withOpacity(0.2),
+          title: Text(ProductModel.productList[index].productName!,
+            style: const TextStyle(fontSize: 16, color: AppColors.textColor),
+          ),
+          subtitle: Row(
+            children: [
+              Text(ProductModel.productList[index].productUnit!,
+                style: const TextStyle(fontSize: 12, color: AppColors.gray),
               ),
-              decoration: const QtyDecorationProps(
-                border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
-                borderShape: BorderShapeBtn.none,
-                fillColor: AppColors.colorDark,
-                contentPadding: EdgeInsets.all(4),
-                btnColor: AppColors.colorWhite,
-                width: 8,
-                plusBtn: Padding(
-                  padding: EdgeInsets.only(right: 2),
-                  child: Icon(Icons.add_circle, color: AppColors.colorWhite, size: 24),
-                ),
-                minusBtn: Padding(
-                  padding: EdgeInsets.only(left: 2),
-                  child: Icon(Icons.remove_circle_rounded, color: Colors.white12, size: 24),
-                ),
+              const SizedBox(width: 4),
+              Text('${ProductModel.productList[index].productPrice.toString()} ${appLocalization.tk}',
+                style: const TextStyle(fontSize: 12,color: AppColors.primary),
               ),
-              maxVal: 99999,
-              initVal: 1,
-              minVal: 1,
-              steps: 0.5,
-              onQtyChanged: (val) {},
+            ],
+          ),
+          leading: AppColors.circleIconBG(AppColors.primary, Icons.water_drop),
+          trailing: InputQty(
+            qtyFormProps: const QtyFormProps(
+              style: TextStyle(fontSize: 18, color: AppColors.colorWhite),
+              cursorColor: AppColors.colorWhite,
+              cursorWidth: 1
             ),
-        ),
+            decoration: const QtyDecorationProps(
+              border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+              borderShape: BorderShapeBtn.none,
+              fillColor: AppColors.colorDark,
+              contentPadding: EdgeInsets.all(4),
+              btnColor: AppColors.colorWhite,
+              width: 8,
+              plusBtn: Padding(
+                padding: EdgeInsets.only(right: 2),
+                child: Icon(Icons.add_circle, color: AppColors.colorWhite, size: 24),
+              ),
+              minusBtn: Padding(
+                padding: EdgeInsets.only(left: 2),
+                child: Icon(Icons.remove_circle_rounded, color: Colors.white12, size: 24),
+              ),
+            ),
+            maxVal: 99999,
+            initVal: 1,
+            minVal: 1,
+            steps: 0.5,
+            onQtyChanged: (val) {},
+          ),
       ),
     );
   }
@@ -118,15 +106,15 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
       child: Container(
         alignment: Alignment.center,
         margin: const EdgeInsets.only(right: 8, left: 8),
-        padding: const EdgeInsets.all(8),
-        decoration: AppColors.defaultDecoration(radius: 32,color: AppColors.primary, bgColor: AppColors.primary),
+        padding: const EdgeInsets.only(right: 16, left: 8),
+        decoration: AppColors.defaultDecoration(radius: 32,color: Colors.transparent, bgColor: AppColors.primary.withOpacity(0.3)),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children:[
-            const Icon(Icons.add, color: AppColors.colorWhite, size: 16),
+            const Icon(Icons.add, color: AppColors.primary, size: 16),
             const SizedBox(width: 4),
-            Text(ProductModel.productList[index].productName!, style: const TextStyle(fontSize: 16,color: AppColors.colorWhite)),
+            Text(ProductModel.productList[index].productName!, style: const TextStyle(fontSize: 16,color: AppColors.primary)),
           ],
         ),
       ),

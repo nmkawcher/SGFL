@@ -13,6 +13,8 @@ import '../modules/main/main_binding.dart';
 import '../modules/main/main_view.dart';
 import '../modules/notification/notification_binding.dart';
 import '../modules/notification/notification_view.dart';
+import '../modules/order_details/order_details_binding.dart';
+import '../modules/order_details/order_details_view.dart';
 import '../modules/requisition/requisition_quantity_view.dart';
 import '../modules/splash/splash_binding.dart';
 import '../modules/splash/splash_view.dart';
@@ -65,6 +67,11 @@ class AppPages {
       name: _Paths.ORDER,
       page: () => OrderView(),
       binding: OrderBinding(),
+    ),
+    GetPage(
+      name: _Paths.ORDERDetails,
+      page: () => OrderDetailsView(),
+      binding: OrderDetailsBinding(),
     ),
     GetPage(
         name: _Paths.NOTIFICATION,

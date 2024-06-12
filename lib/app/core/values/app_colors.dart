@@ -53,7 +53,17 @@ abstract class AppColors {
     bool isSelected = false
   }) =>  BoxDecoration(
       borderRadius: BorderRadius.circular(radius),
-      border: Border.all(color: isSelected ? AppColors.red: color),
+      border: Border.all(color: isSelected ? AppColors.orange: color),
+      color: bgColor
+  );
+  static fillDecoration({
+    Color color = grayLight1,
+    Color bgColor = Colors.transparent,
+    double radius = 12,
+    bool isSelected = false
+  }) =>  BoxDecoration(
+      borderRadius: BorderRadius.circular(radius),
+      border: Border.all(color: isSelected ? AppColors.orange: color),
       color: bgColor
   );
 
