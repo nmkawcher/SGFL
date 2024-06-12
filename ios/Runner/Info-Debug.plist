@@ -30,6 +30,10 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSCameraUsageDescription</key>
+    <string>We need permission to access your Camera so that you can use your own picture as your profile picture.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+   	<string>We need permission to access your Photo Library so that you can choose an image for your profile picture.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

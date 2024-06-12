@@ -28,7 +28,7 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
         children: [
           profileUI(),
           totalStatusUI(),
-          const Text('Order Status', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)).marginOnly(left: 10, top: 16),
+          const Text('Order Status', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)).marginOnly(left: 10, top: 16),
           SizedBox(
             height: 200,
             child: ListView.builder(
@@ -108,19 +108,22 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
     return Container(
       margin: const EdgeInsets.only(left: 8,right: 8,top: 16),
       child: ListTile(
-        onTap: (){Get.toNamed(Routes.NOTIFICATION);},
+        onTap: (){Get.toNamed(Routes.PROFILE);},
         leading: AppColors.circleIconBG(AppColors.primary, Icons.person),
-        trailing: Badge(
-          largeSize: 10.00,
-          smallSize: 10.00,
-          isLabelVisible: true,
-          child: Container(
-            padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(32),
-                border: Border.all(color:AppColors.primary, width: 0.5)
+        trailing: GestureDetector(
+          onTap: (){Get.toNamed(Routes.NOTIFICATION);},
+          child: Badge(
+            largeSize: 10.00,
+            smallSize: 10.00,
+            isLabelVisible: true,
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(32),
+                  border: Border.all(color:AppColors.primary, width: 0.5)
+              ),
+              child: Image.asset(AppImages.notificationIcon, height: 24,),
             ),
-            child: Image.asset(AppImages.notificationIcon, height: 24,),
           ),
         ),
         title: const Text('Welcome Back',style: TextStyle(fontSize: 12, color: AppColors.gray)),
@@ -133,7 +136,6 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
 
   Widget totalStatusUI(){
     return Container(
-      width: Get.width,
       margin: const EdgeInsets.only(left: 16,right: 16,top: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -148,15 +150,60 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
       ),
       child: Column(
         children: [
-          simpleBar("Total Order", "120", AppColors.primary),
-          simpleBar("Total Lorry", "12", AppColors.orange),
-          const Divider( thickness: 1, color: AppColors.grayLight1,),
+           Stack(
+             clipBehavior: Clip.none,
+             children: [
+               Positioned(
+                 top: 0, left: 0, bottom: 0,
+                 child: Column(
+                   mainAxisSize: MainAxisSize.min,
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     sideCalculation("Total Order", "120", AppColors.primary),
+                     const SizedBox(height: 24),
+                     sideCalculation("Total Lorry", "12", AppColors.orange),
+                   ],
+                 ),
+               ),
+               Align(
+                 alignment: Alignment.centerRight,
+                 child: DashedCircularProgressBar(
+                   height: 140, width: 140,
+                   valueNotifier: controller.valueNotifier,
+                   progress: 43,
+                   startAngle: 0,
+                   sweepAngle: 360,
+                   foregroundColor: AppColors.primary,
+                   backgroundColor: AppColors.primary.withOpacity(0.2),
+                   foregroundStrokeWidth: 10,
+                   backgroundStrokeWidth: 2,
+                   animation: true,
+                   seekSize: 6,
+                   seekColor: AppColors.colorWhite,
+                   child: ValueListenableBuilder(
+                       valueListenable: controller.valueNotifier,
+                       builder: (_, double value, __) => Column(
+                         mainAxisSize: MainAxisSize.min,
+                         crossAxisAlignment: CrossAxisAlignment.center,
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: [
+                           Text('${value.toInt()}', style: const TextStyle(fontSize: 30)),
+                           const Text('COMPLETE', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14)),
+                         ],
+                       )
+                   ),
+                 ),
+               ),
+             ],
+           ),
+          const SizedBox(height: 8),
+          const Divider( thickness: 1, color: AppColors.grayLight1),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              simpleStatus("PENDING", "12", AppColors.orange),
-              simpleStatus("PROCESSING", "02", Colors.blueAccent),
-              simpleStatus("COMPLETE", "43", AppColors.primary),
+              bottomCalculation("PENDING", "12", AppColors.orange),
+              bottomCalculation("PROCESSING", "02", Colors.blueAccent),
+              bottomCalculation("COMPLETE", "43", AppColors.primary),
             ],
           ),
         ],
@@ -164,46 +211,50 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
     );
   }
 
-  Widget simpleStatus(String title, String value, Color color){
+  Widget bottomCalculation(String title, String value, Color color){
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
         Container(
-          height: 4, width: 66,
+          height: 3, width: 66,
           margin: const EdgeInsets.all(2),
-          decoration: BoxDecoration(
-              color: color,
+          decoration: BoxDecoration(color: color,
               borderRadius: const BorderRadius.all(Radius.circular(10))
           ),
 
         ),
-        Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.gray)),
+        Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.gray)),
       ],
     );
   }
 
-  Widget simpleBar(String title, String value, Color color){
-    return ListTile(
-      minLeadingWidth: 0,
-      minVerticalPadding: 0.0,
-      visualDensity: const VisualDensity(horizontal: 0, vertical:0),
-      contentPadding: EdgeInsets.zero,
-      leading: Container(width: 4,
-        margin: const EdgeInsets.all(2),
-        decoration: BoxDecoration(
-            color: color,
-            borderRadius: const BorderRadius.all(Radius.circular(10))
+  Widget sideCalculation(String title, String value, Color color){
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(width: 2, height: 48,
+          margin: const EdgeInsets.only(right: 8),
+          decoration: BoxDecoration(color: color,
+              borderRadius: const BorderRadius.all(Radius.circular(10))
+          ),
         ),
-      ),
-      title: Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-      subtitle: Row(
-        children: [
-          Text(value, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
-          const SizedBox(width: 4),
-          const Text('Lorry', style: TextStyle(fontSize: 12,)),
-        ],
-      ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(value, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                const SizedBox(width: 4),
+                const Text('Lorry', style: TextStyle(fontSize: 12,fontWeight: FontWeight.w300)),
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 

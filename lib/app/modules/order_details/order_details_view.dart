@@ -22,27 +22,25 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
         children: [
           orderStatusBarUI(),
           const SizedBox(height: 16),
-          const Text('Order id #2345435', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+          const Text('Order id #2345435', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
           const Text('Date #12 JUN 2024', style: TextStyle(fontSize: 12, color: AppColors.gray)),
           const SizedBox(height: 8),
-          const Text('Depot Address', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 4),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
+              const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Padma Oil Company Limited', style: const TextStyle(fontSize: 14, color: AppColors.textColor)),
-                  Text('Road 16,SIRAJDOLLA ROAD, CHITTAGONG', style: const TextStyle(fontSize: 13,color: AppColors.gray)),
+                  Text('Padma Oil Company Limited', style: TextStyle(fontSize: 14, color: AppColors.textColor)),
+                  Text('Road 16,SIRAJDOLLA ROAD, CHITTAGONG', style: TextStyle(fontSize: 13,color: AppColors.gray)),
                 ],
               ),
               AppColors.circleIconBG(AppColors.primary, Icons.location_on_rounded)
             ],
           ),
           const SizedBox(height: 8),
-          const Text('Product Details', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Text('Product Details', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
           const Divider(color: AppColors.grayLight1, thickness: 1),
           ListView.builder(
             shrinkWrap: true,
@@ -51,34 +49,51 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
             itemBuilder: (BuildContext context, int index) {
               return Column(
                 children: [
-                  ListTile(
-                    leading: AppColors.circleIconBG(AppColors.orange, Icons.water_drop),
-                    trailing: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 16),
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text('2', style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600, color: AppColors.colorDark),),
-                        Text('Lorry', style: TextStyle(fontSize: 12,color: AppColors.gray),
+                        AppColors.circleIconBG(AppColors.orange, Icons.water_drop),
+                        const SizedBox(width: 24),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                             Text(controller.productList[index].productName!, style: const TextStyle(fontSize: 16)),
+                             const Row(
+                              children: [
+                                Text('Total', style: TextStyle(fontSize: 12, color: AppColors.gray),),
+                                SizedBox(width: 4),
+                                Text('7000 Tk.', style: TextStyle(fontSize: 12,color: AppColors.primary),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    title: Text(controller.productList[index].productName!, style: const TextStyle(fontSize: 16)),
-                    subtitle: const Row(
-                      children: [
-                        Text('Total', style: TextStyle(fontSize: 12, color: AppColors.gray),),
-                        SizedBox(width: 4),
-                        Text('7000 Tk.', style: TextStyle(fontSize: 12,color: AppColors.primary),
+                        const Spacer(),
+                        const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text('2', style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600, color: AppColors.colorDark),),
+                            Text('Lorry', style: TextStyle(fontSize: 12,color: AppColors.gray),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
-                  Container(height: 1, width: Get.width, color: AppColors.grayLight1,)
+                  Container(
+                    height: 1, width: Get.width,
+                    color: AppColors.grayLight1,
+                    margin: const EdgeInsets.only(top: 8,bottom: 8)
+                  )
                 ],
               );
             },
           ),
           const SizedBox(height: 8),
-          const Text('Order Summary', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const Text('Order Summary', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
           const SizedBox(height: 8),
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

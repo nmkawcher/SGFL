@@ -4,8 +4,11 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
    <application
-        android:label="flutter_getx_template"
-        android:icon="@mipmap/ic_launcher">
+       android:allowBackup="false"
+        android:label="SGFL Sales"
+        android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true"
+       >
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -36,8 +39,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <!-- Don't delete the meta-data below.
-             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <activity
+           android:name="com.yalantis.ucrop.UCropActivity"
+           android:screenOrientation="portrait"
+           android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

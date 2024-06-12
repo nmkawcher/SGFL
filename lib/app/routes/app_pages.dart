@@ -3,6 +3,8 @@ import 'package:sgfl_sales/app/modules/order/order_binding.dart';
 import 'package:sgfl_sales/app/modules/order/order_view.dart';
 import 'package:sgfl_sales/app/modules/product/product_binding.dart';
 import 'package:sgfl_sales/app/modules/product/product_view.dart';
+import 'package:sgfl_sales/app/modules/profile/profile_binding.dart';
+import 'package:sgfl_sales/app/modules/profile/profile_view.dart';
 import 'package:sgfl_sales/app/modules/requisition/requisition_binding.dart';
 import 'package:sgfl_sales/app/modules/requisition/requisition_information_view.dart';
 import '../modules/home/home_binding.dart';
@@ -79,6 +81,11 @@ class AppPages {
         binding: NotificationBinding(),
         transition: Transition.rightToLeft,
         transitionDuration: 200.milliseconds
+    ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => ProfileView(),
+      binding: ProfileBinding(),
     ),
 
   ];
