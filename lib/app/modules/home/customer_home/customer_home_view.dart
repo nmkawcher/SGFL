@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:sgfl_sales/app/core/values/app_images.dart';
 import 'package:sgfl_sales/app/core/widget/order_dataTable.dart';
 import 'package:sgfl_sales/app/core/widget/step_widget.dart';
 import 'package:sgfl_sales/app/data/model/order_history.dart';
@@ -15,19 +16,8 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
 
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) {
-    return AppBar(
-      iconTheme: const IconThemeData(color: AppColors.colorWhite),
-      title: const Text("SGFL Sales", style: TextStyle(color: AppColors.colorWhite)),
-      systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.light
-      ),
-      backgroundColor: AppColors.primary,
-      centerTitle: true,
-      elevation: 0,
-    );
-  }
+  PreferredSizeWidget? appBar(BuildContext context) =>null;
+
 
   @override
   Widget body(BuildContext context) {
@@ -35,17 +25,7 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            margin: const EdgeInsets.only(left: 8,right: 8,top: 16),
-            decoration: AppColors.defaultDecoration(),
-            child: ListTile(
-             onTap: (){},
-             leading: AppColors.circleIconBG(AppColors.primary, Icons.person),
-             trailing: const Icon(Icons.chevron_right, size: 32,),
-             title: const Text('Hasan Mahamud',style: TextStyle(fontWeight: FontWeight.bold)),
-             subtitle: const Text('You can change your information',style: TextStyle(fontSize: 12)),
-           ),
-          ),
+          profileUI(),
           Container(
             clipBehavior: Clip.antiAliasWithSaveLayer,
             margin: const EdgeInsets.only(left: 8,right: 8,top: 8),
@@ -126,4 +106,32 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
       ),
     );
   }
+
+  Widget profileUI(){
+    return Container(
+      margin: const EdgeInsets.only(left: 8,right: 8,top: 16),
+      child: ListTile(
+        onTap: (){Get.toNamed(Routes.NOTIFICATION);},
+        leading: AppColors.circleIconBG(AppColors.primary, Icons.person),
+        trailing: Badge(
+          largeSize: 10.00,
+          smallSize: 10.00,
+          isLabelVisible: true,
+          child: Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(32),
+                border: Border.all(color:AppColors.primary, width: 0.5)
+            ),
+            child: Image.asset(AppImages.notificationIcon, height: 24,),
+          ),
+        ),
+        title: const Text('Welcome Back',style: TextStyle(fontSize: 12, color: AppColors.gray)),
+        subtitle: const Text('Mr. Williams',
+            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: AppColors.textColor)
+        ),
+      ),
+    );
+  }
+
 }

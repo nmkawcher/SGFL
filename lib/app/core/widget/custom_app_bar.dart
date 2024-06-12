@@ -4,7 +4,14 @@ import '/app/core/values/app_colors.dart';
 //Default appbar customized with the design of our app
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  const CustomAppBar({super.key, required this.title});
+  final double? elevation;
+  final PreferredSizeWidget? bottom;
+  const CustomAppBar({
+    super.key,
+    required this.title,
+    this.elevation = 2.0,
+    this.bottom
+  });
 
   @override
   Size get preferredSize => AppBar().preferredSize;
@@ -21,7 +28,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         )),
       backgroundColor: AppColors.colorWhite,
       centerTitle: true,
-      elevation: 2,
+      elevation: elevation,
+      bottom: bottom,
     );
   }
 }

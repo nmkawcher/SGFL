@@ -63,6 +63,7 @@ abstract class BaseView<Controller extends BaseController> extends GetView<Contr
       floatingActionButton: floatingActionButton(),
       body: pageContent(context),
       bottomNavigationBar: bottomNavigationBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       drawer: drawer(),
     );
   }

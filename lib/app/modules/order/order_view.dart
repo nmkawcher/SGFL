@@ -8,20 +8,52 @@ class OrderView extends BaseView<OrderController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return const CustomAppBar(title:"Orders");
+    return const CustomAppBar(title:"Orders", elevation: 0,);
   }
 
   @override
   Widget body(BuildContext context) {
 
-    return ListView.separated(
-      itemCount: 4,
-      padding: const EdgeInsets.all(8),
-      separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8),
-      itemBuilder: (BuildContext context, int index) {
-        var statusColors = AppColors.statusColor(controller.orderStatus.value);
-        return orderItemUI(statusColors);
-      },
+    return  Padding(
+      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+      child: Column(
+        children: [
+          Container(
+            clipBehavior: Clip.antiAlias,
+            height: kToolbarHeight - 8.0,
+            decoration: BoxDecoration(
+              color: AppColors.primary.withOpacity(0.10),
+              borderRadius: BorderRadius.circular(32),
+            ),
+            child: TabBar(
+              overlayColor: WidgetStateProperty.all(Colors.transparent),
+              controller: controller.tabController,
+              tabs: controller.tabs,
+              unselectedLabelColor: AppColors.primary,
+              labelColor: AppColors.colorWhite,
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(80.0),
+                color: AppColors.primary,
+              ),
+            ),
+          ),
+          TabBarView(
+              children: [
+                Expanded(
+                  child: ListView.separated(
+                  itemCount: 4,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(8),
+                  separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8),
+                  itemBuilder: (BuildContext context, int index) {
+                    var statusColors = AppColors.statusColor(controller.orderStatus.value);
+                    return orderItemUI(statusColors);
+                  },
+                                ),
+                )]
+          )
+        ]
+      ),
     );
   }
 

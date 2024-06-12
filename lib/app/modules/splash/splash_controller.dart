@@ -20,9 +20,9 @@ class SplashScreenController extends BaseController {
     Get.updateLocale(language == 'EN' || language.isEmpty ? const Locale('en') : const Locale('bn'));
     Future.delayed(3.seconds,(){
       if(token.isNotEmpty) {
-        Get.offAllNamed(Routes.HOME_Customer);
+        Get.offAllNamed(Routes.MAIN);
       } else {
-        Get.offAllNamed(Routes.HOME_Customer);
+        Get.offAllNamed(Routes.MAIN);
       }
     });
   }

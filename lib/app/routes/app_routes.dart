@@ -4,6 +4,7 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
 
+  static const MAIN = _Paths.MAIN;
   static const LOGIN = _Paths.LOGIN;
   static const ORDER = _Paths.ORDER;
   static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
@@ -12,9 +13,11 @@ abstract class Routes {
   static const REQUISITION_Quantity = _Paths.REQUISITION_Quantity;
   static const REQUISITION_Information = _Paths.REQUISITION_Information;
   static const REQUISITION_Summary = _Paths.REQUISITION_Summary;
+  static const NOTIFICATION = _Paths.NOTIFICATION;
 }
 
 abstract class _Paths {
+  static const MAIN = '/main';
   static const HOME_Customer = '/home_customer';
   static const LOGIN ='/login';
   static const SPLASH_SCREEN ='/splash';
@@ -23,7 +26,7 @@ abstract class _Paths {
   static const REQUISITION_Quantity = '/requisition_quantity';
   static const REQUISITION_Information = '/requisition_information';
   static const REQUISITION_Summary = '/requisition_summary';
-
+  static const NOTIFICATION = '/notification';
 
 
 }

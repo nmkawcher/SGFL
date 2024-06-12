@@ -9,6 +9,10 @@ import '../modules/home/home_binding.dart';
 import '../modules/home/customer_home/customer_home_view.dart';
 import '../modules/login/login_binding.dart';
 import '../modules/login/login_view.dart';
+import '../modules/main/main_binding.dart';
+import '../modules/main/main_view.dart';
+import '../modules/notification/notification_binding.dart';
+import '../modules/notification/notification_view.dart';
 import '../modules/requisition/requisition_quantity_view.dart';
 import '../modules/splash/splash_binding.dart';
 import '../modules/splash/splash_view.dart';
@@ -21,6 +25,11 @@ class AppPages {
   static const INITIAL = Routes.SPLASH_SCREEN;
 
   static final routes = [
+    GetPage(
+      name: _Paths.MAIN,
+      page: () => MainView(),
+      binding: MainBinding(),
+    ),
     GetPage(
       name: _Paths.HOME_Customer,
       page: () => CustomerHomeView(),
@@ -50,11 +59,19 @@ class AppPages {
       name: _Paths.PRODUCTS,
       page: () => ProductView(),
       binding: ProductBinding(),
+      transition: Transition.downToUp,
     ),
     GetPage(
       name: _Paths.ORDER,
       page: () => OrderView(),
       binding: OrderBinding(),
+    ),
+    GetPage(
+        name: _Paths.NOTIFICATION,
+        page: () => NotificationView(),
+        binding: NotificationBinding(),
+        transition: Transition.rightToLeft,
+        transitionDuration: 200.milliseconds
     ),
 
   ];
