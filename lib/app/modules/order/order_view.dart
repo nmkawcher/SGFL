@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../core/widget/custom_app_bar.dart';
-import '../../routes/app_pages.dart';
 import '/app/core/base/base_view.dart';
 import '../../core/values/app_colors.dart';
+import '../../routes/app_pages.dart';
 import 'order_controller.dart';
 
 class OrderView extends BaseView<OrderController> {
@@ -18,6 +17,7 @@ class OrderView extends BaseView<OrderController> {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight - 8.0),
           child: Container(
+            height: 40,
             clipBehavior: Clip.antiAlias,
             margin: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
@@ -30,6 +30,7 @@ class OrderView extends BaseView<OrderController> {
               tabs: controller.tabs,
               unselectedLabelColor: AppColors.primary,
               labelColor: AppColors.colorWhite,
+              indicatorWeight: 0,
               indicator: BoxDecoration(
                 borderRadius: BorderRadius.circular(80.0),
                 color: AppColors.primary,

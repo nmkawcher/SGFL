@@ -98,7 +98,7 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
             ],
           ),
           const SizedBox(height: 8),
-          requisitionSummaryTable(),
+          orderSummaryTable(),
 
         ],
       ),
@@ -113,24 +113,25 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
     );
   }
 
-  Widget requisitionSummaryTable(){
-    return SizedBox(
+  Widget orderSummaryTable(){
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.grayLight1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       width: Get.width,
       child: DataTable(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        columnSpacing: 16,
+        columnSpacing: 30,
         dividerThickness: 0.00000000001,
         headingRowHeight: 30,
-        dataRowHeight: 35,
+        dataRowMinHeight: 30.0,
+        dataRowMaxHeight: 35.0,
         headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.grayLight1),
-          borderRadius: BorderRadius.circular(8),
-        ),
         columns: [
           DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
-          DataColumn(label: Text('Unit Price', style: AppColors.tableHeaderStyle())),
-          DataColumn(label: Text('Quantity', style: AppColors.tableHeaderStyle())),
+          DataColumn(label: Flexible(child: Center(child: Text('Unit Price', style: AppColors.tableHeaderStyle())))),
+          DataColumn(label: Flexible(child: Center(child: Text('Quantity', style: AppColors.tableHeaderStyle())))),
         ],
         rows:ProductModel.productList.map((index) {
           return DataRow(
@@ -138,8 +139,8 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
               DataCell(Text(index.productName!,
                   style: const TextStyle(fontSize: 12,color: AppColors.blueGrey, fontWeight: FontWeight.w600))
               ),
-              DataCell(Text('${index.productPrice}',style: AppColors.tableCallStyle())),
-              DataCell(Text(index.productQuantity.toString(),style: AppColors.tableCallStyle())
+              DataCell(Center(child: Text('${index.productPrice}',style: AppColors.tableCallStyle()))),
+              DataCell(Center(child: Text(index.productQuantity.toString(),style: AppColors.tableCallStyle()))
               ),
             ],
           );

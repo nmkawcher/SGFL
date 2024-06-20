@@ -135,57 +135,60 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
   }
 
   Widget requisitionSummaryTable(){
-    return SizedBox(
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: AppColors.grayLight1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       width: Get.width,
       child: DataTable(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        columnSpacing: 16,
+        columnSpacing: 30,
         dividerThickness: 0.00000000001,
         headingRowHeight: 35,
-        dataRowHeight: 40,
+        dataRowMinHeight: 35.0,
+        dataRowMaxHeight: 40.0,
         headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.grayLight1),
-          borderRadius: BorderRadius.circular(8),
-        ),
         columns: [
           DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
-          DataColumn(label: Text('Unit Price', style: AppColors.tableHeaderStyle())),
-          DataColumn(label: Text('Quantity', style: AppColors.tableHeaderStyle())),
+          DataColumn(label: Flexible(child: Center(child: Text('Unit Price', style: AppColors.tableHeaderStyle())))),
+          DataColumn(label: Flexible(child: Center(child: Text('Quantity', style: AppColors.tableHeaderStyle())))),
         ],
         rows:ProductModel.productList.map((index) {
           return DataRow(
             cells: <DataCell>[
               DataCell(Text(index.productName!, style: const TextStyle(fontSize: 13,color: AppColors.blueGrey, fontWeight: FontWeight.w600))
               ),
-              DataCell(Text('${index.productPrice}',style: AppColors.tableCallStyle())),
+              DataCell(Center(child: Text('${index.productPrice}',style: AppColors.tableCallStyle()))),
               DataCell(
-                InputQty(
-                  qtyFormProps: const QtyFormProps(
-                      style: TextStyle(fontSize: 18, color: AppColors.colorDark),
-                      cursorColor: AppColors.blueGrey,
-                      cursorWidth: 1
-                  ),
-                  decoration: const QtyDecorationProps(
-                    border: OutlineInputBorder(borderSide:  BorderSide.none),
-                    borderShape: BorderShapeBtn.none,
-                    contentPadding: EdgeInsets.all(4),
-                    btnColor: AppColors.blueGrey,
-                    width: 8,
-                    plusBtn: Padding(
-                      padding: EdgeInsets.only(right: 2),
-                      child: Icon(Icons.add_circle, color: AppColors.blueGrey, size: 24),
+                Center(
+                  child: InputQty(
+                    qtyFormProps: const QtyFormProps(
+                        style: TextStyle(fontSize: 18, color: AppColors.colorDark),
+                        cursorColor: AppColors.blueGrey,
+                        cursorWidth: 1
                     ),
-                    minusBtn: Padding(
-                      padding: EdgeInsets.only(left: 2),
-                      child: Icon(Icons.remove_circle_rounded, color: Colors.black54, size: 24),
+                    decoration: const QtyDecorationProps(
+                      border: OutlineInputBorder(borderSide:  BorderSide.none),
+                      borderShape: BorderShapeBtn.none,
+                      contentPadding: EdgeInsets.all(4),
+                      btnColor: AppColors.blueGrey,
+                      width: 8,
+                      plusBtn: Padding(
+                        padding: EdgeInsets.only(right: 2),
+                        child: Icon(Icons.add_circle, color: AppColors.blueGrey, size: 24),
+                      ),
+                      minusBtn: Padding(
+                        padding: EdgeInsets.only(left: 2),
+                        child: Icon(Icons.remove_circle_rounded, color: Colors.black54, size: 24),
+                      ),
                     ),
+                    maxVal: 99999,
+                    initVal: 1,
+                    minVal: 1,
+                    steps: 0.5,
+                    onQtyChanged: (val) {},
                   ),
-                  maxVal: 99999,
-                  initVal: 1,
-                  minVal: 1,
-                  steps: 0.5,
-                  onQtyChanged: (val) {},
                 ),
               ),
             ],
