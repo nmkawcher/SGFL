@@ -1,6 +1,7 @@
 
 # How to configure and make android release build for production
-Release build can be made using `flutter build <options> apk` command. Before that create a **key.properties** file in the **android** folder. Add folloiwng lines to that file:
+Release build can be made using `flutter build <options> apk` command.
+Before that create a **key.properties** file in the **android** folder. Add folloiwng lines to that file:
 ```
 keyAlias=<your keystore alias>
 password=<your keystore password>
