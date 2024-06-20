@@ -25,6 +25,7 @@ class AppImages {
   static const permission = 'images/permission.png';
   static const downloadReceipt = 'images/downloadReceipt.svg';
   static const watch = 'images/watch.svg';
+  static const profile = 'images/avatar.png';
 
   static const contact = 'images/Contact Us.png';
   static const myBill = 'images/my bill.png';

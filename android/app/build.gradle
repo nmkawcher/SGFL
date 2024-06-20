@@ -68,7 +68,7 @@ android {
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.sgfl.sales"
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 34
         compileSdk 34
         versionCode flutterVersionCode.toInteger()
@@ -82,9 +82,9 @@ android {
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['password']
+            keyPassword keystoreProperties['keyPassword']
             storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-            storePassword keystoreProperties['password']
+            storePassword keystoreProperties['storePassword']
         }
     }
 

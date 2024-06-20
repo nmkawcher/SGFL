@@ -16,17 +16,16 @@ class RequisitionInformationView extends BaseView<RequisitionController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return const CustomAppBar(title:"Depot Details");
+    return const CustomAppBar(title:"Select Depot");
   }
 
   @override
   Widget body(BuildContext context) {
     return Obx((){
-      return ListView.separated(
+      return ListView.builder(
           padding:const EdgeInsets.only(left: 8, right: 8, top: 16, bottom: 24),
           itemCount: controller.depotList.length,
           itemBuilder:(context, index)=> depotItem(controller.depotList[index], index),
-          separatorBuilder: (BuildContext context, int index) =>const SizedBox(height: 8),
       );
     });
   }
@@ -47,31 +46,41 @@ class RequisitionInformationView extends BaseView<RequisitionController> {
   Widget depotItem(DepotModel depot, int index){
     return Obx((){
       var isSelected = controller.selectedDepot.value == index;
-      return GestureDetector(
-        onTap: (){ controller.selectedDepot.value = index;},
-        child: Container(
-          padding: const EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 10),
-          decoration: AppColors.defaultDecoration(isSelected: isSelected,radius: 8),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Icon(Icons.location_on_rounded, color: AppColors.primary, size: 24),
-              const SizedBox(width: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text( depot.depotName!, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16)),
-                  const SizedBox(height: 4),
-                  Text(depot.depotAddress!,style: const TextStyle(fontSize: 12, color: AppColors.gray)),
-                ],
-              ),
-              const Spacer(),
-              Icon(isSelected ?
-              Icons.check_circle_rounded : Icons.circle_outlined,
-                  color: isSelected ? AppColors.orange : AppColors.grayLight1,
-                  size: 20
-              ),
-            ],
+      return Card(
+        clipBehavior: Clip.antiAlias,
+        elevation: isSelected ? 3 : 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: BorderSide(
+                color: isSelected ? AppColors.orange : Colors.transparent,
+                width: 1
+            )
+        ),
+        child: InkWell(
+          onTap: (){ controller.selectedDepot.value = index;},
+          child: Container(
+            padding: const EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 10),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.location_on_rounded, color: AppColors.primary, size: 24),
+                const SizedBox(width: 8),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text( depot.depotName!, overflow: TextOverflow.ellipsis, style: const TextStyle(fontSize: 16)),
+                    const SizedBox(height: 4),
+                    Text(depot.depotAddress!,style: const TextStyle(fontSize: 12, color: AppColors.gray)),
+                  ],
+                ),
+                const Spacer(),
+                Icon(isSelected ?
+                Icons.check_circle_rounded : Icons.circle_outlined,
+                    color: isSelected ? AppColors.orange : AppColors.grayLight1,
+                    size: 20
+                ),
+              ],
+            ),
           ),
         ),
       );

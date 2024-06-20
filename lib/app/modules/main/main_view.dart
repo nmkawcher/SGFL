@@ -28,7 +28,7 @@ class MainView extends BaseView<MainController> {
   Widget? floatingActionButton(){
     return FloatingActionButton(
       onPressed: () {Get.toNamed(Routes.PRODUCTS);},
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.orange,
       child: const Icon(Icons.add),
     );
   }
@@ -38,7 +38,7 @@ class MainView extends BaseView<MainController> {
     return Obx((){
       return AnimatedBottomNavigationBar.builder(
         tabBuilder: (int index, bool isActive) {
-          final color = isActive ? AppColors.orange : AppColors.gray;
+          final color = isActive ? AppColors.primary : AppColors.grayDark;
           return Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

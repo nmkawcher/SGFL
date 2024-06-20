@@ -14,7 +14,7 @@ class SplashScreenView extends CustomView<SplashScreenController> {
       backgroundColor: Colors.transparent,
       systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          statusBarIconBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
       ),
     );
   }
@@ -32,14 +32,7 @@ class SplashScreenView extends CustomView<SplashScreenController> {
     final double bottomHeight = Get.height* 0.04;
 
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [Color(0xFF0c9869), Color(0xFF0c9869)],
-          stops: [0, 1],
-        )
-      ),
+      color: AppColors.primary15,
       child: Stack(
         children: [
           Image.asset(AppImages.bgShep,fit: BoxFit.cover,height: Get.height,width: Get.width),
@@ -54,7 +47,7 @@ class SplashScreenView extends CustomView<SplashScreenController> {
           Positioned(bottom:bottomHeight, left: 0, right: 0,
            child:  Column(
             children: [
-              Text(appLocalization.copyright1,textAlign: TextAlign.center,style: const TextStyle(fontSize: 12, color: AppColors.pageBackground)),
+              Text(appLocalization.copyright1,textAlign: TextAlign.center,style: const TextStyle(fontSize: 12, color: AppColors.colorDark)),
             ],
           ))
         ],

@@ -7,7 +7,7 @@ abstract class AppColors {
   static const Color grayShed = Color(0xFFf7f7f7);
   static const Color primary15 = Color(0xffe3fff2);
   static const Color textColor = Color(0xFF3c4046);
-
+  static const Color blueGrey = Colors.blueGrey;
   static const Color primaryLight = Color(0xFFf5f9f8);
   static const Color accentPrimary = Color(0xff00a058);
   static const Color accentPrimary2 = Color(0xFF00D21C);
@@ -19,6 +19,7 @@ abstract class AppColors {
   static const Color grayLight1 = Color(0xFFE3DFDF);
   static const Color grayLight2 = Color(0xFFC4C6D0);
   static const Color gray = Color(0xFF838383);
+  static const Color grayDark = Color(0xFF8A9FB0);
   static const Color gray58 = Color(0xFF989898);
   static const Color green29= Color(0xFFA0FF7F);
   static const Color greenDark= Color(0xFF086100);
@@ -53,7 +54,7 @@ abstract class AppColors {
     bool isSelected = false
   }) =>  BoxDecoration(
       borderRadius: BorderRadius.circular(radius),
-      border: Border.all(color: isSelected ? AppColors.orange: color),
+      border: Border.all(color: isSelected ? AppColors.orange: color,),
       color: bgColor
   );
   static fillDecoration({
@@ -67,9 +68,13 @@ abstract class AppColors {
       color: bgColor
   );
 
-  static circleIconBG(Color color, IconData icon) => CircleAvatar(
+  static circleIconBG(Color color, IconData icon, {double? radius, double? iconSize}) => CircleAvatar(
+    radius: radius ,
     backgroundColor: color.withOpacity(0.20),
-    child: Icon(icon, color: color),
+    child: Icon(icon, color: color, size:iconSize),
   );
+
+  static tableHeaderStyle() => const TextStyle(fontWeight: FontWeight.w600, fontSize:12,color: AppColors.blueGrey);
+  static tableCallStyle() => const TextStyle(fontSize:12,color: AppColors.colorDark);
 
 }

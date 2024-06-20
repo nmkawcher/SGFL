@@ -21,83 +21,36 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
   @override
   Widget body(BuildContext context) {
     return Obx((){
-      return Column(
-        children: [
-          Container(
-            height: 36,
-            margin: const EdgeInsets.only(top: 16, bottom: 16),
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: controller.productList.length,
-              itemBuilder: (context, index)=>addProductItemUI(index)
+      return SingleChildScrollView(
+        padding: const EdgeInsets.only(left: 8,right: 8, bottom: 70),
+        child: Column(
+          children: [
+            Container(
+              height: 36,
+              margin: const EdgeInsets.only(top: 16, bottom: 8),
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: controller.productList.length,
+                itemBuilder: (context, index)=>addProductItemUI(index)
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              padding:const EdgeInsets.only(left: 8, right: 8, top: 16, bottom: 24),
-              itemCount: controller.productList.length,
-              itemBuilder: (context, index) => requisitionItemUI(index),
+            const SizedBox(height: 32),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text('PRODUCT SUMMARY', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.colorDark)),
+                Text('Unit : Liter', style: TextStyle(fontSize: 12, color: AppColors.gray)),
+              ],
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            requisitionSummaryTable(),
+
+          ],
+        ),
       );
     });
-  }
-
-  Widget requisitionItemUI(int index) {
-    return Container(
-      decoration: AppColors.defaultDecoration(radius: 8),
-      margin: const EdgeInsets.only(bottom: 8),
-      child: ListTile(
-          tileColor: AppColors.pageBackground,
-          focusColor: AppColors.Yellow.withOpacity(0.2),
-          title: Text(ProductModel.productList[index].productName!,
-            style: const TextStyle(fontSize: 16, color: AppColors.textColor),
-          ),
-          subtitle: Row(
-            children: [
-              Text(ProductModel.productList[index].productUnit!,
-                style: const TextStyle(fontSize: 12, color: AppColors.gray),
-              ),
-              const SizedBox(width: 4),
-              Text('${ProductModel.productList[index].productPrice.toString()} ${appLocalization.tk}',
-                style: const TextStyle(fontSize: 12,color: AppColors.primary),
-              ),
-            ],
-          ),
-          leading: AppColors.circleIconBG(AppColors.primary, Icons.water_drop),
-          trailing: InputQty(
-            qtyFormProps: const QtyFormProps(
-              style: TextStyle(fontSize: 18, color: AppColors.colorWhite),
-              cursorColor: AppColors.colorWhite,
-              cursorWidth: 1
-            ),
-            decoration: const QtyDecorationProps(
-              border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
-              borderShape: BorderShapeBtn.none,
-              fillColor: AppColors.colorDark,
-              contentPadding: EdgeInsets.all(4),
-              btnColor: AppColors.colorWhite,
-              width: 8,
-              plusBtn: Padding(
-                padding: EdgeInsets.only(right: 2),
-                child: Icon(Icons.add_circle, color: AppColors.colorWhite, size: 24),
-              ),
-              minusBtn: Padding(
-                padding: EdgeInsets.only(left: 2),
-                child: Icon(Icons.remove_circle_rounded, color: Colors.white12, size: 24),
-              ),
-            ),
-            maxVal: 99999,
-            initVal: 1,
-            minVal: 1,
-            steps: 0.5,
-            onQtyChanged: (val) {},
-          ),
-      ),
-    );
   }
 
   Widget addProductItemUI(int index){
@@ -105,18 +58,10 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
       onTap: (){controller.productList.add(controller.productList[index]);},
       child: Container(
         alignment: Alignment.center,
-        margin: const EdgeInsets.only(right: 8, left: 8),
-        padding: const EdgeInsets.only(right: 16, left: 8),
-        decoration: AppColors.defaultDecoration(radius: 32,color: Colors.transparent, bgColor: AppColors.primary.withOpacity(0.3)),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:[
-            const Icon(Icons.add, color: AppColors.primary, size: 16),
-            const SizedBox(width: 4),
-            Text(ProductModel.productList[index].productName!, style: const TextStyle(fontSize: 16,color: AppColors.primary)),
-          ],
-        ),
+        margin: const EdgeInsets.only(right: 4, left: 8),
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
+        decoration: AppColors.defaultDecoration(radius: 16, color: Colors.transparent, bgColor: AppColors.primary.withOpacity(0.2)),
+        child: Text(ProductModel.productList[index].productName!, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.blueGrey)),
       ),
     );
   }
@@ -124,7 +69,7 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
   @override
   Widget? bottomNavigationBar() {
     return Container(
-      height: 256,
+      height: 240,
       padding: const EdgeInsets.all(16),
       decoration:  BoxDecoration(
         color: AppColors.colorWhite,
@@ -149,41 +94,103 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Number of lorry', style: TextStyle(fontSize: 14,color: AppColors.gray)),
-              Text('5 lorry', style: TextStyle(fontSize: 14,color: AppColors.orange)),
+              Text('Quantity', style: TextStyle(fontSize: 14,color: AppColors.gray)),
+              Text('05', style: TextStyle(fontSize: 14,color: AppColors.gray,  fontWeight: FontWeight.bold)),
             ],
           ),
-          const SizedBox(height: 4),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Total Amount', style: TextStyle(fontSize: 14,color: AppColors.gray)),
-              Text('5000.00 Tk', style: TextStyle(fontSize: 14,color: AppColors.orange)),
-            ],
-          ),
-          const Divider(color: AppColors.grayLight,thickness: 0.5),
-          const Text('Depot Address', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Total Amount', style: TextStyle(fontSize: 14,color: AppColors.gray)),
+              Text('${appLocalization.stk} 5000.00', style: const TextStyle(fontSize: 14,color: AppColors.gray,fontWeight: FontWeight.bold)),
+            ],
+          ),
+          const SizedBox(height: 4),
+          const Divider(color: AppColors.grayLight,thickness: 0.5),
+          const SizedBox(height: 4),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(controller.depotList.first.depotName!, style: const TextStyle(fontSize: 14, color: AppColors.textColor)),
-                  Text(controller.depotList.first.depotAddress!, style: const TextStyle(fontSize: 13,color: AppColors.gray)),
+                  const SizedBox(height: 4),
+                  Text(controller.depotList.first.depotAddress!, style: const TextStyle(fontSize: 12,color: AppColors.gray)),
                 ],
               ),
-              AppColors.circleIconBG(AppColors.primary, Icons.location_on_rounded)
+              AppColors.circleIconBG(AppColors.primary, Icons.location_on_rounded, radius: 16, iconSize: 18)
             ],
           ),
           const SizedBox(height: 24),
           DefaultAppBtn(
-              title: appLocalization.next,
-              onClick: () {Get.toNamed(Routes.HOME_Customer);}
+              title: appLocalization.submit,
+              onClick: () {}
           ),
         ],
+      ),
+    );
+  }
+
+  Widget requisitionSummaryTable(){
+    return SizedBox(
+      width: Get.width,
+      child: DataTable(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        columnSpacing: 16,
+        dividerThickness: 0.00000000001,
+        headingRowHeight: 35,
+        dataRowHeight: 40,
+        headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.grayLight1),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        columns: [
+          DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
+          DataColumn(label: Text('Unit Price', style: AppColors.tableHeaderStyle())),
+          DataColumn(label: Text('Quantity', style: AppColors.tableHeaderStyle())),
+        ],
+        rows:ProductModel.productList.map((index) {
+          return DataRow(
+            cells: <DataCell>[
+              DataCell(Text(index.productName!, style: const TextStyle(fontSize: 13,color: AppColors.blueGrey, fontWeight: FontWeight.w600))
+              ),
+              DataCell(Text('${index.productPrice}',style: AppColors.tableCallStyle())),
+              DataCell(
+                InputQty(
+                  qtyFormProps: const QtyFormProps(
+                      style: TextStyle(fontSize: 18, color: AppColors.colorDark),
+                      cursorColor: AppColors.blueGrey,
+                      cursorWidth: 1
+                  ),
+                  decoration: const QtyDecorationProps(
+                    border: OutlineInputBorder(borderSide:  BorderSide.none),
+                    borderShape: BorderShapeBtn.none,
+                    contentPadding: EdgeInsets.all(4),
+                    btnColor: AppColors.blueGrey,
+                    width: 8,
+                    plusBtn: Padding(
+                      padding: EdgeInsets.only(right: 2),
+                      child: Icon(Icons.add_circle, color: AppColors.blueGrey, size: 24),
+                    ),
+                    minusBtn: Padding(
+                      padding: EdgeInsets.only(left: 2),
+                      child: Icon(Icons.remove_circle_rounded, color: Colors.black54, size: 24),
+                    ),
+                  ),
+                  maxVal: 99999,
+                  initVal: 1,
+                  minVal: 1,
+                  steps: 0.5,
+                  onQtyChanged: (val) {},
+                ),
+              ),
+            ],
+          );
+        }).toList(),
       ),
     );
   }

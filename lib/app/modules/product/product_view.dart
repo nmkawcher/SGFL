@@ -12,7 +12,7 @@ class ProductView extends BaseView<ProductController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return const CustomAppBar(title:"Products");
+    return const CustomAppBar(title:"Select Products");
   }
 
   @override
@@ -38,7 +38,7 @@ class ProductView extends BaseView<ProductController> {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: DefaultAppBtn(
-          title: appLocalization.submit,
+          title: appLocalization.next,
           onClick: (){Get.toNamed(Routes.REQUISITION_Information);}
       ),
     );
@@ -46,49 +46,53 @@ class ProductView extends BaseView<ProductController> {
 
   Widget productItemUi(ProductModel product) {
     return Obx(() {
-      return GestureDetector(
-        onTap: (){product.isSelected.value = !product.isSelected.value;},
-        child: Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: AppColors.grayShed,
-                borderRadius: BorderRadius.circular(4),
-                border: Border.all(
-                    color: product.isSelected.isTrue
-                        ? AppColors.orange
-                        :Colors.transparent
-                )
-            ),
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              children: [
-                AppColors.circleIconBG(AppColors.orange, Icons.water_drop_outlined),
-                const SizedBox(width: 8),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(product.productName!, overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textColor),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(product.productUnit!, style: const TextStyle(
-                            fontSize: 10, color: AppColors.gray)),
-                        const SizedBox(width: 4),
-                        Text('${product.productPrice.toString()} ${appLocalization
-                            .tk}', style: const TextStyle(
-                            fontSize: 10, color: AppColors.primary),
-                        ),
-                      ],
-                    ),
-                  ],
-                )
-              ],
+      return Card(
+        clipBehavior: Clip.antiAlias,
+        elevation: product.isSelected.isTrue ? 3 : 0,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: BorderSide(
+                color: product.isSelected.isTrue ? AppColors.orange : Colors.transparent,
+                width: 1
             )
+        ),
+        child: InkWell(
+          onTap: (){product.isSelected.value = !product.isSelected.value;},
+          child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: AppColors.grayShed,
+                  borderRadius: BorderRadius.circular(4),
+              ),
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                children: [
+                  AppColors.circleIconBG(AppColors.orange, Icons.water_drop_outlined),
+                  const SizedBox(width: 8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(product.productName!, overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.textColor),
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(product.productUnit!, style: const TextStyle(fontSize: 10, color: AppColors.gray)),
+                          const SizedBox(width: 4),
+                          Text('${appLocalization.stk} ${product.productPrice.toString()}', style: const TextStyle(
+                            fontWeight: FontWeight.w600, fontSize: 10, color: AppColors.primary),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )
+                ],
+              )
+          ),
         ),
       );
     });

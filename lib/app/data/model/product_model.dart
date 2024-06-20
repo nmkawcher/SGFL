@@ -22,11 +22,11 @@ class ProductModel{
 
 
  static final List<ProductModel> productList =[
-    ProductModel(productID: 1, productName: "Petrol", productUnit: "Liter", productPrice: 100.0, productQuantity: 0, isSelected: false.obs),
-    ProductModel(productID: 2, productName: "Diesel", productUnit: "Liter", productPrice: 90.0, productQuantity: 0, isSelected: false.obs),
-    ProductModel(productID: 3, productName: "Kerosene", productUnit: "Liter", productPrice: 80.0, productQuantity: 0, isSelected: false.obs),
-    ProductModel(productID: 4, productName: "Gas", productUnit: "Liter", productPrice: 70.0, productQuantity: 0, isSelected: false.obs),
-    ProductModel(productID: 5, productName: "Jet Oil", productUnit: "Liter", productPrice: 70.0, productQuantity: 0, isSelected: false.obs),
+    ProductModel(productID: 1, productName: "Petrol", productUnit: "Unit Price", productPrice: 100.0, productQuantity: 0, isSelected: false.obs),
+    ProductModel(productID: 2, productName: "Diesel", productUnit: "Unit Price", productPrice: 90.0, productQuantity: 0, isSelected: false.obs),
+    ProductModel(productID: 3, productName: "Kerosene", productUnit: "Unit Price", productPrice: 80.0, productQuantity: 0, isSelected: false.obs),
+    ProductModel(productID: 4, productName: "Gas", productUnit: "Unit Price", productPrice: 70.0, productQuantity: 0, isSelected: false.obs),
+    ProductModel(productID: 5, productName: "Jet Oil", productUnit: "Unit Price", productPrice: 70.0, productQuantity: 0, isSelected: false.obs),
   ].obs;
 
 

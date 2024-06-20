@@ -63,29 +63,18 @@ class LoginView extends CustomView<LoginController> {
 
     return Obx(() => Form(
         key: controller.validationKey,
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Positioned(
-                top: 140, left: 0, right: 0,
-                child: Image.asset(AppImages.logo, height: 120,width: 120,)
-            ),
-            Positioned(
-              left: 8,
-              right: 8,
-              bottom: 16,
-              child: Container(
-                padding: const EdgeInsets.only(top: 24, left: 16, right: 16, bottom: 40),
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(16))
-                ),
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(AppImages.logo, height: 120,width: 120,),
+              Container(
+                margin: const EdgeInsets.only(top: 60),
+                padding: const EdgeInsets.only(top: 24, left: 16, right: 16, bottom: 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(appLocalization.signIn, style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 20),
                     TextFormField(
                         style: const TextStyle(color: Colors.black, fontSize: 18),
                         controller: controller.phoneNumberController,
@@ -160,8 +149,8 @@ class LoginView extends CustomView<LoginController> {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

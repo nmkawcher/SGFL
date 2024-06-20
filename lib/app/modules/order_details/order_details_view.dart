@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/widget/custom_app_bar.dart';
 import '../../core/widget/step_widget.dart';
+import '../../data/model/product_model.dart';
 import '/app/core/base/base_view.dart';
 import '../../core/values/app_colors.dart';
 import 'order_details_controller.dart';
@@ -18,98 +19,86 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
     return SingleChildScrollView(
       padding: const EdgeInsets.only(left: 8,right: 8,top: 20,bottom: 70),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           orderStatusBarUI(),
           const SizedBox(height: 16),
-          const Text('Order id #2345435', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400)),
-          const Text('Date #12 JUN 2024', style: TextStyle(fontSize: 12, color: AppColors.gray)),
-          const SizedBox(height: 8),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Column(
+          Card(
+            elevation: 2,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),),
+            child:  Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Padma Oil Company Limited', style: TextStyle(fontSize: 14, color: AppColors.textColor)),
-                  Text('Road 16,SIRAJDOLLA ROAD, CHITTAGONG', style: TextStyle(fontSize: 13,color: AppColors.gray)),
+                  const Text('Company Info', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.colorDark)),
+                  const SizedBox(height: 8),
+                  const Text('Padma Oil Company LTD.', style: TextStyle(fontSize: 15, color: AppColors.colorDark)),
+                  const SizedBox(height: 4),
+                  textWrap2('Contact Person', 'Mr. Abul Khayer'),
+                  textWrap2('Address', 'Bagabri, Sylhet'),
+                  textWrap2('Phone', '01689936665'),
                 ],
               ),
-              AppColors.circleIconBG(AppColors.primary, Icons.location_on_rounded)
-            ],
+            ),
           ),
-          const SizedBox(height: 8),
-          const Text('Product Details', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-          const Divider(color: AppColors.grayLight1, thickness: 1),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: controller.productList.length,
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              return Column(
+          Card(
+            elevation: 2,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8, right: 16),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        AppColors.circleIconBG(AppColors.orange, Icons.water_drop),
-                        const SizedBox(width: 24),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                             Text(controller.productList[index].productName!, style: const TextStyle(fontSize: 16)),
-                             const Row(
-                              children: [
-                                Text('Total', style: TextStyle(fontSize: 12, color: AppColors.gray),),
-                                SizedBox(width: 4),
-                                Text('7000 Tk.', style: TextStyle(fontSize: 12,color: AppColors.primary),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        const Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text('2', style: TextStyle(fontSize: 14,fontWeight: FontWeight.w600, color: AppColors.colorDark),),
-                            Text('Lorry', style: TextStyle(fontSize: 12,color: AppColors.gray),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 1, width: Get.width,
-                    color: AppColors.grayLight1,
-                    margin: const EdgeInsets.only(top: 8,bottom: 8)
-                  )
+                  const Text('Details Info', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.colorDark)),
+                  const SizedBox(height: 8),
+                  const Text('Requisition ID #2345435', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
+                  const SizedBox(height: 4),
+                  textWrap2('Date', '12 JUN 2024'),
+                  textWrap2('Shipping', 'Bagabri, Sylhet'),
+                  const SizedBox(height: 4),
+                  textWrap('Note', 'Padma Oil Company LTD, Bagabri, Sylhet, Requisition ID: 2345435,Date: 12 JUN 2024'),
                 ],
-              );
-            },
+              ),
+            ),
           ),
-          const SizedBox(height: 8),
-          const Text('Order Summary', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-          const SizedBox(height: 8),
+          Card(
+            elevation: 2,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),),
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Contractor Info', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.colorDark)),
+                  const SizedBox(height: 8),
+                  const Text('M/S Tanisa Enterprise', style: TextStyle(fontSize: 15, color: AppColors.colorDark)),
+                  const SizedBox(height: 4),
+                  textWrap2('Driver', 'Mr. Abul Khayer'),
+                  textWrap2('Address', 'Bagabri, Sylhet'),
+                  textWrap2('Lorry Number', 'Dhaka Metro L-250255'),
+                ],
+              ),
+            ),
+          ),
+
+          const SizedBox(height: 16),
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text('Number of lorry', style: TextStyle(fontSize: 14,color: AppColors.gray)),
-              Text('5 lorry', style: TextStyle(fontSize: 14,color: AppColors.orange)),
+              Text('PRODUCT SUMMARY', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.colorDark)),
+              Text('Unit : Liter', style: TextStyle(fontSize: 12, color: AppColors.gray)),
             ],
           ),
-          const SizedBox(height: 4),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Total Amount', style: TextStyle(fontSize: 14,color: AppColors.gray)),
-              Text('5000.00 Tk', style: TextStyle(fontSize: 14,color: AppColors.orange)),
-            ],
-          ),
+          const SizedBox(height: 8),
+          requisitionSummaryTable(),
 
         ],
       ),
@@ -123,6 +112,73 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
       child: SizedBox(height: 80, child: StepWidget(step: 1)),
     );
   }
+
+  Widget requisitionSummaryTable(){
+    return SizedBox(
+      width: Get.width,
+      child: DataTable(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        columnSpacing: 16,
+        dividerThickness: 0.00000000001,
+        headingRowHeight: 30,
+        dataRowHeight: 35,
+        headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
+        decoration: BoxDecoration(
+          border: Border.all(color: AppColors.grayLight1),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        columns: [
+          DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
+          DataColumn(label: Text('Unit Price', style: AppColors.tableHeaderStyle())),
+          DataColumn(label: Text('Quantity', style: AppColors.tableHeaderStyle())),
+        ],
+        rows:ProductModel.productList.map((index) {
+          return DataRow(
+            cells: <DataCell>[
+              DataCell(Text(index.productName!,
+                  style: const TextStyle(fontSize: 12,color: AppColors.blueGrey, fontWeight: FontWeight.w600))
+              ),
+              DataCell(Text('${index.productPrice}',style: AppColors.tableCallStyle())),
+              DataCell(Text(index.productQuantity.toString(),style: AppColors.tableCallStyle())
+              ),
+            ],
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget textWrap(String title, String text){
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text('$title:',style: const TextStyle(fontSize: 13, color: AppColors.blueGrey)),
+        const SizedBox(width: 4),
+        Expanded(
+            child: Text(text, overflow: TextOverflow.visible, style: const TextStyle(fontSize: 13, color: AppColors.gray))),
+      ],
+    );
+  }
+
+  Widget textWrap2(String title, String text){
+    return  Table(
+      columnWidths:const {
+        0: FlexColumnWidth(2),
+        1: FlexColumnWidth(4),
+      },
+      children: [
+        TableRow(
+          children: [
+            TableCell(child: Text(title, style: const TextStyle(fontSize: 13,color: AppColors.blueGrey))),
+            TableCell(child: Text(": $text" , style: const TextStyle(fontSize: 13,color: Colors.black))),
+          ],
+        ),
+      ],
+    );
+  }
+
+
 
 
 }

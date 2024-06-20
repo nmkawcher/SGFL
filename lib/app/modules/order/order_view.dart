@@ -42,7 +42,7 @@ class OrderView extends BaseView<OrderController> {
 
   @override
   Widget body(BuildContext context) {
-    var padding = const EdgeInsets.only(top: 16);
+    var padding = const EdgeInsets.all(8);
     return  TabBarView(
       controller: controller.tabController,
         children: [
@@ -57,7 +57,7 @@ class OrderView extends BaseView<OrderController> {
           ListView.separated(
               itemCount: 4,
               shrinkWrap: true,
-              padding: const EdgeInsets.all(8),
+              padding: padding,
               separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8),
               itemBuilder: (BuildContext context, int index) {
                 var statusColors = AppColors.statusColor(controller.orderStatus.value);
@@ -66,7 +66,7 @@ class OrderView extends BaseView<OrderController> {
           ListView.separated(
               itemCount: 4,
               shrinkWrap: true,
-              padding: const EdgeInsets.all(8),
+              padding: padding,
               separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8),
               itemBuilder: (BuildContext context, int index) {
                 var statusColors = AppColors.statusColor(controller.orderStatus.value);
@@ -78,66 +78,58 @@ class OrderView extends BaseView<OrderController> {
   }
 
   Widget orderItemUI(Color statusColors) {
-    return InkWell(
-      onTap: (){Get.toNamed(Routes.ORDERDetails);},
-      child: Container(
-          padding: const EdgeInsets.only(left: 8,right: 8,top: 8),
-          child: Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:[
-                  AppColors.circleIconBG(statusColors, Icons.water_drop),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Row(
-                              children: [
-                                Text('Order#: ', style: TextStyle(fontSize: 18, color: AppColors.textColor)),
-                                Text('2551646', style: TextStyle(fontSize: 18, color: AppColors.primary)),
-                              ],
-                            ),
-                            Container(
-                                padding: const EdgeInsets.all(4),
-                                decoration: AppColors.fillDecoration(color: statusColors, radius: 8, bgColor: statusColors),
-                                child: const Text('Panding', style: TextStyle(fontSize: 12, color: AppColors.colorWhite))
-                            )
-                          ],
-                        ),
-                        const Text('12 JUN 2024', style: TextStyle(fontSize: 13, color: AppColors.gray)),
-                        const SizedBox(height: 8),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text('Shipping address', style: TextStyle(fontSize: 14, color: AppColors.gray)),
-                                SizedBox(width:4),
-                                Icon(Icons.location_on_rounded, color: AppColors.gray,size: 16,),
-                              ],
-                            ),
-                            Text('1234, 5th Avenue, New York, USA', style: TextStyle(fontSize: 14)),
-                          ],
-                        )
-                      ],
-                    ),
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      child: InkWell(
+        onTap: (){Get.toNamed(Routes.ORDERDetails);},
+        child: Container(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children:[
+                AppColors.circleIconBG(statusColors, Icons.water_drop),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('#2551646', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                      const SizedBox(height: 2),
+                      const Text('Podma Oil Company ltd.', style: TextStyle(fontSize: 13, color: AppColors.gray, fontWeight: FontWeight.normal)),
+                      const Text('Bagabri, Sylhet',  style: TextStyle(fontSize: 12, color: AppColors.gray)),
+                      Container(
+                          margin: const EdgeInsets.only(top: 4),
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: statusColors.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: const Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text('5.2 / ', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.grayDark)),
+                              Text('৳ 200000', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.gray)),
+                            ],
+                          )
+                      )
+                    ],
                   ),
-                ],
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 8),
-                height: 1,
-                width: Get.width,
-                color: AppColors.grayLight1,
-              )
-            ],
+                ),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('Pending', style: TextStyle(fontSize: 12, color: statusColors, fontWeight: FontWeight.w600)),
+                    const SizedBox(height: 2),
+                    const Text('22 JAN 2024', style: TextStyle(fontSize: 12, color: AppColors.gray, fontWeight: FontWeight.w600)),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
+      ),
     );
   }
 
