@@ -7,8 +7,8 @@ import '/flavors/environment.dart';
 
 void main() {
   EnvConfig devConfig = EnvConfig(
-    appName: "Flutter GetX Template Dev",
-    baseUrl: "https://api.github.com",
+    appName: "SGFL Sales Dev",
+    baseUrl: "https://www.sgflerp.top/",
     shouldCollectCrashLog: true,
   );
 

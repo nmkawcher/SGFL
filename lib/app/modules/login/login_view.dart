@@ -63,94 +63,92 @@ class LoginView extends CustomView<LoginController> {
 
     return Obx(() => Form(
         key: controller.validationKey,
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(AppImages.logo, height: 120,width: 120,),
-              Container(
-                margin: const EdgeInsets.only(top: 60),
-                padding: const EdgeInsets.only(top: 24, left: 16, right: 16, bottom: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextFormField(
-                        style: const TextStyle(color: Colors.black, fontSize: 18),
-                        controller: controller.phoneNumberController,
-                        keyboardType: TextInputType.phone,
-                        maxLength: 11,
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return appLocalization.requiredField;
-                          }
-                          if(!Helper.phoneNumberCheck(value)) {
-                             return appLocalization.invalidPhoneNumber;
-                          }
-                             return null;
-                        },
-                        decoration: InputDecoration(
-                            counterText: '',
-                            labelText: appLocalization.phoneNumber,
-                            labelStyle: const TextStyle(fontSize: 14),
-                            hintStyle: const TextStyle(color: AppColors.gray, fontSize: 14),
-                            contentPadding: const EdgeInsets.all(18),
-                            hintText: appLocalization.enterPhoneNumber,
-                            border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8)))
-                        )
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            Image.asset(AppImages.logo, height: 120,width: 120,),
+            Container(
+              margin: const EdgeInsets.only(top: 60),
+              padding: const EdgeInsets.only(top: 24, left: 16, right: 16, bottom: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
                       style: const TextStyle(color: Colors.black, fontSize: 18),
-                      controller: controller.passwordController,
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: controller.isHide.value,
-                      validator: (value) {return value!.isEmpty ? appLocalization.requiredField : null;},
+                      controller: controller.phoneNumberController,
+                      keyboardType: TextInputType.phone,
+                      maxLength: 11,
+                      validator: (value){
+                        if(value!.isEmpty){
+                          return appLocalization.requiredField;
+                        }
+                        if(!Helper.phoneNumberCheck(value)) {
+                           return appLocalization.invalidPhoneNumber;
+                        }
+                           return null;
+                      },
                       decoration: InputDecoration(
-                          labelText: appLocalization.password,
+                          counterText: '',
+                          labelText: appLocalization.phoneNumber,
                           labelStyle: const TextStyle(fontSize: 14),
                           hintStyle: const TextStyle(color: AppColors.gray, fontSize: 14),
                           contentPadding: const EdgeInsets.all(18),
-                          hintText: appLocalization.fillYourPassword,
-                          suffixIcon: GestureDetector(
-                              onTap: () {controller.isHide.value = !controller.isHide.value;},
-                              child: Icon(controller.isHide.value ? Icons.visibility_off : Icons.visibility)),
-                          border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(8)))),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Container(
-                          height: 22, width: 22,
-                          margin: const EdgeInsets.only(right: 4),
-                          child: Checkbox(
-                            activeColor: AppColors.primary,
-                            side: const BorderSide(width: 1, color: AppColors.gray),
-                            value: controller.isRemember.value,
-                            onChanged: (value) => controller.isRemember(value),
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-                          ),
+                          hintText: appLocalization.enterPhoneNumber,
+                          border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8)))
+                      )
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                    controller: controller.passwordController,
+                    keyboardType: TextInputType.visiblePassword,
+                    obscureText: controller.isHide.value,
+                    validator: (value) {return value!.isEmpty ? appLocalization.requiredField : null;},
+                    decoration: InputDecoration(
+                        labelText: appLocalization.password,
+                        labelStyle: const TextStyle(fontSize: 14),
+                        hintStyle: const TextStyle(color: AppColors.gray, fontSize: 14),
+                        contentPadding: const EdgeInsets.all(18),
+                        hintText: appLocalization.fillYourPassword,
+                        suffixIcon: GestureDetector(
+                            onTap: () {controller.isHide.value = !controller.isHide.value;},
+                            child: Icon(controller.isHide.value ? Icons.visibility_off : Icons.visibility)),
+                        border: const OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(8)))),
+                  ),
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Container(
+                        height: 22, width: 22,
+                        margin: const EdgeInsets.only(right: 4),
+                        child: Checkbox(
+                          activeColor: AppColors.primary,
+                          side: const BorderSide(width: 1, color: AppColors.gray),
+                          value: controller.isRemember.value,
+                          onChanged: (value) => controller.isRemember(value),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                         ),
-                        Text(appLocalization.rememberMe),
-                        const Spacer(),
-                        DefaultTextBtn(
-                            title: appLocalization.forgotPassword,
-                            fontSize: 14,
-                            onClick: () {}
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    DefaultAppBtn(
-                        title: appLocalization.signIn,
-                        onClick: () {controller.saveLoginData();}
-                    ),
-                  ],
-                ),
+                      ),
+                      Text(appLocalization.rememberMe),
+                      const Spacer(),
+                      DefaultTextBtn(
+                          title: appLocalization.forgotPassword,
+                          fontSize: 14,
+                          onClick: () {}
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  DefaultAppBtn(
+                      title: appLocalization.signIn,
+                      onClick: () {controller.saveLoginData();}
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -15,14 +15,14 @@ class SplashScreenController extends BaseController {
   }
 
   _initialScreen()async{
-    var token = await preference.getString(PreferenceManager.keyRefreshToken);
+    var token = await preference.getString(PreferenceManager.keyAccessToken);
     var language = await preference.getString(PreferenceManager.keyLanguage);
     Get.updateLocale(language == 'EN' || language.isEmpty ? const Locale('en') : const Locale('bn'));
     Future.delayed(3.seconds,(){
       if(token.isNotEmpty) {
         Get.offAllNamed(Routes.MAIN);
       } else {
-        Get.offAllNamed(Routes.MAIN);
+        Get.offAllNamed(Routes.LOGIN);
       }
     });
   }
