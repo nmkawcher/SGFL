@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import '../data/repository/oauth_repository.dart';
+import '../data/repository/repository.dart';
 
 class RepositoryBindings implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<OauthRepository>(
-      () => OauthRepositoryImpl(),
-      tag: (OauthRepository).toString(),
+    Get.lazyPut<Repository>(
+      () => RepositoryImpl(),
+      tag: (Repository).toString(),
         fenix: true
     );
   }

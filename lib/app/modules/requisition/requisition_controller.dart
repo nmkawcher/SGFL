@@ -2,21 +2,20 @@ import 'package:get/get.dart';
 import 'package:sgfl_sales/app/data/model/depot_model.dart';
 
 import '../../data/model/product_model.dart';
+import '../../data/repository/repository.dart';
 import '/app/core/base/base_controller.dart';
 
 class RequisitionController extends BaseController {
 
   RxInt selectedDepot = 0.obs;
 
-  List<DepotModel> depotList =[
-    DepotModel(depotId: 1, depotName: 'Padma Oil Company Limited', depotAddress: 'Road 16,SIRAJDOLLA ROAD, CHITTAGONG'),
-    DepotModel(depotId: 2, depotName: 'Padma Oil Company Limited', depotAddress: 'Road 16,SIRAJDOLLA ROAD, CHITTAGONG'),
-    DepotModel(depotId: 2, depotName: 'Padma Oil Company Limited', depotAddress: 'Road 16,SIRAJDOLLA ROAD, CHITTAGONG'),
-    DepotModel(depotId: 2, depotName: 'Padma Oil Company Limited', depotAddress: 'Road 16,SIRAJDOLLA ROAD, CHITTAGONG'),
-    DepotModel(depotId: 2, depotName: 'Padma Oil Company Limited', depotAddress: 'Road 16,SIRAJDOLLA ROAD, CHITTAGONG'),
-    DepotModel(depotId: 2, depotName: 'Padma Oil Company Limited', depotAddress: 'Road 16,SIRAJDOLLA ROAD, CHITTAGONG'),
-    DepotModel(depotId: 2, depotName: 'Padma Oil Company Limited', depotAddress: 'Road 16,SIRAJDOLLA ROAD, CHITTAGONG'),
-  ].obs;
+  final RxList<DepotModel> _rxDepotList = RxList.empty();
+  List<DepotModel> get depotList => _rxDepotList.toList();
+
+  final Repository _repository = Get.find(tag: (Repository).toString());
+
+
+
 
   List<ProductModel> productList =[
     ProductModel(productID: 1, productName: "Petrol", productUnit: "Liter", productPrice: 100.0, productQuantity: 0, isSelected: false.obs),
@@ -27,7 +26,13 @@ class RequisitionController extends BaseController {
   ].obs;
 
 
+  void fetchDepotData() {
+    var service = _repository.getAllDepot(4);
+    callDataService(service, onSuccess: _handleResponseSuccess);
+  }
 
-
+  void _handleResponseSuccess(List<DepotModel> result) async {
+    _rxDepotList.addAll(result);
+  }
 
 }

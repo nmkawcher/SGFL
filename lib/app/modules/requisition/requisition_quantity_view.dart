@@ -116,9 +116,9 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(controller.depotList.first.depotName!, style: const TextStyle(fontSize: 14, color: AppColors.textColor)),
+                 // Text(controller.depotList.first.depotName!, style: const TextStyle(fontSize: 14, color: AppColors.textColor)),
                   const SizedBox(height: 4),
-                  Text(controller.depotList.first.depotAddress!, style: const TextStyle(fontSize: 12,color: AppColors.gray)),
+                 // Text(controller.depotList.first.depotAddress!, style: const TextStyle(fontSize: 12,color: AppColors.gray)),
                 ],
               ),
               AppColors.circleIconBG(AppColors.primary, Icons.location_on_rounded, radius: 16, iconSize: 18)

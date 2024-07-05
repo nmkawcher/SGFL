@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sgfl_sales/app/routes/app_pages.dart';
 import '../../data/model/login_model.dart';
-import '../../data/repository/oauth_repository.dart';
+import '../../data/repository/repository.dart';
 import '/app/core/base/base_controller.dart';
 import '../../data/local/preference/preference_manager.dart';
 
@@ -15,7 +15,7 @@ class LoginController extends BaseController {
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var loginRequest = LoginRequest().obs;
-  final OauthRepository _repository = Get.find(tag: (OauthRepository).toString());
+  final Repository _repository = Get.find(tag: (Repository).toString());
 
 
 
@@ -59,7 +59,7 @@ class LoginController extends BaseController {
     preference.setBool(PreferenceManager.keyRemember, isRemember.value);
     preference.setString(PreferenceManager.keyPhone, loginRequest.value.phoneNo ??'');
     preference.setString(PreferenceManager.keyPassword, loginRequest.value.password ??'');
-    Get.offAllNamed(Routes.HOME_Customer);
+    Get.offAllNamed(Routes.MAIN);
   }
 
   @override

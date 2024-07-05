@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 
-import '../data/remote/oauth_remote_source.dart';
+import '../data/remote/remote_source.dart';
 
 class RemoteSourceBindings implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<OauthRemoteDataSource>(
-        () => OauthRemoteDataSourceImpl(),
-        tag: (OauthRemoteDataSource).toString(),
+    Get.lazyPut<RemoteDataSource>(
+        () => RemoteDataSourceImpl(),
+        tag: (RemoteDataSource).toString(),
           fenix: true
     );
   }
