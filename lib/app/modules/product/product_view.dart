@@ -9,6 +9,9 @@ import '/app/core/base/base_view.dart';
 import 'product_controller.dart';
 
 class ProductView extends BaseView<ProductController> {
+  ProductView(){
+    controller.fetchDepotData();
+  }
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
@@ -45,7 +48,7 @@ class ProductView extends BaseView<ProductController> {
   }
 
   Widget productItemUi(ProductModel product) {
-    return Obx(() {
+    return Obx((){
       return Card(
         clipBehavior: Clip.antiAlias,
         elevation: product.isSelected.isTrue ? 3 : 0,
@@ -61,35 +64,30 @@ class ProductView extends BaseView<ProductController> {
           child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: AppColors.grayShed,
-                  borderRadius: BorderRadius.circular(4),
+                color: AppColors.grayShed,
+                borderRadius: BorderRadius.circular(4),
               ),
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(4),
               child: Row(
                 children: [
-                  AppColors.circleIconBG(AppColors.orange, Icons.water_drop_outlined),
-                  const SizedBox(width: 8),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(product.productName!, overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.textColor),
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(product.productUnit!, style: const TextStyle(fontSize: 10, color: AppColors.gray)),
-                          const SizedBox(width: 4),
-                          Text('${appLocalization.stk} ${product.productPrice.toString()}', style: const TextStyle(
+                  AppColors.circleIconBG(AppColors.orange, Icons.water_drop_outlined, radius: 14),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(product.name!, overflow: TextOverflow.visible,
+                          style: const TextStyle(fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.textColor),
+                        ),
+                        Text('Price ${appLocalization.stk} ${product.priceLiter}', style: const TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 10, color: AppColors.primary),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               )
           ),

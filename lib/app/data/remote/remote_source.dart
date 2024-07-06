@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:sgfl_sales/app/data/model/product_model.dart';
 import '../../core/base/base_remote_source.dart';
 import '../../core/values/app_const.dart';
 import '../model/baseResponse_model.dart';
@@ -9,7 +10,8 @@ import '../model/login_model.dart';
 abstract class RemoteDataSource {
   Future<LoginResponse> loginReqData(LoginRequest request);
   Future<BaseResponseModel> logoutReqData();
-  Future<List<DepotModel>> getAllDepot(int depotId);
+  Future<List<DepotModel>> getAllDepot({int? depotId});
+  Future<List<ProductModel>> getAllProduct();
 }
 
 
@@ -44,8 +46,10 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
   }
 
   @override
-  Future<List<DepotModel>> getAllDepot(int depotId) {
-    var dioCall = dioClient.get(ApiEndPoint.DEPOT, queryParameters: {'depot_id': depotId});
+  Future<List<DepotModel>> getAllDepot({int? depotId}) {
+
+    var query =depotId == null? null : {'depot_id': depotId};
+    var dioCall = dioClient.get(ApiEndPoint.DEPOT, queryParameters: query);
 
     try {
       return callApiWithErrorParser(dioCall)
@@ -55,6 +59,17 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
     }
   }
 
+  @override
+  Future<List<ProductModel>> getAllProduct() {
+    var dioCall = dioClient.get(ApiEndPoint.PRODUCT);
+
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _productResData(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   /// Response Data
   BaseResponseModel _baseResponseData(Response<dynamic> response){
@@ -67,6 +82,10 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
 
   List<DepotModel> _depotResData(Response<dynamic> response){
    return depotModelFromJson(response.data);
+  }
+
+  List<ProductModel> _productResData(Response<dynamic> response){
+   return productModelFromJson(response.data);
   }
 
 }

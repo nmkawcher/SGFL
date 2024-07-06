@@ -1,20 +1,26 @@
 import 'package:get/get.dart';
+import '../../data/repository/repository.dart';
 import '/app/core/base/base_controller.dart';
 import '../../data/model/product_model.dart';
 
 class ProductController extends BaseController {
 
   RxList<ProductModel> selectedProduct = <ProductModel>[].obs;
+  final RxList<ProductModel> _rxProductList = RxList.empty();
+  List<ProductModel> get productList => _rxProductList.toList();
+
+  final Repository _repository = Get.find(tag: (Repository).toString());
+
+  void fetchDepotData() {
+    var service = _repository.getAllProduct();
+    callDataService(service, onSuccess: _handleResponseSuccess);
+  }
+
+  void _handleResponseSuccess(List<ProductModel> result) async {
+    _rxProductList.addAll(result);
+  }
 
 
 
-
-  RxList<ProductModel> productList =[
-    ProductModel(productID: 1, productName: "Petrol", productUnit: "Unit Price", productPrice: 100.0, productQuantity: 0, isSelected: false.obs),
-    ProductModel(productID: 2, productName: "Diesel", productUnit: "Unit Price", productPrice: 90.0, productQuantity: 0, isSelected: false.obs),
-    ProductModel(productID: 3, productName: "Kerosene", productUnit: "Unit Price", productPrice: 80.0, productQuantity: 0, isSelected: false.obs),
-    ProductModel(productID: 4, productName: "Gas", productUnit: "Unit Price", productPrice: 70.0, productQuantity: 0, isSelected: false.obs),
-    ProductModel(productID: 5, productName: "Jet Oil", productUnit: "Unit Price", productPrice: 70.0, productQuantity: 0, isSelected: false.obs),
-  ].obs;
 
 }
