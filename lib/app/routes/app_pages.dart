@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:sgfl_sales/app/modules/change_password/change_password_binding.dart';
+import 'package:sgfl_sales/app/modules/change_password/change_password_view.dart';
 import 'package:sgfl_sales/app/modules/order/order_binding.dart';
 import 'package:sgfl_sales/app/modules/order/order_view.dart';
 import 'package:sgfl_sales/app/modules/product/product_binding.dart';
@@ -87,6 +89,17 @@ class AppPages {
       page: () => ProfileView(),
       binding: ProfileBinding(),
     ),
+    GetPage(
+      name: _Paths.PROFILE,
+      page: () => ProfileView(),
+      binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHANGE_PASSWORD,
+      page: () => ChangePasswordView(),
+      binding: ChangePasswordBinding(),
+    )
+
 
   ];
 }

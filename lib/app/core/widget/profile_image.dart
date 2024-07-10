@@ -78,3 +78,61 @@ class CircleImage extends GetView {
     }
   }
 }
+
+
+class ProfileRecImage extends GetView {
+  const ProfileRecImage({
+    super.key,
+    required this.imageUrl,
+    required this.height,
+    required this.width,
+    this.localImage = "",
+  });
+
+  final String? imageUrl;
+  final double height;
+  final double width;
+  final String localImage;
+  final double borderRadius = 8;
+
+  @override
+  Widget build(BuildContext context) {
+    BoxDecoration decoration = BoxDecoration(
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(borderRadius),
+        border: Border.all(color: AppColors.grayLight2, width: 1),
+        image: const DecorationImage(image: AssetImage(AppImages.noImg), fit:BoxFit.cover)
+    );
+
+    if(imageUrl == null || imageUrl!.isEmpty) {
+      return Container(
+          height: height, width: width,
+          decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(borderRadius),
+              border: Border.all(color: AppColors.grayLight2, width: 1),
+              image: localImage == ""
+                  ? const DecorationImage(image: AssetImage(AppImages.noImg), fit:BoxFit.cover)
+                  : DecorationImage(image: FileImage(File(localImage)), fit:BoxFit.cover)
+          )
+      );
+    } else{
+      return SizedBox(
+        height: height, width: width,
+        child: CachedNetworkImage(
+          imageUrl: imageUrl!,
+          imageBuilder: (context, imageProvider) => Container(
+            decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(borderRadius),
+                border: Border.all(color: AppColors.grayLight2, width: 1),
+                image: DecorationImage(image: imageProvider, fit:BoxFit.cover)
+            ),
+          ),
+          placeholder: (context, url) => Container(decoration:decoration,child: const SpinKitDoubleBounce(color: AppColors.accentPrimary, size: 40)),
+          errorWidget: (context, url, error) => Container( height: height, width: width, decoration: decoration),
+        ),
+      );
+    }
+  }
+}

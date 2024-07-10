@@ -11,10 +11,9 @@ class LoginController extends BaseController {
   var isHide = true.obs;
   var isRemember = true.obs;
   final validationKey = GlobalKey<FormState>();
-
+  var loginRequest = LoginModel().obs;
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  var loginRequest = LoginRequest().obs;
   final Repository _repository = Get.find(tag: (Repository).toString());
 
 
@@ -49,16 +48,22 @@ class LoginController extends BaseController {
     }
   }
 
-  void fetchLoginData(LoginRequest loginRequest) {
+  void fetchLoginData(LoginModel loginRequest) {
     var loginService = _repository.loginResponse(loginRequest);
     callDataService(loginService, onSuccess: _handleResponseSuccess);
   }
 
-  void _handleResponseSuccess(LoginResponse result) async {
+  void _handleResponseSuccess(LoginModel result) async {
     preference.setString(PreferenceManager.keyAccessToken, result.token ??'');
     preference.setBool(PreferenceManager.keyRemember, isRemember.value);
     preference.setString(PreferenceManager.keyPhone, loginRequest.value.phoneNo ??'');
     preference.setString(PreferenceManager.keyPassword, loginRequest.value.password ??'');
+    preference.setString(PreferenceManager.keyUserType, result.data?.role ?? '');
+    if(result.data?.role == 'Customer'){
+      preference.setInt(PreferenceManager.keyOrganizationId, result.organisation?.id ?? 0);
+    }
+
+
     Get.offAllNamed(Routes.MAIN);
   }
 

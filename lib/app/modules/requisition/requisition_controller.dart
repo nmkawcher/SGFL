@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
+import 'package:sgfl_sales/app/data/local/preference/preference_manager.dart';
 import 'package:sgfl_sales/app/data/model/depot_model.dart';
-
 import '../../data/repository/repository.dart';
 import '/app/core/base/base_controller.dart';
 
@@ -12,8 +12,9 @@ class RequisitionController extends BaseController {
 
   final Repository _repository = Get.find(tag: (Repository).toString());
 
-  void fetchDepotData() {
-    var service = _repository.getAllDepot(depotId: 4);
+  void fetchDepotData() async{
+    var orgId = await preference.getInt(PreferenceManager.keyOrganizationId);
+    var service = _repository.getAllDepot(depotId: orgId);
     callDataService(service, onSuccess: _handleResponseSuccess);
   }
 

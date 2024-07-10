@@ -11,7 +11,7 @@ class ProductController extends BaseController {
 
   final Repository _repository = Get.find(tag: (Repository).toString());
 
-  void fetchDepotData() {
+  void fetchProductData() {
     var service = _repository.getAllProduct();
     callDataService(service, onSuccess: _handleResponseSuccess);
   }

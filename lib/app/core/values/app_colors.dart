@@ -74,6 +74,12 @@ abstract class AppColors {
     child: Icon(icon, color: color, size:iconSize),
   );
 
+  static circleImageBG(Color color, String icon, {double? radius, double? iconSize}) => CircleAvatar(
+    radius: radius ,
+    backgroundColor: color.withOpacity(0.20),
+    child: Image.asset(icon, color: color, height: iconSize,width: iconSize),
+  );
+
   static tableHeaderStyle() => const TextStyle(fontWeight: FontWeight.w600, fontSize:12,color: AppColors.blueGrey);
   static tableCallStyle() => const TextStyle(fontSize:12,color: AppColors.colorDark);
 

@@ -65,8 +65,9 @@ class RequisitionInformationView extends BaseView<RequisitionController> {
 
   Widget depotItem(int index, int subIndex){
     DepotZone depot = controller.depotList[index].depotZone![subIndex];
+
     return Obx((){
-      var isSelected = controller.selectedDepot.value == subIndex;
+      var isSelected = controller.selectedDepot.value == depot.id;
       return Card(
         clipBehavior: Clip.antiAlias,
         elevation: isSelected ? 3 : 0,
@@ -78,7 +79,7 @@ class RequisitionInformationView extends BaseView<RequisitionController> {
             )
         ),
         child: InkWell(
-          onTap: (){ controller.selectedDepot.value = subIndex;},
+          onTap: (){ controller.selectedDepot.value = depot.id ?? 0;},
           child: Container(
             padding: const EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 10),
             child: Row(

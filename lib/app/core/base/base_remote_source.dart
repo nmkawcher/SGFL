@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 
+import '../utils/dialog_helper.dart';
 import '/app/network/dio_provider.dart';
 import '/app/network/error_handlers.dart';
 import '/app/network/exceptions/base_exception.dart';
@@ -18,8 +19,14 @@ abstract class BaseRemoteSource {
       return response;
     } on DioException catch (dioError) {
       Exception exception = handleDioError(dioError);
-      logger.e(
-          "Throwing error from repository: >>>>>>> $exception : ${(exception as BaseException).message}");
+
+      String? status = dioError.response?.data["status"];
+      int? statusCode = dioError.response?.data["statusCode"];
+      String? errorMessage = dioError.response?.data["message"];
+      DialogHelper.showErrorDialog("Something went wrong", errorMessage!);
+
+
+      logger.e("Throwing error from repository: >>>>>>> $exception : ${(exception as BaseException).message}");
       throw exception;
     } catch (error) {
       logger.e("Generic error: >>>>>>> $error");

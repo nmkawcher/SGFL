@@ -25,16 +25,16 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
         padding: const EdgeInsets.only(left: 8,right: 8, bottom: 70),
         child: Column(
           children: [
-            Container(
-              height: 36,
-              margin: const EdgeInsets.only(top: 16, bottom: 8),
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: controller.productList.length,
-                itemBuilder: (context, index)=>addProductItemUI(index)
-              ),
-            ),
+            // Container(
+            //   height: 36,
+            //   margin: const EdgeInsets.only(top: 16, bottom: 8),
+            //   child: ListView.builder(
+            //     shrinkWrap: true,
+            //     scrollDirection: Axis.horizontal,
+            //     itemCount: controller.productList.length,
+            //     itemBuilder: (context, index)=>addProductItemUI(index)
+            //   ),
+            // ),
             const SizedBox(height: 32),
             const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -45,7 +45,7 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
               ],
             ),
             const SizedBox(height: 16),
-            requisitionSummaryTable(),
+           // requisitionSummaryTable(),
 
           ],
         ),
@@ -53,18 +53,18 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
     });
   }
 
-  Widget addProductItemUI(int index){
-    return GestureDetector(
-      onTap: (){controller.productList.add(controller.productList[index]);},
-      child: Container(
-        alignment: Alignment.center,
-        margin: const EdgeInsets.only(right: 4, left: 8),
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-        decoration: AppColors.defaultDecoration(radius: 16, color: Colors.transparent, bgColor: AppColors.primary.withOpacity(0.2)),
-        child: Text(ProductModel.productList[index].productName!, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.blueGrey)),
-      ),
-    );
-  }
+  // Widget addProductItemUI(int index){
+  //   return GestureDetector(
+  //     onTap: (){controller.productList.add(controller.productList[index]);},
+  //     child: Container(
+  //       alignment: Alignment.center,
+  //       margin: const EdgeInsets.only(right: 4, left: 8),
+  //       padding: const EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
+  //       decoration: AppColors.defaultDecoration(radius: 16, color: Colors.transparent, bgColor: AppColors.primary.withOpacity(0.2)),
+  //       child: Text(ProductModel.productList[index].productName!, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.blueGrey)),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget? bottomNavigationBar() {
@@ -134,69 +134,69 @@ class RequisitionQuantityView extends BaseView<RequisitionController> {
     );
   }
 
-  Widget requisitionSummaryTable(){
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.grayLight1),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      width: Get.width,
-      child: DataTable(
-        columnSpacing: 30,
-        dividerThickness: 0.00000000001,
-        headingRowHeight: 35,
-        dataRowMinHeight: 35.0,
-        dataRowMaxHeight: 40.0,
-        headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
-        columns: [
-          DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
-          DataColumn(label: Flexible(child: Center(child: Text('Unit Price', style: AppColors.tableHeaderStyle())))),
-          DataColumn(label: Flexible(child: Center(child: Text('Quantity', style: AppColors.tableHeaderStyle())))),
-        ],
-        rows:ProductModel.productList.map((index) {
-          return DataRow(
-            cells: <DataCell>[
-              DataCell(Text(index.productName!, style: const TextStyle(fontSize: 13,color: AppColors.blueGrey, fontWeight: FontWeight.w600))
-              ),
-              DataCell(Center(child: Text('${index.productPrice}',style: AppColors.tableCallStyle()))),
-              DataCell(
-                Center(
-                  child: InputQty(
-                    qtyFormProps: const QtyFormProps(
-                        style: TextStyle(fontSize: 18, color: AppColors.colorDark),
-                        cursorColor: AppColors.blueGrey,
-                        cursorWidth: 1
-                    ),
-                    decoration: const QtyDecorationProps(
-                      border: OutlineInputBorder(borderSide:  BorderSide.none),
-                      borderShape: BorderShapeBtn.none,
-                      contentPadding: EdgeInsets.all(4),
-                      btnColor: AppColors.blueGrey,
-                      width: 8,
-                      plusBtn: Padding(
-                        padding: EdgeInsets.only(right: 2),
-                        child: Icon(Icons.add_circle, color: AppColors.blueGrey, size: 24),
-                      ),
-                      minusBtn: Padding(
-                        padding: EdgeInsets.only(left: 2),
-                        child: Icon(Icons.remove_circle_rounded, color: Colors.black54, size: 24),
-                      ),
-                    ),
-                    maxVal: 99999,
-                    initVal: 1,
-                    minVal: 1,
-                    steps: 0.5,
-                    onQtyChanged: (val) {},
-                  ),
-                ),
-              ),
-            ],
-          );
-        }).toList(),
-      ),
-    );
-  }
+  // Widget requisitionSummaryTable(){
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       border: Border.all(color: AppColors.grayLight1),
+  //       borderRadius: BorderRadius.circular(8),
+  //     ),
+  //     clipBehavior: Clip.antiAliasWithSaveLayer,
+  //     width: Get.width,
+  //     child: DataTable(
+  //       columnSpacing: 30,
+  //       dividerThickness: 0.00000000001,
+  //       headingRowHeight: 35,
+  //       dataRowMinHeight: 35.0,
+  //       dataRowMaxHeight: 40.0,
+  //       headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
+  //       columns: [
+  //         DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
+  //         DataColumn(label: Flexible(child: Center(child: Text('Unit Price', style: AppColors.tableHeaderStyle())))),
+  //         DataColumn(label: Flexible(child: Center(child: Text('Quantity', style: AppColors.tableHeaderStyle())))),
+  //       ],
+  //       rows:ProductModel.productList.map((index) {
+  //         return DataRow(
+  //           cells: <DataCell>[
+  //             DataCell(Text(index.productName!, style: const TextStyle(fontSize: 13,color: AppColors.blueGrey, fontWeight: FontWeight.w600))
+  //             ),
+  //             DataCell(Center(child: Text('${index.productPrice}',style: AppColors.tableCallStyle()))),
+  //             DataCell(
+  //               Center(
+  //                 child: InputQty(
+  //                   qtyFormProps: const QtyFormProps(
+  //                       style: TextStyle(fontSize: 18, color: AppColors.colorDark),
+  //                       cursorColor: AppColors.blueGrey,
+  //                       cursorWidth: 1
+  //                   ),
+  //                   decoration: const QtyDecorationProps(
+  //                     border: OutlineInputBorder(borderSide:  BorderSide.none),
+  //                     borderShape: BorderShapeBtn.none,
+  //                     contentPadding: EdgeInsets.all(4),
+  //                     btnColor: AppColors.blueGrey,
+  //                     width: 8,
+  //                     plusBtn: Padding(
+  //                       padding: EdgeInsets.only(right: 2),
+  //                       child: Icon(Icons.add_circle, color: AppColors.blueGrey, size: 24),
+  //                     ),
+  //                     minusBtn: Padding(
+  //                       padding: EdgeInsets.only(left: 2),
+  //                       child: Icon(Icons.remove_circle_rounded, color: Colors.black54, size: 24),
+  //                     ),
+  //                   ),
+  //                   maxVal: 99999,
+  //                   initVal: 1,
+  //                   minVal: 1,
+  //                   steps: 0.5,
+  //                   onQtyChanged: (val) {},
+  //                 ),
+  //               ),
+  //             ),
+  //           ],
+  //         );
+  //       }).toList(),
+  //     ),
+  //   );
+  // }
 
 
 }

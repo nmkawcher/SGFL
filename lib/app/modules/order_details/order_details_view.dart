@@ -98,7 +98,7 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
             ],
           ),
           const SizedBox(height: 8),
-          orderSummaryTable(),
+          //orderSummaryTable(),
 
         ],
       ),
@@ -112,42 +112,42 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
       child: SizedBox(height: 80, child: StepWidget(step: 1)),
     );
   }
-
-  Widget orderSummaryTable(){
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(color: AppColors.grayLight1),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      width: Get.width,
-      child: DataTable(
-        columnSpacing: 30,
-        dividerThickness: 0.00000000001,
-        headingRowHeight: 30,
-        dataRowMinHeight: 30.0,
-        dataRowMaxHeight: 35.0,
-        headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
-        columns: [
-          DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
-          DataColumn(label: Flexible(child: Center(child: Text('Unit Price', style: AppColors.tableHeaderStyle())))),
-          DataColumn(label: Flexible(child: Center(child: Text('Quantity', style: AppColors.tableHeaderStyle())))),
-        ],
-        rows:ProductModel.productList.map((index) {
-          return DataRow(
-            cells: <DataCell>[
-              DataCell(Text(index.productName!,
-                  style: const TextStyle(fontSize: 12,color: AppColors.blueGrey, fontWeight: FontWeight.w600))
-              ),
-              DataCell(Center(child: Text('${index.productPrice}',style: AppColors.tableCallStyle()))),
-              DataCell(Center(child: Text(index.productQuantity.toString(),style: AppColors.tableCallStyle()))
-              ),
-            ],
-          );
-        }).toList(),
-      ),
-    );
-  }
+  //
+  // Widget orderSummaryTable(){
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       border: Border.all(color: AppColors.grayLight1),
+  //       borderRadius: BorderRadius.circular(8),
+  //     ),
+  //     clipBehavior: Clip.antiAliasWithSaveLayer,
+  //     width: Get.width,
+  //     child: DataTable(
+  //       columnSpacing: 30,
+  //       dividerThickness: 0.00000000001,
+  //       headingRowHeight: 30,
+  //       dataRowMinHeight: 30.0,
+  //       dataRowMaxHeight: 35.0,
+  //       headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
+  //       columns: [
+  //         DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
+  //         DataColumn(label: Flexible(child: Center(child: Text('Unit Price', style: AppColors.tableHeaderStyle())))),
+  //         DataColumn(label: Flexible(child: Center(child: Text('Quantity', style: AppColors.tableHeaderStyle())))),
+  //       ],
+  //       rows:ProductModel.productList.map((index) {
+  //         return DataRow(
+  //           cells: <DataCell>[
+  //             DataCell(Text(index.productName!,
+  //                 style: const TextStyle(fontSize: 12,color: AppColors.blueGrey, fontWeight: FontWeight.w600))
+  //             ),
+  //             DataCell(Center(child: Text('${index.productPrice}',style: AppColors.tableCallStyle()))),
+  //             DataCell(Center(child: Text(index.productQuantity.toString(),style: AppColors.tableCallStyle()))
+  //             ),
+  //           ],
+  //         );
+  //       }).toList(),
+  //     ),
+  //   );
+  // }
 
   Widget textWrap(String title, String text){
     return Row(

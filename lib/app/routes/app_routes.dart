@@ -16,6 +16,7 @@ abstract class Routes {
   static const NOTIFICATION = _Paths.NOTIFICATION;
   static const ORDERDetails = _Paths.ORDERDetails;
   static const PROFILE = _Paths.PROFILE;
+  static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
 }
 
 abstract class _Paths {
@@ -31,6 +32,7 @@ abstract class _Paths {
   static const REQUISITION_Summary = '/requisition_summary';
   static const NOTIFICATION = '/notification';
   static const PROFILE = '/profile';
+  static const CHANGE_PASSWORD = '/change_password';
 
 
 }

@@ -1,38 +1,29 @@
 
-class LoginRequest {
-  String? phoneNo;
-  String? password;
-
-
-  LoginRequest(
-      {
-        this.phoneNo,
-        this.password
-      }
-  );
-
-  Map<String, dynamic> toJson() => {
-        "phone_no": phoneNo,
-        "password": password
-      };
-}
-
-class LoginResponse {
+class LoginModel {
   User? data;
   String? token;
   Organisation? organisation;
+  String? phoneNo;
+  String? password;
 
-  LoginResponse({
+  LoginModel({
     this.data,
     this.token,
     this.organisation,
+    this.phoneNo,
+    this.password
   });
 
-  factory LoginResponse.fromJson(Map<String, dynamic> json) => LoginResponse(
+  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
     data: json["data"] == null ? null : User.fromJson(json["data"]),
     token: json["token"],
     organisation: json["organisation"] == null ? null : Organisation.fromJson(json["organisation"]),
   );
+
+  Map<String, dynamic> toJson() => {
+    "phone_no": phoneNo,
+    "password": password
+  };
 
 }
 
@@ -44,6 +35,8 @@ class User {
   String? bnDesignation;
   String? email;
   String? phoneNo;
+  String? role;
+  dynamic dipoId;
   String? avatar;
   dynamic lastLogin;
 
@@ -55,6 +48,8 @@ class User {
     this.bnDesignation,
     this.email,
     this.phoneNo,
+    this.role,
+    this.dipoId,
     this.avatar,
     this.lastLogin,
   });
@@ -67,6 +62,8 @@ class User {
     bnDesignation: json["bn_designation"],
     email: json["email"],
     phoneNo: json["phone_no"],
+    role: json["role"],
+    dipoId: json["dipo_id"],
     avatar: json["avatar"],
     lastLogin: json["last_login"],
   );
@@ -78,7 +75,7 @@ class Organisation {
   String? bnName;
   String? shortName;
   String? type;
-  String? category;
+  dynamic category;
   String? address;
   String? bnAddress;
   String? logo;
@@ -108,4 +105,3 @@ class Organisation {
   );
 
 }
-

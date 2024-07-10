@@ -10,7 +10,7 @@ import 'product_controller.dart';
 
 class ProductView extends BaseView<ProductController> {
   ProductView(){
-    controller.fetchDepotData();
+    controller.fetchProductData();
   }
 
   @override

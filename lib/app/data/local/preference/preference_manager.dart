@@ -2,12 +2,14 @@ abstract class PreferenceManager {
   static const keyToken = "token";
   static const keyAccessToken = "access";
   static const keyRefreshToken = "refresh";
-  static const keyUser = "user";
+  static const keyUserType = "userType";
   static const keyPhone = "phone";
   static const keyPassword = "password";
   static const keyRemember = "remember";
   static const keyNotification = "notification";
   static const keyLanguage = "language";
+  static const keyOrganizationId = "organization_id";
+
 
   Future<String> getString(String key, {String defaultValue = ""});
 
