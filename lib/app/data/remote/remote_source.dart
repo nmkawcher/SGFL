@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:sgfl_sales/app/data/model/product_model.dart';
 import 'package:sgfl_sales/app/data/model/profile_model.dart';
+import 'package:sgfl_sales/app/data/model/requisition_model.dart';
 
 import '../../core/base/base_remote_source.dart';
 import '../../core/values/app_const.dart';
 import '../model/baseResponse_model.dart';
 import '../model/depot_model.dart';
 import '../model/login_model.dart';
+import '../model/order_model.dart';
 import '../model/reset_pass_model.dart';
 
 
@@ -18,6 +20,8 @@ abstract class RemoteDataSource {
   Future<ProfileModel> getProfileData();
   Future<ProfileModel> updateProfileData(ProfileModel profile);
   Future<BaseResponseModel> updatePassword(PasswordReqModel passwordReqModel);
+  Future<BaseResponseModel> requisitionReqData(RequisitionReqModel reqModel);
+  Future<OrderModel> getOrderData({dynamic query});
 }
 
 
@@ -115,6 +119,32 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
     }
   }
 
+  @override
+  Future<BaseResponseModel> requisitionReqData(RequisitionReqModel reqModel) {
+    var data = FormData.fromMap(reqModel.toJson());
+    var dioCall = dioClient.post(ApiEndPoint.REQUISITION,data: data);
+
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _baseResponseData(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<OrderModel> getOrderData({dynamic query}){
+      var dioCall = dioClient.get(ApiEndPoint.ORDER, queryParameters: query);
+
+      try {
+        return callApiWithErrorParser(dioCall)
+            .then((response) => _orderResData(response));
+      } catch (e) {
+        rethrow;
+      }
+  }
+
+
   /// Response Data
   BaseResponseModel _baseResponseData(Response<dynamic> response){
     return BaseResponseModel.fromJson(response.data);
@@ -139,6 +169,10 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
   ProfileModel _profileUpdateResData(Response<dynamic> response){
     var result = BaseResponseModel.fromJson(response.data);
    return ProfileModel.fromJson(result.data);
+  }
+
+  OrderModel _orderResData(Response<dynamic> response){
+    return OrderModel.fromJson(response.data);
   }
 
 }

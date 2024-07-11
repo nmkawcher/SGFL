@@ -38,13 +38,18 @@ class ProductView extends BaseView<ProductController> {
 
   @override
   Widget? bottomNavigationBar() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: DefaultAppBtn(
-          title: appLocalization.next,
-          onClick: (){Get.toNamed(Routes.REQUISITION_Information);}
-      ),
-    );
+    return Obx((){
+      return Padding(
+        padding: const EdgeInsets.all(16),
+        child: controller.selectedProduct.isEmpty ? null : DefaultAppBtn(
+            title: appLocalization.next,
+            onClick: (){
+              Get.toNamed(Routes.DEPOT,
+              arguments: controller.selectedProduct);
+            }
+        ),
+      );
+    });
   }
 
   Widget productItemUi(ProductModel product) {
@@ -60,7 +65,14 @@ class ProductView extends BaseView<ProductController> {
             )
         ),
         child: InkWell(
-          onTap: (){product.isSelected.value = !product.isSelected.value;},
+          onTap: (){
+            product.isSelected.value = !product.isSelected.value;
+            if(product.isSelected.isTrue) {
+              controller.selectedProduct.add(product);
+            } else {
+              controller.selectedProduct.remove(product);
+            }
+          },
           child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(

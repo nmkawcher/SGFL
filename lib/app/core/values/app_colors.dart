@@ -41,10 +41,9 @@ abstract class AppColors {
 
   static Color statusColor(String value) => statusColorMap[value] ?? primary;
   static const Map<String, Color> statusColorMap = {
-    'pending': orange,
-    'approved': primary,
+    'confirmed': primary,
     'processing': orange,
-    'shipping': gray
+    'shipped': gray
   };
 
   static defaultDecoration({
@@ -54,7 +53,7 @@ abstract class AppColors {
     bool isSelected = false
   }) =>  BoxDecoration(
       borderRadius: BorderRadius.circular(radius),
-      border: Border.all(color: isSelected ? AppColors.orange: color,),
+      border: Border.all(color: isSelected ? AppColors.orange: color),
       color: bgColor
   );
   static fillDecoration({
@@ -81,6 +80,6 @@ abstract class AppColors {
   );
 
   static tableHeaderStyle() => const TextStyle(fontWeight: FontWeight.w600, fontSize:12,color: AppColors.blueGrey);
-  static tableCallStyle() => const TextStyle(fontSize:12,color: AppColors.colorDark);
+  static tableCallStyle() => const TextStyle(fontSize:14,color: AppColors.colorDark);
 
 }

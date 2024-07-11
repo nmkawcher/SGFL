@@ -18,6 +18,7 @@ class DefaultInputFiled extends GetView {
         this.validator,
         this.prefixText,
         this.maxLength,
+        this.fontSize = 16
 
       }) : super(key: key);
 
@@ -32,13 +33,14 @@ class DefaultInputFiled extends GetView {
   final FormFieldValidator? validator;
   final String?prefixText;
   final int?maxLength;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: marginBottom),
       child: TextFormField(
-          style: const TextStyle(color: Colors.black, fontSize: 16),
+          style: TextStyle(color: Colors.black, fontSize: fontSize),
           controller: txtController,
           keyboardType: keyboardType,
           onChanged: onChanged,

@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:sgfl_sales/app/modules/change_password/change_password_binding.dart';
 import 'package:sgfl_sales/app/modules/change_password/change_password_view.dart';
+import 'package:sgfl_sales/app/modules/depot/depot_binding.dart';
+import 'package:sgfl_sales/app/modules/depot/depot_view.dart';
 import 'package:sgfl_sales/app/modules/order/order_binding.dart';
 import 'package:sgfl_sales/app/modules/order/order_view.dart';
 import 'package:sgfl_sales/app/modules/product/product_binding.dart';
@@ -8,7 +10,6 @@ import 'package:sgfl_sales/app/modules/product/product_view.dart';
 import 'package:sgfl_sales/app/modules/profile/profile_binding.dart';
 import 'package:sgfl_sales/app/modules/profile/profile_view.dart';
 import 'package:sgfl_sales/app/modules/requisition/requisition_binding.dart';
-import 'package:sgfl_sales/app/modules/requisition/requisition_information_view.dart';
 import '../modules/home/home_binding.dart';
 import '../modules/home/customer_home/customer_home_view.dart';
 import '../modules/login/login_binding.dart';
@@ -19,7 +20,7 @@ import '../modules/notification/notification_binding.dart';
 import '../modules/notification/notification_view.dart';
 import '../modules/order_details/order_details_binding.dart';
 import '../modules/order_details/order_details_view.dart';
-import '../modules/requisition/requisition_quantity_view.dart';
+import '../modules/requisition/requisition_view.dart';
 import '../modules/splash/splash_binding.dart';
 import '../modules/splash/splash_view.dart';
 
@@ -52,14 +53,14 @@ class AppPages {
       binding: LoginBinding(),
     ),
     GetPage(
-      name: _Paths.REQUISITION_Quantity,
-      page: () => RequisitionQuantityView(),
+      name: _Paths.REQUISITION,
+      page: () => RequisitionView(),
       binding: RequisitionBinding(),
     ),
     GetPage(
-      name: _Paths.REQUISITION_Information,
-      page: () => RequisitionInformationView(),
-      binding: RequisitionBinding(),
+      name: _Paths.DEPOT,
+      page: () => DepotView(),
+      binding: DepotBinding(),
     ),
     GetPage(
       name: _Paths.PRODUCTS,

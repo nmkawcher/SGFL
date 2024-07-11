@@ -11,7 +11,7 @@ class Helper {
     int idx = data.indexOf(" ");
     List parts = [data.substring(0,idx).trim(), data.substring(idx+1).trim()];
 
-    return parts[0];
+    return '${parts[1]}\n${parts[0]}';
   }
 
   static String dateFormat(DateTime date) {

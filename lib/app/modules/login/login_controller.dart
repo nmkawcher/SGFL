@@ -59,10 +59,8 @@ class LoginController extends BaseController {
     preference.setString(PreferenceManager.keyPhone, loginRequest.value.phoneNo ??'');
     preference.setString(PreferenceManager.keyPassword, loginRequest.value.password ??'');
     preference.setString(PreferenceManager.keyUserType, result.data?.role ?? '');
-    if(result.data?.role == 'Customer'){
-      preference.setInt(PreferenceManager.keyOrganizationId, result.organisation?.id ?? 0);
-    }
-
+    preference.setInt(PreferenceManager.keyUserID, result.data?.id ?? 0);
+    preference.setInt(PreferenceManager.keyOrganizationId, result.organisation?.id ?? 0);
 
     Get.offAllNamed(Routes.MAIN);
   }

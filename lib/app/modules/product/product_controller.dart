@@ -20,7 +20,4 @@ class ProductController extends BaseController {
     _rxProductList.addAll(result);
   }
 
-
-
-
 }

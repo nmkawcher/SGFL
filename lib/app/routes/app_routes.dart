@@ -10,8 +10,8 @@ abstract class Routes {
   static const SPLASH_SCREEN = _Paths.SPLASH_SCREEN;
   static const HOME_Customer = _Paths.HOME_Customer;
   static const PRODUCTS = _Paths.PRODUCTS;
-  static const REQUISITION_Quantity = _Paths.REQUISITION_Quantity;
-  static const REQUISITION_Information = _Paths.REQUISITION_Information;
+  static const REQUISITION = _Paths.REQUISITION;
+  static const DEPOT = _Paths.DEPOT;
   static const REQUISITION_Summary = _Paths.REQUISITION_Summary;
   static const NOTIFICATION = _Paths.NOTIFICATION;
   static const ORDERDetails = _Paths.ORDERDetails;
@@ -27,8 +27,8 @@ abstract class _Paths {
   static const PRODUCTS = '/products';
   static const ORDER = '/order';
   static const ORDERDetails = '/order_details';
-  static const REQUISITION_Quantity = '/requisition_quantity';
-  static const REQUISITION_Information = '/requisition_information';
+  static const REQUISITION = '/requisition';
+  static const DEPOT = '/depot';
   static const REQUISITION_Summary = '/requisition_summary';
   static const NOTIFICATION = '/notification';
   static const PROFILE = '/profile';

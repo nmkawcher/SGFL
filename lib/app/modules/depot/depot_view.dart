@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '/app/core/base/base_view.dart';
 import '../../core/values/app_colors.dart';
 import '../../core/widget/custom_app_bar.dart';
 import '../../core/widget/custom_btn.dart';
 import '../../data/model/depot_model.dart';
 import '../../routes/app_pages.dart';
-import 'requisition_controller.dart';
+import '/app/core/base/base_view.dart';
+import 'depot_controller.dart';
 
-class RequisitionInformationView extends BaseView<RequisitionController> {
-
-  RequisitionInformationView(){
+class DepotView extends BaseView<DepotController> {
+  DepotView(){
     controller.fetchDepotData();
   }
 
@@ -53,13 +52,22 @@ class RequisitionInformationView extends BaseView<RequisitionController> {
 
   @override
   Widget? bottomNavigationBar() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: DefaultAppBtn(
-          title: appLocalization.next,
-          onClick: () {Get.toNamed(Routes.REQUISITION_Quantity);}
-      ),
-    );
+    return Obx((){
+      return Padding(
+        padding: const EdgeInsets.all(16),
+        child: controller.selectedDepot.value == 0 ? null : DefaultAppBtn(
+            title: appLocalization.next,
+            onClick: (){
+                Get.toNamed(Routes.REQUISITION,
+                   arguments: [
+                      controller.selectedDepotZone,
+                      Get.arguments
+                   ]
+              );
+            }
+        ),
+      );
+    });
   }
 
 
@@ -79,7 +87,10 @@ class RequisitionInformationView extends BaseView<RequisitionController> {
             )
         ),
         child: InkWell(
-          onTap: (){ controller.selectedDepot.value = depot.id ?? 0;},
+          onTap: (){
+            controller.selectedDepot.value = depot.id ?? 0;
+            controller.selectedDepotZone.value = depot;
+          },
           child: Container(
             padding: const EdgeInsets.only(left: 8, right: 8, top: 10, bottom: 10),
             child: Row(

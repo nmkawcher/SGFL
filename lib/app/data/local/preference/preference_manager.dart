@@ -3,6 +3,7 @@ abstract class PreferenceManager {
   static const keyAccessToken = "access";
   static const keyRefreshToken = "refresh";
   static const keyUserType = "userType";
+  static const keyUserID = "userId";
   static const keyPhone = "phone";
   static const keyPassword = "password";
   static const keyRemember = "remember";
