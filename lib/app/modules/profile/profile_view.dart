@@ -25,7 +25,7 @@ class ProfileView extends BaseView<ProfileController> {
           style: const TextStyle(color: Colors.black)),
       elevation: 0,
       centerTitle: true,
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFFAF9F9),
       iconTheme: const IconThemeData(color: Colors.black),
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -37,92 +37,91 @@ class ProfileView extends BaseView<ProfileController> {
   @override
   Widget body(BuildContext context) {
     double defaultSize = Get.width * 0.024;
-
+    var decoration = const BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+    );
     return Obx(() => RefreshIndicator(
           onRefresh: () async {},
           child: SingleChildScrollView(
-            child: Padding(
+            child: Container(
+              height: Get.height,
+              color: const Color(0xFFFAF9F9),
               padding: const EdgeInsets.all(16),
               child: Form(
                 key: controller.profileGlobalKey,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: controller.isProfileEdit.value ? MainAxisAlignment.center : MainAxisAlignment.start,
+                    Stack(
+                      clipBehavior: Clip.none,
                       children: [
-                        Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            ProfileRecImage(height: 100, width: 80,
-                                imageUrl: controller.profile.avatar ?? "",
-                                localImage: controller.selectedImagePath.value),
-                            Visibility(
-                              visible: controller.isProfileEdit.value,
-                              child: Positioned(bottom: -10, right: -16,
-                                child: GestureDetector(
-                                  onTap: () {DialogHelper.onDefaultButtonSheet(bottomSheetBar(), dialogHeight: Get.height * 0.35);},
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(width: defaultSize * 0.5, color: Colors.white,),
-                                        borderRadius: const BorderRadius.all(Radius.circular(50),),
-                                        color: AppColors.orange),
-                                    child: const Padding(padding: EdgeInsets.all(2.0),
-                                      child: Icon(Icons.edit, color: Colors.white),
-                                    ),
-                                  ),
+                        ProfileCircleImage(profileSize: 90,
+                            imageUrl: controller.profile.avatar ?? "",
+                            localImage: controller.selectedImagePath.value),
+                        Visibility(
+                          visible: controller.isProfileEdit.value,
+                          child: Positioned(bottom: -8, right: -8,
+                            child: GestureDetector(
+                              onTap: () {DialogHelper.onDefaultButtonSheet(bottomSheetBar(), dialogHeight: Get.height * 0.35);},
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(width: defaultSize * 0.5, color: Colors.white,),
+                                    borderRadius: const BorderRadius.all(Radius.circular(50),),
+                                    color: AppColors.orange),
+                                child: const Padding(padding: EdgeInsets.all(2.0),
+                                  child: Icon(Icons.edit, color: Colors.white),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                        const SizedBox(width: 16),
-                        Visibility(
-                          visible: controller.isProfileEdit.isFalse,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(controller.profile.name ?? "", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
-                              const SizedBox(height: 4),
-                              Text(controller.profile.designation ?? "", style: const TextStyle(fontSize: 14,color: AppColors.blueGrey, fontWeight: FontWeight.w500)),
-                              const SizedBox(height: 8),
-                              Text(controller.profile.phoneNo ?? "", style: const TextStyle(fontSize: 12, color: AppColors.blueGrey)),
-                              Text(controller.profile.email ?? "", style: const TextStyle(fontSize: 12, color: AppColors.blueGrey)),
-                            ],
                           ),
-                        )
+                        ),
                       ],
+                    ),
+                    const SizedBox(height: 24),
+                    Visibility(
+                      visible: controller.isProfileEdit.isFalse,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(controller.profile.name ?? "", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                          const SizedBox(height: 4),
+                          Text(controller.profile.email ?? "", style: const TextStyle(fontSize: 14, color: AppColors.gray)),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 40),
                     Visibility(
                       visible: controller.isProfileEdit.isFalse,
-                      child: Container(
-                        decoration: AppColors.defaultDecoration(),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: Column(
-                          children: [
-                            ListTile(
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: decoration,
+                            child: ListTile(
                               title: const Text('Edit Profile', style: TextStyle(color: AppColors.gray, fontSize: 16, fontWeight: FontWeight.w500)),
                               leading: const Icon(Icons.person, color: AppColors.primary, size: 24),
-                              trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 16,),
                               onTap: () async {controller.isProfileEdit(true);},
                             ),
-                            const Divider(thickness: 1,height: 0),
-                            ListTile(
+                          ),
+                          const SizedBox(height: 16),
+                          Container(
+                            decoration: decoration,
+                            child: ListTile(
                               title: const Text('Change Password', style: TextStyle(color: AppColors.gray, fontSize: 16, fontWeight: FontWeight.w500)),
                               leading: const Icon(Icons.password_rounded, color: AppColors.primary, size: 24),
-                              trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 16,),
                               onTap: () async {Get.toNamed(Routes.CHANGE_PASSWORD);},
                             ),
-                            const Divider(thickness: 1,height: 0),
-                            ListTile(
+                          ),
+                          const SizedBox(height: 16),
+                          Container(
+                            decoration: decoration,
+                            child: ListTile(
                               title: const Text('Logout', style: TextStyle(color: AppColors.gray, fontSize: 16, fontWeight: FontWeight.w500)),
                               leading: Image.asset(AppImages.logout, width: 24, height: 24),
-                              trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 16,),
                               onTap: () async {controller.logoutRequest();},
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                     Visibility(
@@ -146,7 +145,12 @@ class ProfileView extends BaseView<ProfileController> {
                           const SizedBox(height: 32),
                           DefaultAppBtn(title: appLocalization.submit, onClick: (){
                             controller.updateProfileData();
-                          })
+                          }),
+                          const SizedBox(height: 8),
+                          DefaultAppBtn(
+                              title: appLocalization.noTakeMwBack,
+                              backgroundColor: AppColors.grayLight2,
+                              onClick: (){controller.isProfileEdit.value = false;})
                         ],
                       ),
                     )
