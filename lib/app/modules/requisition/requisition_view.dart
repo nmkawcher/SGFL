@@ -143,7 +143,6 @@ class RequisitionView extends BaseView<RequisitionController> {
           headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
           columns: [
             DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
-            DataColumn(label: Flexible(child: Center(child: Text('Unit Price', style: AppColors.tableHeaderStyle())))),
             DataColumn(label: Flexible(child: Center(child: Text('Qty(9000)', style: AppColors.tableHeaderStyle())))),
             DataColumn(label: Flexible(child: Center(child: Text('Qty(13500)', style: AppColors.tableHeaderStyle())))),
           ],
@@ -161,7 +160,6 @@ class RequisitionView extends BaseView<RequisitionController> {
     return DataRow(
       cells: <DataCell>[
         DataCell(Text(product.name!, style: const TextStyle(fontSize: 12, color: AppColors.blueGrey, fontWeight: FontWeight.w600))),
-        DataCell(Center(child: Text('${product.priceLiter}', style: AppColors.tableCallStyle()))),
         quantityCell(index, 9000),
         quantityCell(index, 13500),
       ],
@@ -174,8 +172,7 @@ class RequisitionView extends BaseView<RequisitionController> {
         child: InputQty(
           qtyFormProps: const QtyFormProps(
             style: TextStyle(fontSize: 14, color: AppColors.colorDark),
-            cursorColor: AppColors.blueGrey,
-            cursorWidth: 1,
+            enableTyping: false
           ),
           decoration: const QtyDecorationProps(
             border: OutlineInputBorder(borderSide: BorderSide.none),
@@ -194,10 +191,10 @@ class RequisitionView extends BaseView<RequisitionController> {
                   Icons.remove_circle_rounded, color: Colors.black54, size: 20),
             ),
           ),
-          maxVal: 99999,
+          maxVal: 99999999,
           initVal: 0,
           minVal: 0,
-          steps: 1,
+          steps: multiplier,
           onQtyChanged: (val) {
             if (multiplier == 9000) {
               controller.productReq.value.baseQuantity = (val * multiplier).toInt();

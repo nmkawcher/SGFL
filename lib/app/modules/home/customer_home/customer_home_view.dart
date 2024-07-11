@@ -1,13 +1,9 @@
-import 'package:dashed_circular_progress_bar/dashed_circular_progress_bar.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:sgfl_sales/app/core/values/app_images.dart';
-import 'package:sgfl_sales/app/core/widget/order_dataTable.dart';
-import 'package:sgfl_sales/app/core/widget/step_widget.dart';
-import 'package:sgfl_sales/app/data/model/order_history.dart';
 
+import 'package:dashed_circular_progress_bar/dashed_circular_progress_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../../../core/values/app_images.dart';
+import '../../../core/widget/profile_image.dart';
 import '../../../core/widget/status_card.dart';
 import '../../../routes/app_pages.dart';
 import '/app/core/base/base_view.dart';
@@ -17,6 +13,10 @@ import 'customer_home_controller.dart';
 
 class CustomerHomeView extends BaseView<CustomerHomeController> {
 
+  CustomerHomeView(){
+    controller.loadInitialData();
+    controller.fetchDashBoardData();
+  }
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) =>null;
@@ -25,24 +25,26 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
   @override
   Widget body(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          profileUI(),
-          totalStatusUI(),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text('RECENT ORDER', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)).marginOnly(left: 10, top: 24),
-              const Spacer(),
-              const Icon(Icons.arrow_forward_ios, size: 20, color: AppColors.colorDark).marginOnly(right: 10, top: 24),
-            ],
-          ),
-          StatusCard(),
-        ],
-      ),
+      child: Obx((){
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            profileUI(),
+            totalStatusUI(),
+            const SizedBox(height: 16),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('RECENT ${controller.orderStatus.value}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)).marginOnly(left: 10, top: 24),
+                const Spacer(),
+                const Icon(Icons.arrow_forward_ios, size: 20, color: AppColors.colorDark).marginOnly(right: 10, top: 24),
+              ],
+            ),
+            OrderUiModel(orderList: controller.orderList),
+          ],
+        );
+      })
     );
   }
 
@@ -51,10 +53,7 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
       margin: const EdgeInsets.only(left: 8,right: 8,top: 16),
       child: ListTile(
         onTap: (){Get.toNamed(Routes.PROFILE);},
-        leading: ClipRRect(
-            borderRadius: BorderRadius.circular(32),
-            child: Image.asset(AppImages.profile, height: 40)
-        ),
+        leading: ProfileCircleImage(profileSize: 40, imageUrl: controller.userPhoto.value),
         trailing: GestureDetector(
           onTap: (){Get.toNamed(Routes.NOTIFICATION);},
           child: Badge(
@@ -65,14 +64,17 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
           ),
         ),
         title: const Text('Welcome Back',style: TextStyle(fontSize: 12, color: AppColors.gray)),
-        subtitle: const Text('Mr. Williams',
-            style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: AppColors.textColor)
+        subtitle: Text(controller.userName.value,
+            style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: AppColors.textColor)
         ),
       ),
     );
   }
 
   Widget totalStatusUI(){
+    if (controller.statsList.isEmpty) {
+      return Container();
+    }
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       margin: const EdgeInsets.only(left: 16,right: 16,top: 16),
@@ -90,9 +92,9 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
                      mainAxisSize: MainAxisSize.min,
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: [
-                       sideCalculation("ORDER", "120"),
+                       sideCalculation( controller.statsList[0].label ?? "",  controller.statsList[0].value.toString()),
                        const SizedBox(height: 24),
-                       sideCalculation("LORRY", "12"),
+                       sideCalculation( controller.statsList[1].label ?? "",  controller.statsList[1].value.toString()),
                      ],
                    ),
                  ),
@@ -101,7 +103,7 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
                    child: DashedCircularProgressBar(
                      height: 140, width: 140,
                      valueNotifier: controller.valueNotifier,
-                     progress: 43,
+                     progress: controller.statsList[2].value.toDouble(),
                      startAngle: 0,
                      sweepAngle: 360,
                      foregroundColor: AppColors.orange,
@@ -110,6 +112,7 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
                      backgroundStrokeWidth: 2,
                      animation: true,
                      seekSize: 6,
+                     maxProgress: controller.statsList[2].value.toDouble(),
                      seekColor: AppColors.colorWhite,
                      child: ValueListenableBuilder(
                          valueListenable: controller.valueNotifier,
@@ -119,7 +122,7 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
                            mainAxisAlignment: MainAxisAlignment.center,
                            children: [
                              Text('${value.toInt()}', style: const TextStyle(fontSize: 30)),
-                             const Text('COMPLETE', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: AppColors.gray)),
+                             Text(controller.statsList[2].label ?? "", style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14, color: AppColors.gray)),
                            ],
                          )
                      ),
@@ -132,9 +135,9 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                bottomCalculation("PENDING", "12", AppColors.orange),
-                bottomCalculation("PROCESSING", "02", AppColors.primary),
-                bottomCalculation("COMPLETE", "43", AppColors.green)
+                bottomCalculation(controller.statsList[3].label ?? "", controller.statsList[3].value.toString(), AppColors.orange),
+                bottomCalculation(controller.statsList[4].label ?? "", controller.statsList[4].value.toString(), AppColors.primary),
+                bottomCalculation(controller.statsList[5].label ?? "", controller.statsList[5].value.toString(), AppColors.green)
               ],
             ),
           ],
@@ -175,8 +178,8 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: AppColors.gray)),
-            Text(value, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+            Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.gray)),
+            Text(value, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
           ],
         ),
       ],

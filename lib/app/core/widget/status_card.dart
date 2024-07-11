@@ -3,20 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 
+import '../../data/model/home_model.dart';
 import '../utils/app_haptics.dart';
 import '../values/app_colors.dart';
 
 
-class StatusCard extends GetView {
+class OrderUiModel extends GetView {
 
+  List<LatestOrder> orderList;
+  OrderUiModel({required this.orderList});
   AppLocalizations get appLocalization => AppLocalizations.of(Get.context!)!;
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
       options: CarouselOptions(
-        height: 220,
-        viewportFraction: 0.60,
+        height: 235,
+        viewportFraction: 0.70,
         autoPlayCurve: Curves.fastOutSlowIn,
         enlargeCenterPage: true,
         enableInfiniteScroll: false,
@@ -27,8 +30,9 @@ class StatusCard extends GetView {
           if (reason == CarouselPageChangedReason.manual) AppHaptics.lightImpact();
         },
       ),
-      itemCount: 3,
+      itemCount: orderList.length,
       itemBuilder: (context, itemIndex, pageViewIndex){
+        LatestOrder order = orderList[itemIndex];
         return Card(
           elevation: 4,
           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -56,32 +60,32 @@ class StatusCard extends GetView {
                             color:AppColors.orange,
                             radius: 6
                         ),
-                        padding: const EdgeInsets.only(left: 4,right: 2,top: 4,bottom: 2),
-                        child: const Text('PENDING', style: TextStyle(fontSize: 10, color: AppColors.orange, fontWeight: FontWeight.w600)
-                        )),
+                        padding: const EdgeInsets.only(left: 4,right: 4,top: 4,bottom: 2),
+                        child: Text(order.status?.toUpperCase() ??"", style: const TextStyle(fontSize: 10, color: AppColors.orange, fontWeight: FontWeight.w600)
+                     )),
                     const SizedBox(width: 8),
-                    const Expanded(
-                      child: Text('#235648', textAlign: TextAlign.end,
+                    Expanded(
+                      child: Text('#${order.challanNo}', textAlign: TextAlign.end,
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 16, color: AppColors.colorWhite, fontWeight: FontWeight.w600)
+                          style: const TextStyle(fontSize: 16, color: AppColors.colorWhite, fontWeight: FontWeight.w600)
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height:30),
-                const Text('Padma Oil Company ltd',
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.colorWhite)),
+                const SizedBox(height:20),
+                Text(order.order?.customer?.name??"",
+                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.colorWhite)),
                 const SizedBox(height: 4),
-                const Text('Bagabri, Sylhet', style: TextStyle(fontSize: 12, color: AppColors.colorWhite)),
+                Text(order.order?.dipo?.address??"", style: const TextStyle(fontSize: 12, color: AppColors.colorWhite)),
                 const SizedBox(height: 4),
-                const Text('Aug 12, 2024', style: TextStyle(fontSize: 11, color: AppColors.colorWhite)),
-                const SizedBox(height: 18),
+                Text(order.date??"", style: const TextStyle(fontSize: 11, color: AppColors.colorWhite)),
+                const SizedBox(height: 14),
                 const Divider(thickness: 0.5, color: AppColors.grayDark),
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Qty: 5.3', style: TextStyle(fontSize: 14, color: AppColors.orange, fontWeight: FontWeight.w600)),
-                    Text('৳ 12000', style: TextStyle(fontSize: 14, color: AppColors.orange, fontWeight: FontWeight.w600)),
+                    Text('Qty: ${order.quantityLiter ?? 0.00}', style: const TextStyle(fontSize: 12, color: AppColors.orange, fontWeight: FontWeight.w600)),
+                    Text('৳ ${order.totalAmount ?? 0.00}', style: const TextStyle(fontSize: 12, color: AppColors.orange, fontWeight: FontWeight.w600)),
                   ],
                 ),
               ],

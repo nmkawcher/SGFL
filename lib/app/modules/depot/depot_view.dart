@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '/app/core/base/base_view.dart';
 import '../../core/values/app_colors.dart';
 import '../../core/widget/custom_app_bar.dart';
 import '../../core/widget/custom_btn.dart';
 import '../../data/model/depot_model.dart';
 import '../../routes/app_pages.dart';
-import '/app/core/base/base_view.dart';
 import 'depot_controller.dart';
 
 class DepotView extends BaseView<DepotController> {
   DepotView(){
     controller.fetchDepotData();
+    controller.loadInitialData();
   }
 
   @override
@@ -26,14 +27,17 @@ class DepotView extends BaseView<DepotController> {
           itemBuilder: (context, index){
             return Column(
               children: [
-                ListTile(
-                  horizontalTitleGap: 0,
-                  leading: const SizedBox(
-                    height: double.infinity,
-                    child: Icon(Icons.account_balance_rounded, color: AppColors.blueGrey, size: 24),
+                Visibility(
+                  visible: controller.isUserAdmin.value,
+                  child: ListTile(
+                    horizontalTitleGap: 0,
+                    leading: const SizedBox(
+                      height: double.infinity,
+                      child: Icon(Icons.account_balance_rounded, color: AppColors.blueGrey, size: 24),
+                    ),
+                    title:  Text(controller.depotList[index].name!, style: const TextStyle(fontSize: 16, color: AppColors.blueGrey)),
+                    subtitle: Text(controller.depotList[index].address!, style: const TextStyle(fontSize: 12, color: AppColors.blueGrey)),
                   ),
-                  title:  Text(controller.depotList[index].name!, style: const TextStyle(fontSize: 16, color: AppColors.blueGrey)),
-                  subtitle: Text(controller.depotList[index].address!, style: const TextStyle(fontSize: 12, color: AppColors.blueGrey)),
                 ),
                 ListView.builder(
                   shrinkWrap: true,
@@ -58,12 +62,9 @@ class DepotView extends BaseView<DepotController> {
         child: controller.selectedDepot.value == 0 ? null : DefaultAppBtn(
             title: appLocalization.next,
             onClick: (){
-                Get.toNamed(Routes.REQUISITION,
-                   arguments: [
-                      controller.selectedDepotZone,
-                      Get.arguments
-                   ]
-              );
+                Get.toNamed(Routes.PRODUCTS,
+                   arguments: controller.selectedDepotZone
+                );
             }
         ),
       );

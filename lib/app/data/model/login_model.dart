@@ -3,6 +3,7 @@ class LoginModel {
   User? data;
   String? token;
   Organisation? organisation;
+  List<String>? orderStatus;
   String? phoneNo;
   String? password;
 
@@ -10,6 +11,7 @@ class LoginModel {
     this.data,
     this.token,
     this.organisation,
+    this.orderStatus,
     this.phoneNo,
     this.password
   });
@@ -18,6 +20,7 @@ class LoginModel {
     data: json["data"] == null ? null : User.fromJson(json["data"]),
     token: json["token"],
     organisation: json["organisation"] == null ? null : Organisation.fromJson(json["organisation"]),
+    orderStatus: json["orderStatus"] == null ? [] : List<String>.from(json["orderStatus"]!.map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {

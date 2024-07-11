@@ -7,11 +7,18 @@ import '/app/core/base/base_controller.dart';
 class DepotController extends BaseController {
 
   RxInt selectedDepot = 0.obs;
+  RxBool isUserAdmin = false.obs;
   var selectedDepotZone = DepotZone().obs;
+
   final RxList<DepotModel> _rxDepotList = RxList.empty();
   List<DepotModel> get depotList => _rxDepotList.toList();
 
   final Repository _repository = Get.find(tag: (Repository).toString());
+
+  void loadInitialData() async {
+    var isAdmin = await preference.getString(PreferenceManager.keyUserType);
+    isUserAdmin.value = isAdmin == 'Customer' ? false:true;
+  }
 
   void fetchDepotData() async{
     var orgId = await preference.getInt(PreferenceManager.keyOrganizationId);

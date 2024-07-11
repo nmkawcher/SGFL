@@ -26,7 +26,7 @@ class ProfileCircleImage extends GetView {
     BoxDecoration decoration = BoxDecoration(
         shape: BoxShape.circle,
         border: Border.all(color: AppColors.grayLight2, width: 1),
-        image: const DecorationImage(image: AssetImage(AppImages.noImg), fit:BoxFit.cover)
+        image: const DecorationImage(image: AssetImage(AppImages.profile), fit:BoxFit.cover)
     );
 
     if(imageUrl == null || imageUrl!.isEmpty) {
@@ -112,7 +112,7 @@ class ProfileRecImage extends GetView {
               borderRadius: BorderRadius.circular(borderRadius),
               border: Border.all(color: AppColors.grayLight2, width: 1),
               image: localImage == ""
-                  ? const DecorationImage(image: AssetImage(AppImages.noImg), fit:BoxFit.cover)
+                  ? const DecorationImage(image: AssetImage(AppImages.profile), fit:BoxFit.cover)
                   : DecorationImage(image: FileImage(File(localImage)), fit:BoxFit.cover)
           )
       );

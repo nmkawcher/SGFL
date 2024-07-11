@@ -44,8 +44,12 @@ class ProductView extends BaseView<ProductController> {
         child: controller.selectedProduct.isEmpty ? null : DefaultAppBtn(
             title: appLocalization.next,
             onClick: (){
-              Get.toNamed(Routes.DEPOT,
-              arguments: controller.selectedProduct);
+              Get.toNamed(Routes.REQUISITION,
+                arguments: [
+                  Get.arguments,
+                  controller.selectedProduct,
+                ]
+              );
             }
         ),
       );

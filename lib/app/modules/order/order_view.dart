@@ -75,7 +75,6 @@ class OrderView extends BaseView<OrderController> {
 
 
   Widget orderItemUI(Order order) {
-    var statusColors = AppColors.statusColor(order.status ?? '');
     return Card(
       clipBehavior: Clip.antiAlias,
       elevation: 2,
@@ -91,21 +90,15 @@ class OrderView extends BaseView<OrderController> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Row(
-                         crossAxisAlignment: CrossAxisAlignment.center,
-                         children: [
-                           Text(order.orderNo ?? "", style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.primary)),
-                           Text(' at ${order.orderAt}', style: const TextStyle(fontSize: 12, color: AppColors.gray, fontWeight: FontWeight.w400)),
-                         ],
-                       ),
+                       Text(order.orderNo ?? "", style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.primary)),
                        const SizedBox(height: 2),
-                       Text(order.supplier??'', style: const TextStyle(fontSize: 13, color: AppColors.gray, fontWeight: FontWeight.normal)),
-                       Text(order.customer??'',  style: const TextStyle(fontSize: 12, color: AppColors.gray)),
+                       Text(order.customer??'', style: const TextStyle(fontSize: 13, color: AppColors.gray, fontWeight: FontWeight.normal)),
+                       Text(order.dipo??'',  style: const TextStyle(fontSize: 12, color: AppColors.gray)),
                        Container(
                           margin: const EdgeInsets.only(top: 4),
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                            color: statusColors.withOpacity(0.15),
+                            color: AppColors.orange.withOpacity(0.15),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child:  Row(
@@ -123,9 +116,9 @@ class OrderView extends BaseView<OrderController> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('${order.totalLorryPhysically} Lorry', style: const TextStyle(fontSize: 13, color: AppColors.blueGrey, fontWeight: FontWeight.w600)),
+                    Text(order.status?.toUpperCase()??'', style: const TextStyle(fontSize: 12, color: AppColors.orange, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 2),
-                    Text(order.status?.toUpperCase()??'', style: TextStyle(fontSize: 12, color: statusColors, fontWeight: FontWeight.w600)),
+                    Text('${order.date}', style: const TextStyle(fontSize: 13, color: AppColors.gray, fontWeight: FontWeight.w400)),
                   ],
                 ),
               ],

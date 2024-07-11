@@ -7,6 +7,7 @@ import '../../core/base/base_remote_source.dart';
 import '../../core/values/app_const.dart';
 import '../model/baseResponse_model.dart';
 import '../model/depot_model.dart';
+import '../model/home_model.dart';
 import '../model/login_model.dart';
 import '../model/order_model.dart';
 import '../model/reset_pass_model.dart';
@@ -22,6 +23,7 @@ abstract class RemoteDataSource {
   Future<BaseResponseModel> updatePassword(PasswordReqModel passwordReqModel);
   Future<BaseResponseModel> requisitionReqData(RequisitionReqModel reqModel);
   Future<OrderModel> getOrderData({dynamic query});
+  Future<HomeModel> getDashBoardData();
 }
 
 
@@ -144,6 +146,17 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
       }
   }
 
+  @override
+  Future<HomeModel> getDashBoardData() {
+    var dioCall = dioClient.get(ApiEndPoint.DASHBOARD);
+
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _homeResData(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
 
   /// Response Data
   BaseResponseModel _baseResponseData(Response<dynamic> response){
@@ -173,6 +186,10 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
 
   OrderModel _orderResData(Response<dynamic> response){
     return OrderModel.fromJson(response.data);
+  }
+
+  HomeModel _homeResData(Response<dynamic> response){
+    return HomeModel.fromJson(response.data);
   }
 
 }

@@ -61,6 +61,8 @@ class LoginController extends BaseController {
     preference.setString(PreferenceManager.keyUserType, result.data?.role ?? '');
     preference.setInt(PreferenceManager.keyUserID, result.data?.id ?? 0);
     preference.setInt(PreferenceManager.keyOrganizationId, result.organisation?.id ?? 0);
+    preference.setString(PreferenceManager.keyUserName, result.data?.name ?? '');
+    preference.setString(PreferenceManager.keyUserPhoto, result.data?.avatar ?? '');
 
     Get.offAllNamed(Routes.MAIN);
   }

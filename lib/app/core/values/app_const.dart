@@ -8,4 +8,5 @@ class ApiEndPoint{
   static const String PASSWORD = "api/password-update";
   static const String REQUISITION = "api/orders";
   static const String ORDER = "api/orders";
+  static const String DASHBOARD ="api/dashboard";
 }
