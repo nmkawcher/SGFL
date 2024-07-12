@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sgfl_sales/app/data/model/baseResponse_model.dart';
 import '../../data/local/preference/preference_manager.dart';
 import '../../data/model/depot_model.dart';
 import '../../data/model/product_model.dart';
@@ -21,10 +22,9 @@ class RequisitionController extends BaseController {
   DepotZone get depot => _argsDepot.value;
   final RxList<ProductModel> _rxProductList = RxList.empty();
   List<ProductModel> get productList => _rxProductList;
-
-  var productReq = ProductReq().obs;
-  var requisitionReq = RequisitionReqModel().obs;
   final RxList<ProductReq> productReqList = RxList.empty();
+
+  var requisitionReq = RequisitionReqModel().obs;
   TextEditingController notedController = TextEditingController();
 
   final Repository _repository = Get.find(tag: (Repository).toString());
@@ -36,7 +36,16 @@ class RequisitionController extends BaseController {
      requisitionReq.value.dipoId = depot.id;
      requisitionReq.value.note = notedController.text;
      requisitionReq.value.items = productReqList;
-     print(requisitionReq.toJson());
+     crateRequisition(requisitionReq.value);
+  }
+
+  void crateRequisition(RequisitionReqModel reqModel) {
+    var service = _repository.requisitionReqData(reqModel);
+    callDataService(service, onSuccess: _handleResponseSuccess);
+  }
+
+  void _handleResponseSuccess(BaseResponseModel result) async {
+    print(result.data);
   }
 
 

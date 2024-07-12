@@ -30,8 +30,8 @@ class ProductReq {
 
   ProductReq({
     this.productId,
-    this.baseQuantity,
-    this.upperQuantity,
+    this.baseQuantity = 0,
+    this.upperQuantity = 0,
   });
 
   Map<String, dynamic> toJson() => {
@@ -39,4 +39,9 @@ class ProductReq {
     "base_quantity": baseQuantity,
     "upper_quantity": upperQuantity,
   };
+
+  @override
+  String toString() {
+    return 'ProductReq{productId: $productId, baseQuantity: $baseQuantity, upperQuantity: $upperQuantity}';
+  }
 }

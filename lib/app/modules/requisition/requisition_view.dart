@@ -1,14 +1,13 @@
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:input_quantity/input_quantity.dart';
-import 'package:sgfl_sales/app/core/widget/custom_btn.dart';
-import 'package:sgfl_sales/app/data/model/product_model.dart';
+import '../../core/widget/custom_btn.dart';
+import '../../data/model/product_model.dart';
+import '../../data/model/requisition_model.dart';
+import '/app/core/base/base_view.dart';
 import '../../core/values/app_colors.dart';
 import '../../core/widget/custom_app_bar.dart';
 import '../../core/widget/custom_inputField.dart';
-import '../../routes/app_pages.dart';
-import '/app/core/base/base_view.dart';
 import 'requisition_controller.dart';
 
 class RequisitionView extends BaseView<RequisitionController> {
@@ -147,26 +146,27 @@ class RequisitionView extends BaseView<RequisitionController> {
             DataColumn(label: Flexible(child: Center(child: Text('Qty(13500)', style: AppColors.tableHeaderStyle())))),
           ],
           rows: List.generate(controller.productList.length, growable: true , (index){
-            return productRow(index);
+            return productRow(controller.productList[index]);
           }),
         ),
       ),
     );
   }
 
-  DataRow productRow(int index) {
-    ProductModel product = controller.productList[index];
-    controller.productReq.value.productId = product.id;
+  DataRow productRow(ProductModel product) {
+    ProductReq reqProduct = ProductReq();
+    reqProduct.productId = product.id;
+    controller.productReqList.add(reqProduct);
     return DataRow(
       cells: <DataCell>[
         DataCell(Text(product.name!, style: const TextStyle(fontSize: 12, color: AppColors.blueGrey, fontWeight: FontWeight.w600))),
-        quantityCell(index, 9000),
-        quantityCell(index, 13500),
+        quantityCell(9000,reqProduct ),
+        quantityCell(13500, reqProduct),
       ],
     );
   }
 
-  DataCell quantityCell(int index, int multiplier) {
+  DataCell quantityCell(int multiplier, ProductReq reqProduct) {
     return DataCell(
       Center(
         child: InputQty(
@@ -197,11 +197,10 @@ class RequisitionView extends BaseView<RequisitionController> {
           steps: multiplier,
           onQtyChanged: (val) {
             if (multiplier == 9000) {
-              controller.productReq.value.baseQuantity = (val * multiplier).toInt();
+              reqProduct.baseQuantity = val.toInt();
             } else {
-              controller.productReq.value.upperQuantity = (val * multiplier).toInt();
+              reqProduct.upperQuantity = val.toInt();
             }
-            controller.productReqList.add(controller.productReq.value);
           },
         ),
       ),
