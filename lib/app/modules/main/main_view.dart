@@ -27,7 +27,9 @@ class MainView extends BaseView<MainController> {
 
   @override
   Widget? floatingActionButton(){
-    return FloatingActionButton(
+    return controller.isContractor.isTrue
+        ? null
+        : FloatingActionButton(
       onPressed: () {Get.toNamed(Routes.DEPOT);},
       backgroundColor: AppColors.orange,
       child: const Icon(Icons.add),

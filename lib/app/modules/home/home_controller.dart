@@ -19,9 +19,13 @@ class HomeController extends BaseController {
 
   void loadInitialData() async {
     var userType = await preference.getString(PreferenceManager.keyUserType);
-    userName.value = await preference.getString(PreferenceManager.keyUserName);
-    userPhoto.value = await preference.getString(PreferenceManager.keyUserPhoto);
-    status.value = userType == 'Contactor' ? "REQUEST":"REQUISITION";
+    status.value = userType == 'Contractor' ? "REQUEST":"REQUISITION";
+    dbManager.getUserInfoData().then((value) {
+      if(value != null){
+        userName.value = value.name!;
+        userPhoto.value = value.avatar!;
+      }
+    });
   }
 
   void fetchDashBoardData() {

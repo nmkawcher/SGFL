@@ -16,8 +16,8 @@ class DepotController extends BaseController {
   final Repository _repository = Get.find(tag: (Repository).toString());
 
   void loadInitialData() async {
-    var isAdmin = await preference.getString(PreferenceManager.keyUserType);
-    isUserAdmin.value = isAdmin == 'Customer' ? false:true;
+    var userType = await preference.getString(PreferenceManager.keyUserType);
+    isUserAdmin.value = userType == 'Customer' ? false:true;
   }
 
   void fetchDepotData() async{

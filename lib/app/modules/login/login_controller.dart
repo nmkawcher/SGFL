@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sgfl_sales/app/data/local/db/sqlite_table.dart';
 import 'package:sgfl_sales/app/routes/app_pages.dart';
 import '../../data/model/login_model.dart';
 import '../../data/repository/repository.dart';
@@ -61,8 +62,10 @@ class LoginController extends BaseController {
     preference.setString(PreferenceManager.keyUserType, result.data?.role ?? '');
     preference.setInt(PreferenceManager.keyUserID, result.data?.id ?? 0);
     preference.setInt(PreferenceManager.keyOrganizationId, result.organisation?.id ?? 0);
-    preference.setString(PreferenceManager.keyUserName, result.data?.name ?? '');
-    preference.setString(PreferenceManager.keyUserPhoto, result.data?.avatar ?? '');
+    dbManager.insertItems(tableUser, result.data!.toJson());
+    if(result.data?.role != 'Admin') {
+      dbManager.insertItems(tableOrganization, result.organisation!.toJson());
+    }
 
     Get.offAllNamed(Routes.MAIN);
   }

@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:path/path.dart' as path;
 import 'package:sgfl_sales/app/data/model/login_model.dart';
+import 'package:sgfl_sales/app/data/model/product_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'sqlite_manager.dart';
 import 'sqlite_table.dart';
@@ -14,13 +16,20 @@ class SQLiteManagerImpl extends SQLiteManager {
   Future<Database> _open() async {
     final rootPath = await getDatabasesPath();
     final dbPath = path.join(rootPath, 'sgfl.db');
-    await deleteDatabase(dbPath);
     return openDatabase(dbPath, version: dbVersion, onCreate: _onCreate);
   }
 
-  Future _onCreate(Database db, int version)async{
+  @override
+  Future deleteDB() async {
+    final rootPath = await getDatabasesPath();
+    final dbPath = path.join(rootPath, 'sgfl.db');
+    await deleteDatabase(dbPath);
+  }
 
-    await db.execute(userInfoDBTable);
+  Future _onCreate(Database db, int version)async{
+    await db.execute(userDBTable);
+    await db.execute(organisationDBTable);
+    await db.execute(productDBTable);
 
   }
 
@@ -38,17 +47,36 @@ class SQLiteManagerImpl extends SQLiteManager {
     return db.delete(tableName);
   }
 
-
   @override
-  Future<User?> getUserInfoData() async {
+  Future<Organisation?> getOrganisationData()async {
     final db = await database;
-    final map = await db.query(tableUserInfo);
+    final map = await db.query(tableOrganization, limit: 1);
     if(map.isNotEmpty) {
-      return User.fromJson(map.first);
+      return Organisation.fromJson(map.first);
     }else{
       return null;
     }
   }
+
+  @override
+  Future<UserModel?> getUserInfoData() async{
+    final db = await database;
+    final map = await db.query(tableUser, limit: 1);
+    if(map.isNotEmpty) {
+      return UserModel.fromJson(map.first);
+    }else{
+      return null;
+    }
+  }
+
+  @override
+  Future<List<ProductModel>> getProductData() async{
+    final db = await database;
+    final map = await db.query(tableProduct);
+    return List.generate(map.length, (index) => ProductModel.fromJson(map[index]));
+  }
+
+
 
 
 }

@@ -1,6 +1,8 @@
 
+import 'package:dio/dio.dart';
+
 class LoginModel {
-  User? data;
+  UserModel? data;
   String? token;
   Organisation? organisation;
   List<String>? orderStatus;
@@ -17,7 +19,7 @@ class LoginModel {
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-    data: json["data"] == null ? null : User.fromJson(json["data"]),
+    data: json["data"] == null ? null : UserModel.fromJson(json["data"]),
     token: json["token"],
     organisation: json["organisation"] == null ? null : Organisation.fromJson(json["organisation"]),
     orderStatus: json["orderStatus"] == null ? [] : List<String>.from(json["orderStatus"]!.map((x) => x)),
@@ -30,7 +32,7 @@ class LoginModel {
 
 }
 
-class User {
+class UserModel {
   int? id;
   String? name;
   String? bnName;
@@ -42,8 +44,9 @@ class User {
   dynamic dipoId;
   String? avatar;
   dynamic lastLogin;
+  MultipartFile? image;
 
-  User({
+  UserModel({
     this.id,
     this.name,
     this.bnName,
@@ -55,9 +58,10 @@ class User {
     this.dipoId,
     this.avatar,
     this.lastLogin,
+    this.image,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     id: json["id"],
     name: json["name"],
     bnName: json["bn_name"],
@@ -74,16 +78,21 @@ class User {
   Map<String, dynamic> toJson() => {
     "id": id,
     "name": name,
-    "bn_name": bnName,
     "designation": designation,
-    "bn_designation": bnDesignation,
     "email": email,
     "phone_no": phoneNo,
     "role": role,
-    "dipo_id": dipoId,
     "avatar": avatar,
-    "last_login": lastLogin,
   };
+
+  Map<String, dynamic> profileUpdateJson() => {
+    "_method": "PUT", // This is a hidden field in the form, which is used to override the POST method.
+    "name": name,
+    "bn_name": bnName,
+    "email": email,
+    "avatar": image,
+  };
+
 
 }
 
@@ -92,8 +101,6 @@ class Organisation {
   String? name;
   String? bnName;
   String? shortName;
-  String? type;
-  dynamic category;
   String? address;
   String? bnAddress;
   String? logo;
@@ -103,8 +110,6 @@ class Organisation {
     this.name,
     this.bnName,
     this.shortName,
-    this.type,
-    this.category,
     this.address,
     this.bnAddress,
     this.logo,
@@ -115,11 +120,16 @@ class Organisation {
     name: json["name"],
     bnName: json["bn_name"],
     shortName: json["short_name"],
-    type: json["type"],
-    category: json["category"],
     address: json["address"],
     bnAddress: json["bn_address"],
     logo: json["logo"],
   );
 
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "short_name": shortName,
+    "address": address,
+    "logo": logo,
+  };
 }

@@ -36,6 +36,9 @@ class AppImages {
   static const supportTicket = 'images/SupportTicket.png';
   static const notificationIcon = 'images/notification.png';
   static const logout = 'images/Logout.png';
+  static const designation = 'images/mortarboard.png';
+  static const phone = 'images/smartphone.png';
+  static const office = 'images/office.png';
 
 
 

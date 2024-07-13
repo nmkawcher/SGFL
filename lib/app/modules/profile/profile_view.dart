@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,7 @@ import 'profile_controller.dart';
 
 class ProfileView extends BaseView<ProfileController> {
   ProfileView() {
-    controller.fetchProfileData();
+    controller.loadInitialData();
   }
 
   @override
@@ -42,7 +43,7 @@ class ProfileView extends BaseView<ProfileController> {
       borderRadius: BorderRadius.all(Radius.circular(10)),
     );
     return Obx(() => RefreshIndicator(
-          onRefresh: () async {},
+          onRefresh: () async {controller.fetchProfileData();},
           child: SingleChildScrollView(
             child: Container(
               height: Get.height,
@@ -91,6 +92,25 @@ class ProfileView extends BaseView<ProfileController> {
                       ),
                     ),
                     const SizedBox(height: 40),
+                    Visibility(
+                      visible: controller.isProfileEdit.isFalse,
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: decoration,
+                        child: Column(
+                          children: [
+                            profileTill(AppImages.designation, controller.profile.designation ?? ""),
+                            const SizedBox(height: 8),
+                            profileTill(AppImages.phone, controller.profile.phoneNo ?? ""),
+                            const SizedBox(height: 8),
+                            controller.organisation.name == null
+                                ? Container()
+                                :profileTill(AppImages.office, controller.organisation.name ?? ""),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
                     Visibility(
                       visible: controller.isProfileEdit.isFalse,
                       child: Column(
@@ -160,6 +180,16 @@ class ProfileView extends BaseView<ProfileController> {
             ),
           ),
         ));
+  }
+
+  Widget profileTill(String icon, String title) {
+    return Row(
+      children: [
+        Image.asset(icon, width: 24, height: 24),
+        const SizedBox(width:16),
+        Text(title, style: const TextStyle(color: AppColors.gray, fontSize: 14, fontWeight: FontWeight.w500)),
+      ],
+    );
   }
 
   Widget bottomSheetBar() {

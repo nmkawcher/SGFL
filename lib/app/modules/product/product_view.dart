@@ -10,7 +10,7 @@ import 'product_controller.dart';
 
 class ProductView extends BaseView<ProductController> {
   ProductView(){
-    controller.fetchProductData();
+    controller.loadInitialData();
   }
 
   @override
@@ -21,17 +21,20 @@ class ProductView extends BaseView<ProductController> {
   @override
   Widget body(BuildContext context) {
     return Obx((){
-      return GridView.builder(
-        padding: const EdgeInsets.only(left: 8, right: 8, top: 16, bottom: 24),
-          shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
-              childAspectRatio: 2.5
-          ),
-          itemCount: controller.productList.length,
-          itemBuilder: (context, index)=> productItemUi(controller.productList[index])
+      return RefreshIndicator(
+        onRefresh: () async {controller.fetchProductData();},
+        child: GridView.builder(
+          padding: const EdgeInsets.only(left: 8, right: 8, top: 16, bottom: 24),
+            shrinkWrap: true,
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+                childAspectRatio: 2.5
+            ),
+            itemCount: controller.productList.length,
+            itemBuilder: (context, index)=> productItemUi(controller.productList[index])
+        ),
       );
     });
   }

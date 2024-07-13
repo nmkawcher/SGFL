@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:sgfl_sales/app/data/local/db/sqlite_table.dart';
 import '../../core/values/app_colors.dart';
-import '../../data/model/profile_model.dart';
+import '../../data/model/login_model.dart';
 import '../../data/repository/repository.dart';
 import '../../routes/app_pages.dart';
 import '/app/core/base/base_controller.dart';
@@ -20,11 +21,26 @@ class ProfileController extends BaseController {
   final  GlobalKey<FormState> profileGlobalKey = GlobalKey<FormState>();
 
 
-  var reqProfile = ProfileModel().obs;
-  final Rx<ProfileModel> _rxProfile = ProfileModel().obs;
-  ProfileModel get profile => _rxProfile.value;
+  var reqProfile = UserModel().obs;
+  final Rx<UserModel> _rxProfile = UserModel().obs;
+  UserModel get profile => _rxProfile.value;
+
+  final Rx<Organisation> _rxOrganisation = Organisation().obs;
+  Organisation get organisation => _rxOrganisation.value;
 
   final Repository _repository = Get.find(tag: (Repository).toString());
+
+
+  void loadInitialData() {
+   dbManager.getUserInfoData().then((value) {
+     if(value != null){_rxProfile.value = value;}
+     else{fetchProfileData();}
+   });
+   dbManager.getOrganisationData().then((value) {
+     if(value != null){_rxOrganisation.value = value;}
+   });
+  }
+
 
   void fetchProfileData() {
     var service = _repository.getProfileData();
@@ -51,12 +67,13 @@ class ProfileController extends BaseController {
   }
 
   void _handelError(error) {
-    reqProfile.value = ProfileModel();
+    reqProfile.value = UserModel();
   }
 
-  void _handleResponseSuccess(ProfileModel result) async {
+  void _handleResponseSuccess(UserModel result) async {
     _rxProfile.value = result;
     isProfileEdit.value = false;
+    await dbManager.insertItems(tableUser, result.toJson());
   }
 
   void logoutRequest() {
@@ -66,6 +83,9 @@ class ProfileController extends BaseController {
 
   void _handleLogoutSuccess(result) {
     preference.clear();
+    dbManager.deleteAllData(tableUser);
+    dbManager.deleteAllData(tableOrganization);
+    dbManager.deleteAllData(tableProduct);
     Get.offAllNamed(Routes.LOGIN);
   }
 
