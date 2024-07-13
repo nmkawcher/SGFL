@@ -1,14 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:sgfl_sales/app/data/model/product_model.dart';
-import 'package:sgfl_sales/app/data/model/requisition_model.dart';
-
 import '../../core/base/base_remote_source.dart';
 import '../../core/values/app_const.dart';
 import '../model/baseResponse_model.dart';
 import '../model/depot_model.dart';
 import '../model/home_model.dart';
 import '../model/login_model.dart';
-import '../model/order_model.dart';
+import '../model/product_model.dart';
+import '../model/requisition_model.dart';
 import '../model/reset_pass_model.dart';
 
 
@@ -21,7 +19,7 @@ abstract class RemoteDataSource {
   Future<UserModel> updateProfileData(UserModel profile);
   Future<BaseResponseModel> updatePassword(PasswordReqModel passwordReqModel);
   Future<BaseResponseModel> requisitionReqData(RequisitionReqModel reqModel);
-  Future<OrderModel> getOrderData({dynamic query});
+  Future<dynamic> getOrderData({dynamic query});
   Future<HomeModel> getDashBoardData();
 }
 
@@ -134,7 +132,7 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
   }
 
   @override
-  Future<OrderModel> getOrderData({dynamic query}){
+  Future<dynamic> getOrderData({dynamic query}){
       var dioCall = dioClient.get(ApiEndPoint.ORDER, queryParameters: query);
 
       try {
@@ -183,8 +181,8 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
    return UserModel.fromJson(result.data);
   }
 
-  OrderModel _orderResData(Response<dynamic> response){
-    return OrderModel.fromJson(response.data);
+  dynamic _orderResData(Response<dynamic> response){
+    return response.data;
   }
 
   HomeModel _homeResData(Response<dynamic> response){

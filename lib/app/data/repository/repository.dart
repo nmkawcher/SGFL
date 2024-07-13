@@ -4,7 +4,6 @@ import '../model/baseResponse_model.dart';
 import '../model/depot_model.dart';
 import '../model/home_model.dart';
 import '../model/login_model.dart';
-import '../model/order_model.dart';
 import '../model/product_model.dart';
 import '../model/requisition_model.dart';
 import '../model/reset_pass_model.dart';
@@ -19,7 +18,7 @@ abstract class Repository {
   Future<UserModel> updateProfileData(UserModel profile);
   Future<BaseResponseModel> updatePassword(PasswordReqModel passwordReqModel);
   Future<BaseResponseModel> requisitionReqData(RequisitionReqModel reqModel);
-  Future<OrderModel> getOrderData({dynamic query});
+  Future<dynamic> getOrderData({dynamic query});
   Future<HomeModel> getDashBoardData();
 }
 
@@ -68,7 +67,7 @@ class RepositoryImpl implements Repository{
   }
 
   @override
-  Future<OrderModel> getOrderData({dynamic query}) {
+  Future<dynamic> getOrderData({dynamic query}) {
     return _remoteSource.getOrderData(query: query);
   }
 
