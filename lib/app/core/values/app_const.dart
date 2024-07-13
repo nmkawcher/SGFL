@@ -9,4 +9,7 @@ class ApiEndPoint{
   static const String REQUISITION = "api/orders";
   static const String ORDER = "api/orders";
   static const String DASHBOARD ="api/dashboard";
+  static const String UNASSIGN = "api/orders/unassigned-items";
+  static const String ASSIGN = "api/orders/assign";
+  static const String CONTRACTOR = "api/contractors";
 }

@@ -122,6 +122,7 @@ class Contractor {
   String? contactPhone;
   String? contactEmail;
   String? shortName;
+  String? logo;
 
   Contractor({
     this.id,
@@ -133,6 +134,7 @@ class Contractor {
     this.contactPhone,
     this.contactEmail,
     this.shortName,
+    this.logo,
   });
 
   factory Contractor.fromJson(Map<String, dynamic> json) => Contractor(
@@ -145,6 +147,8 @@ class Contractor {
     contactPhone: json["contact_phone"],
     contactEmail: json["contact_email"],
     shortName: json["short_name"],
+    logo: json["logo"],
+
   );
 
   Map<String, dynamic> toJson() => {

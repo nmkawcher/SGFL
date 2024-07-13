@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:sgfl_sales/app/modules/assign_contractor/assign_binding.dart';
+import 'package:sgfl_sales/app/modules/assign_contractor/assign_view.dart';
 import 'package:sgfl_sales/app/modules/change_password/change_password_binding.dart';
 import 'package:sgfl_sales/app/modules/change_password/change_password_view.dart';
 import 'package:sgfl_sales/app/modules/depot/depot_binding.dart';
@@ -99,6 +101,11 @@ class AppPages {
       name: _Paths.CHANGE_PASSWORD,
       page: () => ChangePasswordView(),
       binding: ChangePasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.CONTRACTOR_ASSIGN,
+      page: () => AssignView(),
+      binding: AssignBinding(),
     )
 
 

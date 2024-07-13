@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../data/local/preference/preference_manager.dart';
 import '../../data/model/contractor_model.dart';
+import '../../routes/app_pages.dart';
 import '/app/core/base/base_controller.dart';
 import '../../data/model/order_model.dart';
 import '../../data/repository/repository.dart';
@@ -10,6 +11,7 @@ import '../../data/repository/repository.dart';
 class OrderController extends BaseController with GetSingleTickerProviderStateMixin {
 
   final isContractor = false.obs;
+  var title = 'Requisition';
   late TabController tabController;
   final tabs = [
     const Tab(text: 'Pending'),
@@ -42,6 +44,7 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
   void loadInitialData()async {
     var userType = await preference.getString(PreferenceManager.keyUserType);
     isContractor.value = userType == 'Contractor';
+    title = isContractor.value ? "Request":"Requisition";
 
     fetchOrderData('pending');
     tabController.addListener(() {
@@ -71,4 +74,13 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
       orderLists[requestStatus]!.assignAll(order.data!);
     }
   }
+
+  void gotoOrderDetails(Order order)async {
+    var result = await Get.toNamed(Routes.ORDERDetails, arguments: order);
+    if(result == true){
+      orderLists['pending']!.clear();
+      fetchOrderData('pending');
+    }
+  }
+
 }

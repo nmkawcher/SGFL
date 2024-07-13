@@ -27,13 +27,21 @@ class MainView extends BaseView<MainController> {
 
   @override
   Widget? floatingActionButton(){
-    return controller.isContractor.isTrue
+    return controller.isContractor.value
         ? null
-        : FloatingActionButton(
-      onPressed: () {Get.toNamed(Routes.DEPOT);},
-      backgroundColor: AppColors.orange,
-      child: const Icon(Icons.add),
-    );
+        : Obx((){
+          return FloatingActionButton(
+            onPressed: () {
+              controller.isAdmin.value
+                  ? Get.toNamed(Routes.CONTRACTOR_ASSIGN)
+                  : Get.toNamed(Routes.DEPOT);
+              },
+            backgroundColor: AppColors.orange,
+            child: controller.isAdmin.value
+                ? const Icon(Icons.person_add_rounded)
+                : const Icon(Icons.add),
+          );
+    });
   }
 
   @override

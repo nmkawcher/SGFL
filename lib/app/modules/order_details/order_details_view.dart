@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sgfl_sales/app/core/widget/custom_btn.dart';
 import 'package:sgfl_sales/app/data/model/order_model.dart';
 import '../../core/widget/custom_app_bar.dart';
@@ -11,7 +12,7 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
-    return const CustomAppBar(title: 'Order Details',elevation: 0);
+    return CustomAppBar(title: '${controller.title} Details',elevation: 0);
   }
 
   @override
@@ -124,14 +125,19 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
                                   children: [
                                     Row(
                                       children: [
+                                        Text('O: ${lorry.quantityLiter}', style: const TextStyle(fontSize: 12, color: AppColors.grayDark, fontWeight: FontWeight.w600)),
+                                        const Text(' (Ltr)', style: TextStyle(fontSize: 11, color: AppColors.gray)),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 8),
+                                    lorry.quantityReceived == "0.00"
+                                        ? ResizeAbleBtn(title: "RECEIVED",textSize: 10, onClick: () {  },)
+                                        : Row(
+                                      children: [
                                         Text('R: ${lorry.quantityReceived}', style: const TextStyle(fontSize: 12, color: AppColors.orange, fontWeight: FontWeight.w600)),
                                         const Text(' (Ltr)', style: TextStyle(fontSize: 11, color: AppColors.gray)),
                                       ],
                                     ),
-                                    const SizedBox(height: 2),
-                                    lorry.quantityReceived == "0.00"?
-                                        ResizeAbleBtn(title: "RECEIVED",textSize: 10, onClick: () {  },):
-                                    const Text('RECEIVED', style: TextStyle(fontSize: 12, color: AppColors.gray, fontWeight: FontWeight.w600)),
                                   ],
                                 ),
                               ],
@@ -147,6 +153,17 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
         ],
       ),
     );
+  }
+
+  @override
+  Widget? bottomNavigationBar() {
+      return Obx((){
+        return controller.isAdmin.value
+            ? Padding(
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+            child: DefaultAppBtn(title: 'Confirm', onClick: (){controller.confirmOrder();})
+        ):const SizedBox();
+      });
   }
 
   Widget orderStatusBarUI() {

@@ -100,12 +100,20 @@ class ProfileView extends BaseView<ProfileController> {
                         child: Column(
                           children: [
                             profileTill(AppImages.designation, controller.profile.designation ?? ""),
-                            const SizedBox(height: 8),
+                            const SizedBox(height: 10),
+                            const Divider(color: AppColors.grayLight2,),
+                            const SizedBox(height: 10),
                             profileTill(AppImages.phone, controller.profile.phoneNo ?? ""),
-                            const SizedBox(height: 8),
                             controller.organisation.name == null
                                 ? Container()
-                                :profileTill(AppImages.office, controller.organisation.name ?? ""),
+                                :Column(
+                                  children: [
+                                    const SizedBox(height: 10),
+                                    const Divider(color: AppColors.grayLight2,),
+                                    const SizedBox(height: 10),
+                                    profileTill(AppImages.office, controller.organisation.name ?? ""),
+                                  ],
+                                ),
                           ],
                         ),
                       ),
@@ -119,7 +127,7 @@ class ProfileView extends BaseView<ProfileController> {
                             decoration: decoration,
                             child: ListTile(
                               title: const Text('Edit Profile', style: TextStyle(color: AppColors.gray, fontSize: 16, fontWeight: FontWeight.w500)),
-                              leading: const Icon(Icons.person, color: AppColors.gray, size: 24),
+                              leading: const Icon(Icons.person_outline, color: Colors.black, size: 24),
                               onTap: () async {controller.isProfileEdit(true);},
                             ),
                           ),
@@ -128,7 +136,7 @@ class ProfileView extends BaseView<ProfileController> {
                             decoration: decoration,
                             child: ListTile(
                               title: const Text('Change Password', style: TextStyle(color: AppColors.gray, fontSize: 16, fontWeight: FontWeight.w500)),
-                              leading: const Icon(Icons.password_rounded, color: AppColors.gray, size: 24),
+                              leading: const Icon(Icons.password_rounded, color: Colors.black, size: 24),
                               onTap: () async {Get.toNamed(Routes.CHANGE_PASSWORD);},
                             ),
                           ),
@@ -185,7 +193,7 @@ class ProfileView extends BaseView<ProfileController> {
   Widget profileTill(String icon, String title) {
     return Row(
       children: [
-        Image.asset(icon, width: 24, height: 24),
+        Image.asset(icon, width: 20, height: 20),
         const SizedBox(width:16),
         Text(title, style: const TextStyle(color: AppColors.gray, fontSize: 14, fontWeight: FontWeight.w500)),
       ],

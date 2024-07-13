@@ -17,6 +17,7 @@ abstract class Routes {
   static const ORDERDetails = _Paths.ORDERDetails;
   static const PROFILE = _Paths.PROFILE;
   static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
+  static const CONTRACTOR_ASSIGN = _Paths.CONTRACTOR_ASSIGN;
 }
 
 abstract class _Paths {
@@ -33,6 +34,7 @@ abstract class _Paths {
   static const NOTIFICATION = '/notification';
   static const PROFILE = '/profile';
   static const CHANGE_PASSWORD = '/change_password';
+  static const CONTRACTOR_ASSIGN = '/contractor_assign';
 
 
 }

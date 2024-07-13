@@ -31,8 +31,8 @@ class RequisitionController extends BaseController {
 
 
   void creteRequisition() async {
-     var userId = await preference.getInt(PreferenceManager.keyUserID);
-     requisitionReq.value.customerId = userId;
+     var orgID = await preference.getInt(PreferenceManager.keyOrganizationId);
+     requisitionReq.value.customerId = orgID;
      requisitionReq.value.dipoId = depot.id;
      requisitionReq.value.note = notedController.text;
      requisitionReq.value.items = productReqList;

@@ -1,12 +1,14 @@
 
 import 'package:get/get.dart';
 import '../model/baseResponse_model.dart';
+import '../model/contractor_model.dart';
 import '../model/depot_model.dart';
 import '../model/home_model.dart';
 import '../model/login_model.dart';
 import '../model/product_model.dart';
 import '../model/requisition_model.dart';
 import '../model/reset_pass_model.dart';
+import '../model/unassign_model.dart';
 import '../remote/remote_source.dart';
 
 abstract class Repository {
@@ -20,6 +22,11 @@ abstract class Repository {
   Future<BaseResponseModel> requisitionReqData(RequisitionReqModel reqModel);
   Future<dynamic> getOrderData({dynamic query});
   Future<HomeModel> getDashBoardData();
+  Future<BaseResponseModel> orderConfirm(int id);
+  Future<List<UnassignedModel>> getAllUnassigned();
+  Future<List<Contractor>> getContractorData();
+  Future<BaseResponseModel> assignOrder(List<AssignModel> assignModel);
+
 }
 
 class RepositoryImpl implements Repository{
@@ -76,7 +83,25 @@ class RepositoryImpl implements Repository{
     return _remoteSource.getDashBoardData();
   }
 
+  @override
+  Future<BaseResponseModel> orderConfirm(int id) {
+    return _remoteSource.orderConfirm(id);
+  }
 
+  @override
+  Future<List<UnassignedModel>> getAllUnassigned() {
+    return _remoteSource.getAllUnassigned();
+  }
+
+  @override
+  Future<List<Contractor>> getContractorData() {
+    return _remoteSource.getContractorData();
+  }
+
+  @override
+  Future<BaseResponseModel> assignOrder(List<AssignModel> assignModel) {
+    return _remoteSource.assignOrder(assignModel);
+  }
 
 }
 

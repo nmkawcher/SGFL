@@ -4,7 +4,6 @@ import 'package:sgfl_sales/app/data/model/contractor_model.dart';
 import 'package:sgfl_sales/app/data/model/order_model.dart';
 import '/app/core/base/base_view.dart';
 import '../../core/values/app_colors.dart';
-import '../../routes/app_pages.dart';
 import 'order_controller.dart';
 
 class OrderView extends BaseView<OrderController> {
@@ -12,7 +11,7 @@ class OrderView extends BaseView<OrderController> {
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBar(
-        title: const Text('Orders',style: TextStyle(fontSize: 20, color: AppColors.colorDark, fontWeight: FontWeight.w500)),
+        title: Text(controller.title, style: const TextStyle(fontSize: 20, color: AppColors.colorDark, fontWeight: FontWeight.w500)),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.white,
@@ -78,7 +77,7 @@ class OrderView extends BaseView<OrderController> {
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: InkWell(
-        onTap: (){Get.toNamed(Routes.ORDERDetails, arguments: order);},
+        onTap: (){controller.gotoOrderDetails(order);},
         child: Container(
           padding: const EdgeInsets.all(8),
           child: Row(
