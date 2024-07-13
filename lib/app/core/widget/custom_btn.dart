@@ -133,7 +133,7 @@ class ResizeAbleBtn extends GetView {
       onTap: onClick,
       child: Ink(
         child: Container(
-          padding: const EdgeInsets.only(left: 8,right: 8, top: 4,bottom: 4),
+          padding: const EdgeInsets.only(left: 4,right: 4, top: 4,bottom: 2),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               border: Border.all(color: AppColors.primary)

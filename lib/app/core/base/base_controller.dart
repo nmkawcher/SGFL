@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
+import '../../data/local/db/sqlite_manager.dart';
 import '../../data/local/preference/preference_manager.dart';
 import '/app/core/model/page_state.dart';
 import '/app/network/exceptions/api_exception.dart';
@@ -27,6 +28,8 @@ abstract class BaseController extends GetxController {
   final Logger logger = BuildConfig.instance.config.logger;
 
   final PreferenceManager preference = getx.Get.find(tag: (PreferenceManager).toString());
+
+  final SQLiteManager dbManager = getx.Get.find(tag: (SQLiteManager).toString());
 
   AppLocalizations get appLocalization => AppLocalizations.of(Get.context!)!;
 

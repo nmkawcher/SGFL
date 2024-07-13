@@ -8,10 +8,6 @@ import 'order_controller.dart';
 
 class OrderView extends BaseView<OrderController> {
 
-  OrderView(){
-    controller.fetchOrderData();
-  }
-
   @override
   PreferredSizeWidget? appBar(BuildContext context) {
     return AppBar(
@@ -48,28 +44,32 @@ class OrderView extends BaseView<OrderController> {
 
   @override
   Widget body(BuildContext context) {
-    return Obx((){
-      return  TabBarView(
-          controller: controller.tabController,
-          children: [
-            buildOrderList(controller.pendingOrderList),
-            buildOrderList(controller.processingOrderList),
-            buildOrderList(controller.completedOrderList),
-          ],
+    return Obx(() {
+      return TabBarView(
+        controller: controller.tabController,
+        children: controller.tabs.map((tab) => buildOrderList(
+            controller.getOrderList(tab.text!.toLowerCase()
+            )
+        )).toList(),
       );
     });
   }
 
-
-  Widget buildOrderList(RxList<Order> orderList) {
-    return ListView.separated(
-      itemCount: orderList.length,
-      shrinkWrap: true,
-      padding: const EdgeInsets.all(8),
-      separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8),
-      itemBuilder: (BuildContext context, int index) {
-        return orderItemUI(orderList[index]);
+  Widget buildOrderList(List<Order> orderList) {
+    return RefreshIndicator(
+      onRefresh: () async {
+        controller.orderLists[controller.requestStatus]!.clear();
+        controller.fetchOrderData(controller.requestStatus);
       },
+      child: ListView.separated(
+        itemCount: orderList.length,
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(8),
+        separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8),
+        itemBuilder: (BuildContext context, int index) {
+          return orderItemUI(orderList[index]);
+        },
+      ),
     );
   }
 
@@ -80,7 +80,7 @@ class OrderView extends BaseView<OrderController> {
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: InkWell(
-        onTap: (){Get.toNamed(Routes.ORDERDetails);},
+        onTap: (){Get.toNamed(Routes.ORDERDetails, arguments: order);},
         child: Container(
             padding: const EdgeInsets.all(8),
             child: Row(
@@ -92,8 +92,8 @@ class OrderView extends BaseView<OrderController> {
                     children: [
                        Text(order.orderNo ?? "", style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.primary)),
                        const SizedBox(height: 2),
-                       Text(order.customer??'', style: const TextStyle(fontSize: 13, color: AppColors.gray, fontWeight: FontWeight.normal)),
-                       Text(order.dipo??'',  style: const TextStyle(fontSize: 12, color: AppColors.gray)),
+                       Text(order.customer?.name??'', style: const TextStyle(fontSize: 13, color: AppColors.gray, fontWeight: FontWeight.normal)),
+                       Text(order.dipo?.name??'',  style: const TextStyle(fontSize: 12, color: AppColors.gray)),
                        Container(
                           margin: const EdgeInsets.only(top: 4),
                           padding: const EdgeInsets.all(4),

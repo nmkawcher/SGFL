@@ -37,6 +37,7 @@ class RequisitionController extends BaseController {
      requisitionReq.value.note = notedController.text;
      requisitionReq.value.items = productReqList;
      crateRequisition(requisitionReq.value);
+
   }
 
   void crateRequisition(RequisitionReqModel reqModel) {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:sgfl_sales/app/core/widget/custom_btn.dart';
+import 'package:sgfl_sales/app/data/model/order_model.dart';
 import '../../core/widget/custom_app_bar.dart';
 import '../../core/widget/step_widget.dart';
-import '../../data/model/product_model.dart';
 import '/app/core/base/base_view.dart';
 import '../../core/values/app_colors.dart';
 import 'order_details_controller.dart';
@@ -19,7 +19,7 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
     return SingleChildScrollView(
       padding: const EdgeInsets.only(left: 8,right: 8,top: 20,bottom: 70),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           orderStatusBarUI(),
           const SizedBox(height: 16),
@@ -35,11 +35,12 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
                 children: [
                   const Text('Company Info', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.colorDark)),
                   const SizedBox(height: 8),
-                  const Text('Padma Oil Company LTD.', style: TextStyle(fontSize: 15, color: AppColors.colorDark)),
-                  const SizedBox(height: 4),
-                  textWrap2('Contact Person', 'Mr. Abul Khayer'),
-                  textWrap2('Address', 'Bagabri, Sylhet'),
-                  textWrap2('Phone', '01689936665'),
+                  Text(controller.order.customer?.name ??"", style: const TextStyle(fontSize: 15, color: AppColors.colorDark)),
+                  Text(controller.order.customer?.address ??"", style: const TextStyle(fontSize: 12, color: AppColors.gray)),
+                  const SizedBox(height: 6),
+                  textWrap2('Name', controller.order.customer?.adminName ??""),
+                  textWrap2('Phone',  controller.order.customer?.contactPhone ??""),
+                  textWrap2('Email',  controller.order.customer?.contactEmail ??""),
                 ],
               ),
             ),
@@ -56,50 +57,93 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
                 children: [
                   const Text('Details Info', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.colorDark)),
                   const SizedBox(height: 8),
-                  const Text('Requisition ID #2345435', style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
+                  Text('Requisition ID #${controller.order.orderNo ??""}', style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400)),
                   const SizedBox(height: 4),
-                  textWrap2('Date', '12 JUN 2024'),
-                  textWrap2('Shipping', 'Bagabri, Sylhet'),
+                  textWrap2('Date', controller.order.date ??""),
+                  textWrap2('Shipping', controller.order.dipo?.address ??""),
                   const SizedBox(height: 4),
-                  textWrap('Note', 'Padma Oil Company LTD, Bagabri, Sylhet, Requisition ID: 2345435,Date: 12 JUN 2024'),
+                  textWrap('Note', controller.order.note ??""),
                 ],
               ),
             ),
           ),
-          Card(
-            elevation: 2,
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),),
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Contractor Info', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.colorDark)),
-                  const SizedBox(height: 8),
-                  const Text('M/S Tanisa Enterprise', style: TextStyle(fontSize: 15, color: AppColors.colorDark)),
-                  const SizedBox(height: 4),
-                  textWrap2('Driver', 'Mr. Abul Khayer'),
-                  textWrap2('Address', 'Bagabri, Sylhet'),
-                  textWrap2('Lorry Number', 'Dhaka Metro L-250255'),
-                ],
-              ),
-            ),
-          ),
-
           const SizedBox(height: 16),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text('PRODUCT SUMMARY', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppColors.colorDark)),
-              Text('Unit : Liter', style: TextStyle(fontSize: 12, color: AppColors.gray)),
-            ],
-          ),
+          const Text('Requisition Details', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: AppColors.colorDark)),
           const SizedBox(height: 8),
-          //orderSummaryTable(),
-
+          ListView.builder(
+              shrinkWrap: true,
+              physics: const ClampingScrollPhysics(),
+              itemCount: controller.order.orderItems?.length ?? 0,
+              itemBuilder: (context, index){
+                OrderItem item = controller.order.orderItems![index];
+                return Column(
+                  children: [
+                    ListTile(
+                      tileColor: AppColors.blueGrey.withOpacity(0.07),
+                      horizontalTitleGap: 0,
+                      contentPadding: const EdgeInsets.only(left: 10),
+                      leading: AppColors.circleIconBG(AppColors.orange, Icons.water_drop, radius: 16),
+                      title:  Row(
+                        children: [
+                          Text(item.product!, style: const TextStyle(fontSize: 14, color: AppColors.blueGrey, fontWeight: FontWeight.w600)),
+                          const SizedBox(width: 8),
+                          Text('(Unit Price: ৳${item.perLiterPrice})', style: const TextStyle(fontSize: 12, color: AppColors.gray)),
+                        ],
+                      ),
+                    ),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ClampingScrollPhysics(),
+                      padding:const EdgeInsets.only(left: 8, right: 8,),
+                      itemCount: item.itemLorries?.length,
+                      itemBuilder:(context, subIndex){
+                        ItemLorry lorry = item.itemLorries![subIndex];
+                        return Card(
+                          elevation: 2,
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),),
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                       Text(lorry.contractor?.name ??"", style: const TextStyle(fontSize: 15, color: AppColors.colorDark)),
+                                      const SizedBox(height: 4),
+                                      textWrap2('Truck No', lorry.lorry?.regNo ??""),
+                                      textWrap2('Contact', lorry.contractor?.contactPhone ??""),
+                                    ],
+                                  ),
+                                ),
+                                Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text('R: ${lorry.quantityReceived}', style: const TextStyle(fontSize: 12, color: AppColors.orange, fontWeight: FontWeight.w600)),
+                                        const Text(' (Ltr)', style: TextStyle(fontSize: 11, color: AppColors.gray)),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 2),
+                                    lorry.quantityReceived == "0.00"?
+                                        ResizeAbleBtn(title: "RECEIVED",textSize: 10, onClick: () {  },):
+                                    const Text('RECEIVED', style: TextStyle(fontSize: 12, color: AppColors.gray, fontWeight: FontWeight.w600)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+                    ),
+                  ],
+                );
+              }
+          ),
         ],
       ),
     );
@@ -109,45 +153,9 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
     return Container(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: AppColors.defaultDecoration(color: AppColors.grayLight1),
-      child: SizedBox(height: 80, child: StepWidget(step: 1)),
+      child: SizedBox(height: 80, child: StepWidget(step: controller.progressStep)),
     );
   }
-  //
-  // Widget orderSummaryTable(){
-  //   return Container(
-  //     decoration: BoxDecoration(
-  //       border: Border.all(color: AppColors.grayLight1),
-  //       borderRadius: BorderRadius.circular(8),
-  //     ),
-  //     clipBehavior: Clip.antiAliasWithSaveLayer,
-  //     width: Get.width,
-  //     child: DataTable(
-  //       columnSpacing: 30,
-  //       dividerThickness: 0.00000000001,
-  //       headingRowHeight: 30,
-  //       dataRowMinHeight: 30.0,
-  //       dataRowMaxHeight: 35.0,
-  //       headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
-  //       columns: [
-  //         DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
-  //         DataColumn(label: Flexible(child: Center(child: Text('Unit Price', style: AppColors.tableHeaderStyle())))),
-  //         DataColumn(label: Flexible(child: Center(child: Text('Quantity', style: AppColors.tableHeaderStyle())))),
-  //       ],
-  //       rows:ProductModel.productList.map((index) {
-  //         return DataRow(
-  //           cells: <DataCell>[
-  //             DataCell(Text(index.productName!,
-  //                 style: const TextStyle(fontSize: 12,color: AppColors.blueGrey, fontWeight: FontWeight.w600))
-  //             ),
-  //             DataCell(Center(child: Text('${index.productPrice}',style: AppColors.tableCallStyle()))),
-  //             DataCell(Center(child: Text(index.productQuantity.toString(),style: AppColors.tableCallStyle()))
-  //             ),
-  //           ],
-  //         );
-  //       }).toList(),
-  //     ),
-  //   );
-  // }
 
   Widget textWrap(String title, String text){
     return Row(
@@ -157,7 +165,10 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
         Text('$title:',style: const TextStyle(fontSize: 13, color: AppColors.blueGrey)),
         const SizedBox(width: 4),
         Expanded(
-            child: Text(text, overflow: TextOverflow.visible, style: const TextStyle(fontSize: 13, color: AppColors.gray))),
+            child: Text(text, overflow: TextOverflow.visible,
+                style: const TextStyle(fontSize: 13, color: AppColors.gray)
+            )
+        ),
       ],
     );
   }
@@ -165,8 +176,8 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
   Widget textWrap2(String title, String text){
     return  Table(
       columnWidths:const {
-        0: FlexColumnWidth(2),
-        1: FlexColumnWidth(4),
+        0: FlexColumnWidth(1),
+        1: FlexColumnWidth(3),
       },
       children: [
         TableRow(

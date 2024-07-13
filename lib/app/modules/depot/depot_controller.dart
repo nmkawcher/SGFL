@@ -27,7 +27,7 @@ class DepotController extends BaseController {
   }
 
   void _handleResponseSuccess(List<DepotModel> result) async {
-    _rxDepotList.addAll(result);
+    _rxDepotList.assignAll(result);
   }
 
 }

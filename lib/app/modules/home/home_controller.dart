@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sgfl_sales/app/data/model/home_model.dart';
-import '../../../core/base/base_controller.dart';
-import '../../../data/local/preference/preference_manager.dart';
-import '../../../data/repository/repository.dart';
+import '../../core/base/base_controller.dart';
+import '../../data/local/preference/preference_manager.dart';
+import '../../data/repository/repository.dart';
 
-class CustomerHomeController extends BaseController {
+class HomeController extends BaseController {
 
-  var orderStatus = ''.obs;
+  var status = ''.obs;
   var userName = ''.obs;
   var userPhoto = ''.obs;
   final RxList<Stat> _rxStatsList = RxList.empty();
@@ -18,11 +18,10 @@ class CustomerHomeController extends BaseController {
   final Repository _repository = Get.find(tag: (Repository).toString());
 
   void loadInitialData() async {
-    var isAdmin = await preference.getString(PreferenceManager.keyUserType);
+    var userType = await preference.getString(PreferenceManager.keyUserType);
     userName.value = await preference.getString(PreferenceManager.keyUserName);
     userPhoto.value = await preference.getString(PreferenceManager.keyUserPhoto);
-    print('isAdmin: $isAdmin, userName: ${userName.value}, userPhoto: ${userPhoto.value}');
-    orderStatus.value = isAdmin == 'Contactor' ? "REQUEST":"REQUISITION";
+    status.value = userType == 'Contactor' ? "REQUEST":"REQUISITION";
   }
 
   void fetchDashBoardData() {

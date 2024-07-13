@@ -99,7 +99,7 @@ class ProfileView extends BaseView<ProfileController> {
                             decoration: decoration,
                             child: ListTile(
                               title: const Text('Edit Profile', style: TextStyle(color: AppColors.gray, fontSize: 16, fontWeight: FontWeight.w500)),
-                              leading: const Icon(Icons.person, color: AppColors.primary, size: 24),
+                              leading: const Icon(Icons.person, color: AppColors.gray, size: 24),
                               onTap: () async {controller.isProfileEdit(true);},
                             ),
                           ),
@@ -108,7 +108,7 @@ class ProfileView extends BaseView<ProfileController> {
                             decoration: decoration,
                             child: ListTile(
                               title: const Text('Change Password', style: TextStyle(color: AppColors.gray, fontSize: 16, fontWeight: FontWeight.w500)),
-                              leading: const Icon(Icons.password_rounded, color: AppColors.primary, size: 24),
+                              leading: const Icon(Icons.password_rounded, color: AppColors.gray, size: 24),
                               onTap: () async {Get.toNamed(Routes.CHANGE_PASSWORD);},
                             ),
                           ),

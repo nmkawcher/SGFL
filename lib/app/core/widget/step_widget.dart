@@ -51,7 +51,7 @@ class _StepWidgetState extends State<StepWidget> {
         EasyStep(title: 'Pending', icon: Icon(Icons.pending_actions_rounded)),
         EasyStep(title: 'Approved', icon: Icon(Icons.download_done_rounded)),
         EasyStep(title: 'Processing', icon: Icon(Icons.autorenew_rounded)),
-        EasyStep(title: 'Shipped', icon: Icon(Icons.directions_bus)),
+        EasyStep(title: 'Delivered', icon: Icon(Icons.directions_bus)),
       ],
     );
   }

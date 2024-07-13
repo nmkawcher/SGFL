@@ -10,35 +10,38 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
   late TabController tabController;
   final tabs = [const Tab(text: 'Pending'), const Tab(text: 'Processing'), const Tab(text: 'Completed'),];
 
-  final _rxOrderData = OrderModel().obs;
-  OrderModel get orderData => _rxOrderData.value;
-  RxList<Order> orderList = RxList.empty();
+  var requestStatus = 'pending';
+  final Map<String, RxList<Order>> orderLists = {
+    'pending': RxList.empty(),
+    'processing': RxList.empty(),
+    'completed': RxList.empty(),
+  };
 
-  RxList<Order> pendingOrderList = RxList.empty();
-  RxList<Order> processingOrderList = RxList.empty();
-  RxList<Order> completedOrderList = RxList.empty();
+  List<Order> getOrderList(String status) => orderLists[status]!.toList();
 
   @override
   void onInit() {
     super.onInit();
+    fetchOrderData('pending');
     tabController = TabController(length: tabs.length, vsync: this);
+    tabController.addListener(() {
+      var status = tabs[tabController.index].text!.toLowerCase();
+      requestStatus = status;
+      fetchOrderData(status);
+    });
   }
 
   final Repository _repository = Get.find(tag: (Repository).toString());
 
-  void fetchOrderData() {
-    var queryParam = {'type': 'processing'};
-    var service = _repository.getOrderData(query: queryParam);
-    callDataService(service, onSuccess: _handleResponseSuccess);
+  void fetchOrderData(String type) {
+    if (orderLists[type]!.isEmpty) {
+      var queryParam = {'type': type};
+      var service = _repository.getOrderData(query: queryParam);
+      callDataService(service, onSuccess: _handleResponseSuccess);
+    }
   }
 
   void _handleResponseSuccess(OrderModel result) async {
-    _rxOrderData.value = result;
-    orderList.assignAll(_rxOrderData.value.data ?? []);
-    if(orderList.isNotEmpty){
-      pendingOrderList.assignAll(orderList.where((element) => element.status == 'confirmed').toList());
-      processingOrderList.assignAll(orderList.where((element) => element.status == 'processing').toList());
-      completedOrderList.assignAll(orderList.where((element) => element.status == 'shipped').toList());
-    }
+    orderLists[requestStatus]!.assignAll(result.data!);
   }
 }

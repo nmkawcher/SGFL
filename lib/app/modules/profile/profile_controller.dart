@@ -92,7 +92,7 @@ class ProfileController extends BaseController {
      uiSettings: [
        AndroidUiSettings(
          toolbarTitle: 'Cropper',
-         cropStyle: CropStyle.rectangle,
+         cropStyle: CropStyle.circle,
          aspectRatioPresets: [CropAspectRatioPreset.square],
          activeControlsWidgetColor: AppColors.primary,
          toolbarColor: AppColors.primary,
@@ -102,7 +102,7 @@ class ProfileController extends BaseController {
        ),
        IOSUiSettings(
          title: 'Cropper',
-         cropStyle: CropStyle.rectangle,
+         cropStyle: CropStyle.circle,
          aspectRatioPresets: [CropAspectRatioPreset.square],
          aspectRatioLockEnabled: false,
        ),

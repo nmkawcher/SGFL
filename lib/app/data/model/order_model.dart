@@ -30,49 +30,27 @@ class OrderModel {
 
 class Order {
   int? id;
-  String? supplierId;
-  String? supplier;
-  String? customerId;
-  String? customer;
-  String? dipoId;
-  String? dipo;
+  Customer? customer;
+  Dipo? dipo;
   String? orderNo;
   String? quantityLiter;
-  String? quantityBbl;
-  String? netAmount;
-  String? vatAmount;
   String? totalAmount;
   String? totalLorryPhysically;
-  String? totalLorryBaseEq;
   String? date;
-  String? orderAt;
-  dynamic approvedAt;
-  dynamic canceledAt;
   String? note;
   String? status;
   bool? editable;
-  List<Product>? orderItems;
+  List<OrderItem>? orderItems;
 
   Order({
     this.id,
-    this.supplierId,
-    this.supplier,
-    this.customerId,
     this.customer,
-    this.dipoId,
     this.dipo,
     this.orderNo,
     this.quantityLiter,
-    this.quantityBbl,
-    this.netAmount,
-    this.vatAmount,
     this.totalAmount,
     this.totalLorryPhysically,
-    this.totalLorryBaseEq,
     this.date,
-    this.orderAt,
-    this.approvedAt,
-    this.canceledAt,
     this.note,
     this.status,
     this.editable,
@@ -81,50 +59,28 @@ class Order {
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
     id: json["id"],
-    supplierId: json["supplier_id"],
-    supplier: json["supplier"],
-    customerId: json["customer_id"],
-    customer: json["customer"],
-    dipoId: json["dipo_id"],
-    dipo: json["dipo"],
+    customer: json["customer"] == null ? null : Customer.fromJson(json["customer"]),
+    dipo: json["dipo"] == null ? null : Dipo.fromJson(json["dipo"]),
     orderNo: json["order_no"],
     quantityLiter: json["quantity_liter"],
-    quantityBbl: json["quantity_bbl"],
-    netAmount: json["net_amount"],
-    vatAmount: json["vat_amount"],
     totalAmount: json["total_amount"],
     totalLorryPhysically: json["total_lorry_physically"],
-    totalLorryBaseEq: json["total_lorry_base_eq"],
     date: json["date"],
-    orderAt: json["order_at"],
-    approvedAt: json["approved_at"],
-    canceledAt: json["canceled_at"],
     note: json["note"],
     status: json["status"],
     editable: json["editable"],
-    orderItems: json["orderItems"] == null ? [] : List<Product>.from(json["orderItems"]!.map((x) => Product.fromJson(x))),
+    orderItems: json["orderItems"] == null ? [] : List<OrderItem>.from(json["orderItems"]!.map((x) => OrderItem.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "supplier_id": supplierId,
-    "supplier": supplier,
-    "customer_id": customerId,
-    "customer": customer,
-    "dipo_id": dipoId,
-    "dipo": dipo,
+    "customer": customer?.toJson(),
+    "dipo": dipo?.toJson(),
     "order_no": orderNo,
     "quantity_liter": quantityLiter,
-    "quantity_bbl": quantityBbl,
-    "net_amount": netAmount,
-    "vat_amount": vatAmount,
     "total_amount": totalAmount,
     "total_lorry_physically": totalLorryPhysically,
-    "total_lorry_base_eq": totalLorryBaseEq,
     "date": date,
-    "order_at": orderAt,
-    "approved_at": approvedAt,
-    "canceled_at": canceledAt,
     "note": note,
     "status": status,
     "editable": editable,
@@ -132,66 +88,122 @@ class Order {
   };
 }
 
-class Product {
+class Customer {
+  int? id;
+  String? name;
+  String? bnName;
+  String? shortName;
+  String? address;
+  String? bnAddress;
+  String? adminName;
+  String? contactPhone;
+  String? contactEmail;
+
+  Customer({
+    this.id,
+    this.name,
+    this.bnName,
+    this.shortName,
+    this.address,
+    this.bnAddress,
+    this.adminName,
+    this.contactPhone,
+    this.contactEmail,
+  });
+
+  factory Customer.fromJson(Map<String, dynamic> json) => Customer(
+    id: json["id"],
+    name: json["name"],
+    bnName: json["bn_name"],
+    shortName: json["short_name"],
+    address: json["address"],
+    bnAddress: json["bn_address"],
+    adminName: json["admin_name"],
+    contactPhone: json["contact_phone"],
+    contactEmail: json["contact_email"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "bn_name": bnName,
+    "short_name": shortName,
+    "address": address,
+    "bn_address": bnAddress,
+    "admin_name": adminName,
+    "contact_phone": contactPhone,
+    "contact_email": contactEmail,
+  };
+}
+
+class Dipo {
+  int? id;
+  String? name;
+  String? bnName;
+  String? address;
+  String? bnAddress;
+
+  Dipo({
+    this.id,
+    this.name,
+    this.bnName,
+    this.address,
+    this.bnAddress,
+  });
+
+  factory Dipo.fromJson(Map<String, dynamic> json) => Dipo(
+    id: json["id"],
+    name: json["name"],
+    bnName: json["bn_name"],
+    address: json["address"],
+    bnAddress: json["bn_address"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "bn_name": bnName,
+    "address": address,
+    "bn_address": bnAddress,
+  };
+}
+
+class OrderItem {
   int? id;
   String? orderId;
-  String? productId;
   String? product;
-  String? productType;
   String? quantityLiter;
-  String? quantityBbl;
   String? perLiterPrice;
-  String? perLiterVat;
-  String? netAmount;
-  String? vatAmount;
-  String? shippingCost;
   String? totalAmount;
-  String? payment;
-  String? totalLorryPhysically;
-  String? totalLorryBaseEq;
+  String? baseQuantityLiter;
+  String? upperQuantityLiter;
   String? date;
   List<dynamic>? additional;
   List<ItemLorry>? itemLorries;
 
-  Product({
+  OrderItem({
     this.id,
     this.orderId,
-    this.productId,
     this.product,
-    this.productType,
     this.quantityLiter,
-    this.quantityBbl,
     this.perLiterPrice,
-    this.perLiterVat,
-    this.netAmount,
-    this.vatAmount,
-    this.shippingCost,
     this.totalAmount,
-    this.payment,
-    this.totalLorryPhysically,
-    this.totalLorryBaseEq,
+    this.baseQuantityLiter,
+    this.upperQuantityLiter,
     this.date,
     this.additional,
     this.itemLorries,
   });
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
+  factory OrderItem.fromJson(Map<String, dynamic> json) => OrderItem(
     id: json["id"],
     orderId: json["order_id"],
-    productId: json["product_id"],
     product: json["product"],
-    productType: json["product_type"],
     quantityLiter: json["quantity_liter"],
-    quantityBbl: json["quantity_bbl"],
     perLiterPrice: json["per_liter_price"],
-    perLiterVat: json["per_liter_vat"],
-    netAmount: json["net_amount"],
-    vatAmount: json["vat_amount"],
-    shippingCost: json["shipping_cost"],
     totalAmount: json["total_amount"],
-    payment: json["payment"],
-    totalLorryPhysically: json["total_lorry_physically"],
-    totalLorryBaseEq: json["total_lorry_base_eq"],
+    baseQuantityLiter: json["base_quantity_liter"],
+    upperQuantityLiter: json["upper_quantity_liter"],
     date: json["date"],
     additional: json["additional"] == null ? [] : List<dynamic>.from(json["additional"]!.map((x) => x)),
     itemLorries: json["itemLorries"] == null ? [] : List<ItemLorry>.from(json["itemLorries"]!.map((x) => ItemLorry.fromJson(x))),
@@ -200,20 +212,12 @@ class Product {
   Map<String, dynamic> toJson() => {
     "id": id,
     "order_id": orderId,
-    "product_id": productId,
     "product": product,
-    "product_type": productType,
     "quantity_liter": quantityLiter,
-    "quantity_bbl": quantityBbl,
     "per_liter_price": perLiterPrice,
-    "per_liter_vat": perLiterVat,
-    "net_amount": netAmount,
-    "vat_amount": vatAmount,
-    "shipping_cost": shippingCost,
     "total_amount": totalAmount,
-    "payment": payment,
-    "total_lorry_physically": totalLorryPhysically,
-    "total_lorry_base_eq": totalLorryBaseEq,
+    "base_quantity_liter": baseQuantityLiter,
+    "upper_quantity_liter": upperQuantityLiter,
     "date": date,
     "additional": additional == null ? [] : List<dynamic>.from(additional!.map((x) => x)),
     "itemLorries": itemLorries == null ? [] : List<dynamic>.from(itemLorries!.map((x) => x.toJson())),
@@ -223,60 +227,38 @@ class Product {
 class ItemLorry {
   int? id;
   String? orderId;
-  String? orderItemId;
-  String? productId;
   String? product;
-  String? contractorId;
-  String? contractor;
-  String? lorryId;
-  String? lorry;
+  Customer? contractor;
+  Lorry? lorry;
   String? challanNo;
   String? quantityLiter;
   String? perLiterPrice;
   String? perLiterVat;
-  String? netAmount;
-  String? vatAmount;
   String? totalAmount;
   String? totalLorryBaseEq;
   String? quantityReceived;
-  String? shortage;
-  String? allowableLoss;
-  String? shortageCompensated;
-  String? arrivedAt;
-  String? shippedAt;
-  String? deliveredAt;
-  dynamic canceledAt;
+  String? date;
   Notes? notes;
+  String? status;
   bool? assignable;
   bool? editable;
 
   ItemLorry({
     this.id,
     this.orderId,
-    this.orderItemId,
-    this.productId,
     this.product,
-    this.contractorId,
     this.contractor,
-    this.lorryId,
     this.lorry,
     this.challanNo,
     this.quantityLiter,
     this.perLiterPrice,
     this.perLiterVat,
-    this.netAmount,
-    this.vatAmount,
     this.totalAmount,
     this.totalLorryBaseEq,
     this.quantityReceived,
-    this.shortage,
-    this.allowableLoss,
-    this.shortageCompensated,
-    this.arrivedAt,
-    this.shippedAt,
-    this.deliveredAt,
-    this.canceledAt,
+    this.date,
     this.notes,
+    this.status,
     this.assignable,
     this.editable,
   });
@@ -284,30 +266,19 @@ class ItemLorry {
   factory ItemLorry.fromJson(Map<String, dynamic> json) => ItemLorry(
     id: json["id"],
     orderId: json["order_id"],
-    orderItemId: json["order_item_id"],
-    productId: json["product_id"],
     product: json["product"],
-    contractorId: json["contractor_id"],
-    contractor: json["contractor"],
-    lorryId: json["lorry_id"],
-    lorry: json["lorry"],
+    contractor: json["contractor"] == null ? null : Customer.fromJson(json["contractor"]),
+    lorry: json["lorry"] == null ? null : Lorry.fromJson(json["lorry"]),
     challanNo: json["challan_no"],
     quantityLiter: json["quantity_liter"],
     perLiterPrice: json["per_liter_price"],
     perLiterVat: json["per_liter_vat"],
-    netAmount: json["net_amount"],
-    vatAmount: json["vat_amount"],
     totalAmount: json["total_amount"],
     totalLorryBaseEq: json["total_lorry_base_eq"],
     quantityReceived: json["quantity_received"],
-    shortage: json["shortage"],
-    allowableLoss: json["allowable_loss"],
-    shortageCompensated: json["shortage_compensated"],
-    arrivedAt: json["arrived_at"],
-    shippedAt: json["shipped_at"],
-    deliveredAt: json["delivered_at"],
-    canceledAt: json["canceled_at"],
+    date: json["date"],
     notes: json["notes"] == null ? null : Notes.fromJson(json["notes"]),
+    status: json["status"],
     assignable: json["assignable"],
     editable: json["editable"],
   );
@@ -315,32 +286,45 @@ class ItemLorry {
   Map<String, dynamic> toJson() => {
     "id": id,
     "order_id": orderId,
-    "order_item_id": orderItemId,
-    "product_id": productId,
     "product": product,
-    "contractor_id": contractorId,
-    "contractor": contractor,
-    "lorry_id": lorryId,
-    "lorry": lorry,
+    "contractor": contractor?.toJson(),
+    "lorry": lorry?.toJson(),
     "challan_no": challanNo,
     "quantity_liter": quantityLiter,
     "per_liter_price": perLiterPrice,
     "per_liter_vat": perLiterVat,
-    "net_amount": netAmount,
-    "vat_amount": vatAmount,
     "total_amount": totalAmount,
     "total_lorry_base_eq": totalLorryBaseEq,
     "quantity_received": quantityReceived,
-    "shortage": shortage,
-    "allowable_loss": allowableLoss,
-    "shortage_compensated": shortageCompensated,
-    "arrived_at": arrivedAt,
-    "shipped_at": shippedAt,
-    "delivered_at": deliveredAt,
-    "canceled_at": canceledAt,
+    "date": date,
     "notes": notes?.toJson(),
+    "status": status,
     "assignable": assignable,
     "editable": editable,
+  };
+}
+
+class Lorry {
+  int? id;
+  String? regNo;
+  String? capacityLiter;
+
+  Lorry({
+    this.id,
+    this.regNo,
+    this.capacityLiter,
+  });
+
+  factory Lorry.fromJson(Map<String, dynamic> json) => Lorry(
+    id: json["id"],
+    regNo: json["reg_no"],
+    capacityLiter: json["capacity_liter"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "reg_no": regNo,
+    "capacity_liter": capacityLiter,
   };
 }
 

@@ -2,18 +2,18 @@
 import 'package:dashed_circular_progress_bar/dashed_circular_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../core/values/app_images.dart';
-import '../../../core/widget/profile_image.dart';
-import '../../../core/widget/status_card.dart';
-import '../../../routes/app_pages.dart';
+import '../../core/values/app_colors.dart';
+import '../../core/values/app_images.dart';
+import '../../core/widget/profile_image.dart';
+import '../../core/widget/status_card.dart';
+import '../../routes/app_pages.dart';
 import '/app/core/base/base_view.dart';
-import '../../../core/values/app_colors.dart';
-import 'customer_home_controller.dart';
+import 'home_controller.dart';
 
 
-class CustomerHomeView extends BaseView<CustomerHomeController> {
+class HomeView extends BaseView<HomeController> {
 
-  CustomerHomeView(){
+  HomeView(){
     controller.loadInitialData();
     controller.fetchDashBoardData();
   }
@@ -36,7 +36,7 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('RECENT ${controller.orderStatus.value}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)).marginOnly(left: 10, top: 24),
+                Text('RECENT ${controller.status.value}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)).marginOnly(left: 10, top: 24),
                 const Spacer(),
                 const Icon(Icons.arrow_forward_ios, size: 20, color: AppColors.colorDark).marginOnly(right: 10, top: 24),
               ],
@@ -179,6 +179,7 @@ class CustomerHomeView extends BaseView<CustomerHomeController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.gray)),
+            const SizedBox(height: 6),
             Text(value, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
           ],
         ),

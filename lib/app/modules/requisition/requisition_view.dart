@@ -57,7 +57,7 @@ class RequisitionView extends BaseView<RequisitionController> {
   @override
   Widget? bottomNavigationBar() {
     return Container(
-      height: 240,
+      height: 180,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.colorWhite,
@@ -79,24 +79,6 @@ class RequisitionView extends BaseView<RequisitionController> {
         children: [
           const Text('Order Summary', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 8),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Quantity', style: TextStyle(fontSize: 14, color: AppColors.gray)),
-              Text('05', style: TextStyle(fontSize: 14, color: AppColors.gray, fontWeight: FontWeight.bold)),
-            ],
-          ),
-          const SizedBox(height: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text('Total Amount', style: TextStyle(fontSize: 14, color: AppColors.gray)),
-              Text('${appLocalization.stk} 5000.00', style: const TextStyle(fontSize: 14, color: AppColors.gray, fontWeight: FontWeight.bold)),
-            ],
-          ),
-          const SizedBox(height: 4),
-          const Divider(color: AppColors.grayLight, thickness: 0.5),
-          const SizedBox(height: 4),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -142,8 +124,8 @@ class RequisitionView extends BaseView<RequisitionController> {
           headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
           columns: [
             DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
-            DataColumn(label: Flexible(child: Center(child: Text('Qty(9000)', style: AppColors.tableHeaderStyle())))),
-            DataColumn(label: Flexible(child: Center(child: Text('Qty(13500)', style: AppColors.tableHeaderStyle())))),
+            DataColumn(label: Flexible(child: Center(child: Text('Qty(9000) Ltr', style: AppColors.tableHeaderStyle())))),
+            DataColumn(label: Flexible(child: Center(child: Text('Qty(13500) Ltr', style: AppColors.tableHeaderStyle())))),
           ],
           rows: List.generate(controller.productList.length, growable: true , (index){
             return productRow(controller.productList[index]);

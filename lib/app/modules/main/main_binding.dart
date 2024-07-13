@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../home/customer_home/customer_home_controller.dart';
+import '../home/home_controller.dart';
 import '../order/order_controller.dart';
 import 'main_controller.dart';
 
@@ -11,8 +11,8 @@ class MainBinding extends Bindings {
       () => MainController(),
       fenix: true,
     );
-    Get.lazyPut<CustomerHomeController>(
-          () => CustomerHomeController(),
+    Get.lazyPut<HomeController>(
+          () => HomeController(),
       fenix: true,
     );
     Get.lazyPut<OrderController>(

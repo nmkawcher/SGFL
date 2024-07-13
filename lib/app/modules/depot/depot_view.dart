@@ -22,33 +22,38 @@ class DepotView extends BaseView<DepotController> {
   @override
   Widget body(BuildContext context) {
     return Obx((){
-      return ListView.builder(
-          itemCount: controller.depotList.length,
-          itemBuilder: (context, index){
-            return Column(
-              children: [
-                Visibility(
-                  visible: controller.isUserAdmin.value,
-                  child: ListTile(
-                    horizontalTitleGap: 0,
-                    leading: const SizedBox(
-                      height: double.infinity,
-                      child: Icon(Icons.account_balance_rounded, color: AppColors.blueGrey, size: 24),
+      return RefreshIndicator(
+        onRefresh: () async{
+          controller.fetchDepotData();
+        },
+        child: ListView.builder(
+            itemCount: controller.depotList.length,
+            itemBuilder: (context, index){
+              return Column(
+                children: [
+                  Visibility(
+                    visible: controller.isUserAdmin.value,
+                    child: ListTile(
+                      horizontalTitleGap: 0,
+                      leading: const SizedBox(
+                        height: double.infinity,
+                        child: Icon(Icons.account_balance_rounded, color: AppColors.blueGrey, size: 24),
+                      ),
+                      title:  Text(controller.depotList[index].name!, style: const TextStyle(fontSize: 16, color: AppColors.blueGrey)),
+                      subtitle: Text(controller.depotList[index].address!, style: const TextStyle(fontSize: 12, color: AppColors.blueGrey)),
                     ),
-                    title:  Text(controller.depotList[index].name!, style: const TextStyle(fontSize: 16, color: AppColors.blueGrey)),
-                    subtitle: Text(controller.depotList[index].address!, style: const TextStyle(fontSize: 12, color: AppColors.blueGrey)),
                   ),
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  padding:const EdgeInsets.only(left: 8, right: 8, top: 8),
-                  itemCount: controller.depotList[index].depotZone?.length,
-                  itemBuilder:(context, subIndex)=> depotItem(index, subIndex),
-                ),
-              ],
-            );
-          }
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    padding:const EdgeInsets.only(left: 8, right: 8, top: 8),
+                    itemCount: controller.depotList[index].depotZone?.length,
+                    itemBuilder:(context, subIndex)=> depotItem(index, subIndex),
+                  ),
+                ],
+              );
+            }
+        ),
       );
     });
   }

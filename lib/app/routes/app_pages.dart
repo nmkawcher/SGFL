@@ -11,7 +11,7 @@ import 'package:sgfl_sales/app/modules/profile/profile_binding.dart';
 import 'package:sgfl_sales/app/modules/profile/profile_view.dart';
 import 'package:sgfl_sales/app/modules/requisition/requisition_binding.dart';
 import '../modules/home/home_binding.dart';
-import '../modules/home/customer_home/customer_home_view.dart';
+import '../modules/home/home_view.dart';
 import '../modules/login/login_binding.dart';
 import '../modules/login/login_view.dart';
 import '../modules/main/main_binding.dart';
@@ -39,7 +39,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.HOME_Customer,
-      page: () => CustomerHomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(

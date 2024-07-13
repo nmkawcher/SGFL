@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/values/app_colors.dart';
 import '../../routes/app_pages.dart';
-import '../home/customer_home/customer_home_view.dart';
+import '../home/home_view.dart';
 import '../order/order_view.dart';
 import '/app/core/base/base_view.dart';
 import 'main_controller.dart';
 
 
 class MainView extends BaseView<MainController> {
+  MainView(){controller.loadInitialData();}
 
   @override
   PreferredSizeWidget? appBar(BuildContext context) => null;
@@ -62,7 +63,7 @@ class MainView extends BaseView<MainController> {
     });
   }
 
-  final CustomerHomeView homeView = CustomerHomeView();
+  final HomeView homeView = HomeView();
   OrderView? favoriteView;
 
   Widget pageView(int menuCode) {

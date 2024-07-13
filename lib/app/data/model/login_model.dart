@@ -70,6 +70,21 @@ class User {
     avatar: json["avatar"],
     lastLogin: json["last_login"],
   );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "bn_name": bnName,
+    "designation": designation,
+    "bn_designation": bnDesignation,
+    "email": email,
+    "phone_no": phoneNo,
+    "role": role,
+    "dipo_id": dipoId,
+    "avatar": avatar,
+    "last_login": lastLogin,
+  };
+
 }
 
 class Organisation {
