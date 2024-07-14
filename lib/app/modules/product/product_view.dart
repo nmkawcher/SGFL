@@ -83,7 +83,7 @@ class ProductView extends BaseView<ProductController> {
           child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: AppColors.grayShed,
+                color: AppColors.colorWhite,
                 borderRadius: BorderRadius.circular(4),
               ),
               padding: const EdgeInsets.all(4),

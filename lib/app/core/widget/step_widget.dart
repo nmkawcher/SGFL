@@ -15,6 +15,7 @@ class _StepWidgetState extends State<StepWidget> {
   @override
   Widget build(BuildContext context) {
     return EasyStepper(
+      enableStepTapping: false,
       activeStep: widget.step,
       borderThickness: 2,
       internalPadding: 4,

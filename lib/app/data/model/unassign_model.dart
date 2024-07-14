@@ -196,14 +196,22 @@ class Dipo {
 class AssignModel{
   int? itemId;
   int? contractorId;
+  int? lorryId;
 
   AssignModel({
     this.itemId,
     this.contractorId,
+    this.lorryId
   });
 
-  Map<String, dynamic> toJson()=> {
-    'item_id': itemId,
-    'contractor_id': contractorId
-  };
+  Map<String, dynamic> toJson(){
+   var map = <String, dynamic>{'item_id': itemId};
+    if(contractorId != null){
+      map['contractor_id'] = contractorId;
+    }
+    if(lorryId != null){
+      map['lorry_id'] = lorryId;
+    }
+    return map;
+  }
 }

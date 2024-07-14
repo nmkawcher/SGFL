@@ -38,6 +38,7 @@ abstract class AppColors {
   static const Color errorColor = Color(0xFFAB0B0B);
   static const Color colorDark = Color(0xFF353638);
   static const Color colorTeal = Color(0xFF00EDFF);
+  static const Color colorGrayBG = Color(0xFFFAF9F9);
 
   static Color statusColor(String value) => statusColorMap[value] ?? primary;
   static const Map<String, Color> statusColorMap = {

@@ -12,4 +12,5 @@ class ApiEndPoint{
   static const String UNASSIGN = "api/orders/unassigned-items";
   static const String ASSIGN = "api/orders/assign";
   static const String CONTRACTOR = "api/contractors";
+  static const String LORRY = "api/lorries";
 }

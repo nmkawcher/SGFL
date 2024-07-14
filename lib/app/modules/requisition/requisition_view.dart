@@ -115,21 +115,27 @@ class RequisitionView extends BaseView<RequisitionController> {
       width: Get.width,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
-        child: DataTable(
-          columnSpacing: 30,
-          dividerThickness: 0.00000000001,
-          headingRowHeight: 35,
-          dataRowMinHeight: 35.0,
-          dataRowMaxHeight: 40.0,
-          headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
-          columns: [
-            DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
-            DataColumn(label: Flexible(child: Center(child: Text('Qty(9000) Ltr', style: AppColors.tableHeaderStyle())))),
-            DataColumn(label: Flexible(child: Center(child: Text('Qty(13500) Ltr', style: AppColors.tableHeaderStyle())))),
-          ],
-          rows: List.generate(controller.productList.length, growable: true , (index){
-            return productRow(controller.productList[index]);
-          }),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minWidth: Get.width,
+            maxWidth: double.infinity,
+          ),
+          child: DataTable(
+            columnSpacing: 30,
+            dividerThickness: 0.00000000001,
+            headingRowHeight: 35,
+            dataRowMinHeight: 35.0,
+            dataRowMaxHeight: 40.0,
+            headingRowColor: WidgetStateProperty.all(AppColors.primary.withOpacity(0.20)),
+            columns: [
+              DataColumn(label: Text('Product', style: AppColors.tableHeaderStyle())),
+              DataColumn(label: Flexible(child: Center(child: Text('Qty(9000) Ltr', style: AppColors.tableHeaderStyle())))),
+              DataColumn(label: Flexible(child: Center(child: Text('Qty(13500) Ltr', style: AppColors.tableHeaderStyle())))),
+            ],
+            rows: List.generate(controller.productList.length, growable: true , (index){
+              return productRow(controller.productList[index]);
+            }),
+          ),
         ),
       ),
     );

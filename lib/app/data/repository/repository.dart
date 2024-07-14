@@ -1,5 +1,6 @@
 
 import 'package:get/get.dart';
+import 'package:sgfl_sales/app/data/model/lorry_model.dart';
 import '../model/baseResponse_model.dart';
 import '../model/contractor_model.dart';
 import '../model/depot_model.dart';
@@ -22,10 +23,12 @@ abstract class Repository {
   Future<BaseResponseModel> requisitionReqData(RequisitionReqModel reqModel);
   Future<dynamic> getOrderData({dynamic query});
   Future<HomeModel> getDashBoardData();
-  Future<BaseResponseModel> orderConfirm(int id);
+  Future<BaseResponseModel> orderConfirm(int id, String status);
   Future<List<UnassignedModel>> getAllUnassigned();
   Future<List<Contractor>> getContractorData();
   Future<BaseResponseModel> assignOrder(List<AssignModel> assignModel);
+  Future<BaseResponseModel> orderItemUpdate(int id, int itemId, String receivedQty);
+  Future<List<LorryModel>> getLorryData(int contractorId);
 
 }
 
@@ -84,8 +87,8 @@ class RepositoryImpl implements Repository{
   }
 
   @override
-  Future<BaseResponseModel> orderConfirm(int id) {
-    return _remoteSource.orderConfirm(id);
+  Future<BaseResponseModel> orderConfirm(int id, String status) {
+    return _remoteSource.orderConfirm(id, status);
   }
 
   @override
@@ -103,5 +106,14 @@ class RepositoryImpl implements Repository{
     return _remoteSource.assignOrder(assignModel);
   }
 
+  @override
+  Future<BaseResponseModel> orderItemUpdate(int id, int itemId, String receivedQty) {
+    return _remoteSource.orderItemUpdate(id, itemId, receivedQty);
+  }
+
+  @override
+  Future<List<LorryModel>> getLorryData(int contractorId) {
+    return _remoteSource.getLorryData(contractorId);
+  }
 }
 

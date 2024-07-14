@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -26,7 +25,7 @@ class ProfileView extends BaseView<ProfileController> {
           style: const TextStyle(color: Colors.black)),
       elevation: 0,
       centerTitle: true,
-      backgroundColor: const Color(0xFFFAF9F9),
+      backgroundColor: AppColors.colorGrayBG,
       iconTheme: const IconThemeData(color: Colors.black),
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -47,7 +46,6 @@ class ProfileView extends BaseView<ProfileController> {
           child: SingleChildScrollView(
             child: Container(
               height: Get.height,
-              color: const Color(0xFFFAF9F9),
               padding: const EdgeInsets.all(16),
               child: Form(
                 key: controller.profileGlobalKey,

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import '../../core/base/base_remote_source.dart';
 import '../../core/values/app_const.dart';
@@ -8,6 +6,7 @@ import '../model/contractor_model.dart';
 import '../model/depot_model.dart';
 import '../model/home_model.dart';
 import '../model/login_model.dart';
+import '../model/lorry_model.dart';
 import '../model/product_model.dart';
 import '../model/requisition_model.dart';
 import '../model/reset_pass_model.dart';
@@ -25,12 +24,12 @@ abstract class RemoteDataSource {
   Future<BaseResponseModel> requisitionReqData(RequisitionReqModel reqModel);
   Future<dynamic> getOrderData({dynamic query});
   Future<HomeModel> getDashBoardData();
-  Future<BaseResponseModel> orderConfirm(int id);
+  Future<BaseResponseModel> orderConfirm(int id, String status);
   Future<List<UnassignedModel>> getAllUnassigned();
   Future<List<Contractor>> getContractorData();
   Future<BaseResponseModel> assignOrder(List<AssignModel> assignModel);
-
-}
+  Future<BaseResponseModel> orderItemUpdate(int id, int itemId, String receivedQty);
+  Future<List<LorryModel>> getLorryData(int contractorId);}
 
 
 class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource {
@@ -165,8 +164,8 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
   }
 
   @override
-  Future<BaseResponseModel> orderConfirm(int id) {
-    var data = FormData.fromMap({'status': 'confirmed', '_method': 'put'});
+  Future<BaseResponseModel> orderConfirm(int id, String status) {
+    var data = FormData.fromMap({'status': status, '_method': 'put'});
     var dioCall = dioClient.post('${ApiEndPoint.ORDER}/$id/status-update', data: data);
 
     try {
@@ -207,12 +206,37 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
   }
 
   @override
+  Future<BaseResponseModel> orderItemUpdate(int id, int itemId, String receivedQty) {
+    var data = FormData.fromMap({'_method': 'put', 'quantity': receivedQty, 'item_id': itemId});
+    var dioCall = dioClient.post('${ApiEndPoint.ORDER}/$id/receive-update', data: data);
+
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _baseResponseData(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<List<Contractor>> getContractorData() {
     var dioCall = dioClient.get(ApiEndPoint.CONTRACTOR);
 
     try {
       return callApiWithErrorParser(dioCall)
           .then((response) => _contractorResData(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<LorryModel>> getLorryData(int contractorId) {
+    var dioCall = dioClient.get('${ApiEndPoint.LORRY}/$contractorId');
+
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _lorryResData(response));
     } catch (e) {
       rethrow;
     }
@@ -258,6 +282,10 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
 
   List<Contractor> _contractorResData(Response<dynamic> response){
     return List.from(response.data.map((x) => Contractor.fromJson(x)));
+  }
+
+  List<LorryModel> _lorryResData(Response<dynamic> response){
+    return lorryModelFromJson(response.data);
   }
 
 }

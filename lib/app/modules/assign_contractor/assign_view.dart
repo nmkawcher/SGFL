@@ -98,9 +98,23 @@ class AssignView extends BaseView<AssignController> {
       return controller.selectedUnassign.isEmpty
         ? const SizedBox()
         : Container(
-          color: const Color(0xFFFAF9F9),
           height: 200,
           padding: const EdgeInsets.only(left: 16, right: 16, top: 24),
+          decoration: BoxDecoration(
+          color: AppColors.colorWhite,
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(32),
+              topRight: Radius.circular(32)
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.colorDark.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 16,
+              offset: const Offset(0, 1), // changes position of shadow
+            ),
+          ],
+        ),
           child: Form(
             key: controller.assignFormKey,
             child: Column(
