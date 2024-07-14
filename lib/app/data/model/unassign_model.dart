@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-List<UnassignedModel> unAssignModelFromJson(String str) => List<UnassignedModel>.from(json.decode(str).map((x) => UnassignedModel.fromJson(x)));
+import 'package:get/get.dart';
+
+List<UnassignedModel> unAssignModelFromJson(List str) => List<UnassignedModel>.from(str.map((x) => UnassignedModel.fromJson(x)));
 
 String unAssignModelToJson(List<UnassignedModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
@@ -23,6 +25,7 @@ class UnassignedModel {
   bool? assignable;
   bool? editable;
   Order? order;
+  RxBool isSelected;
 
   UnassignedModel({
     this.id,
@@ -43,6 +46,7 @@ class UnassignedModel {
     this.assignable,
     this.editable,
     this.order,
+    required this.isSelected
   });
 
   factory UnassignedModel.fromJson(Map<String, dynamic> json) => UnassignedModel(
@@ -64,6 +68,7 @@ class UnassignedModel {
     assignable: json["assignable"],
     editable: json["editable"],
     order: json["order"] == null ? null : Order.fromJson(json["order"]),
+    isSelected: false.obs
   );
 
   Map<String, dynamic> toJson() => {
@@ -189,8 +194,8 @@ class Dipo {
 }
 
 class AssignModel{
-  String? itemId;
-  String? contractorId;
+  int? itemId;
+  int? contractorId;
 
   AssignModel({
     this.itemId,

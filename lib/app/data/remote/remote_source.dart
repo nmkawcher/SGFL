@@ -257,7 +257,7 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
   }
 
   List<Contractor> _contractorResData(Response<dynamic> response){
-    return List.from(json.decode(response.data).map((x) => Contractor.fromJson(x)));
+    return List.from(response.data.map((x) => Contractor.fromJson(x)));
   }
 
 }
