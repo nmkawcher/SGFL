@@ -38,8 +38,11 @@ class RequisitionController extends BaseController {
      requisitionReq.value.customerId = orgID;
      requisitionReq.value.dipoId = depot.id;
      requisitionReq.value.note = notedController.text;
+     productReqList.removeWhere((element) => element.baseQuantity == 0 && element.upperQuantity == 0);
      requisitionReq.value.items = productReqList;
-     crateRequisition(requisitionReq.value);
+     if(productReqList.isNotEmpty) {
+       crateRequisition(requisitionReq.value);
+     }
   }
 
   void crateRequisition(RequisitionReqModel reqModel) {
