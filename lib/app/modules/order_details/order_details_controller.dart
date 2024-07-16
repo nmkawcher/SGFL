@@ -32,7 +32,7 @@ class OrderDetailsController extends BaseController {
   void loadInitialData()async {
     var userType = await preference.getString(PreferenceManager.keyUserType);
     title = userType == 'Contractor' ? "Request":"Requisition";
-    isAdmin.value = progressStep == 0 && userType == 'Admin';
+    isAdmin.value =  userType == 'Admin';
     _rxOrder.value = orderArgus as Order;
   }
 

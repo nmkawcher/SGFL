@@ -197,11 +197,13 @@ class AssignModel{
   int? itemId;
   int? contractorId;
   int? lorryId;
+  int? driverId;
 
   AssignModel({
     this.itemId,
     this.contractorId,
-    this.lorryId
+    this.lorryId,
+    this.driverId
   });
 
   Map<String, dynamic> toJson(){
@@ -211,6 +213,9 @@ class AssignModel{
     }
     if(lorryId != null){
       map['lorry_id'] = lorryId;
+    }
+    if(driverId != null){
+      map['driver_id'] = driverId;
     }
     return map;
   }

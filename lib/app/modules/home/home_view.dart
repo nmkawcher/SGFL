@@ -24,10 +24,10 @@ class HomeView extends BaseView<HomeController> {
 
   @override
   Widget body(BuildContext context) {
-    return SingleChildScrollView(
-      child: Obx((){
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Obx((){
+      return RefreshIndicator(
+        onRefresh: () async {controller.fetchDashBoardData();},
+        child: ListView(
           children: [
             profileUI(),
             totalStatusUI(),
@@ -43,9 +43,9 @@ class HomeView extends BaseView<HomeController> {
             ),
             OrderUiModel(orderList: controller.orderList),
           ],
-        );
-      })
-    );
+        ),
+      );
+    });
   }
 
   Widget profileUI(){

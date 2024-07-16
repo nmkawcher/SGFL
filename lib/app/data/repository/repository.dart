@@ -4,6 +4,7 @@ import 'package:sgfl_sales/app/data/model/lorry_model.dart';
 import '../model/baseResponse_model.dart';
 import '../model/contractor_model.dart';
 import '../model/depot_model.dart';
+import '../model/driver_mode.dart';
 import '../model/home_model.dart';
 import '../model/login_model.dart';
 import '../model/product_model.dart';
@@ -28,7 +29,8 @@ abstract class Repository {
   Future<List<Contractor>> getContractorData();
   Future<BaseResponseModel> assignOrder(List<AssignModel> assignModel);
   Future<BaseResponseModel> orderItemUpdate(int id, int itemId, String receivedQty);
-  Future<List<LorryModel>> getLorryData(int contractorId);
+  Future<List<LorryModel>> getLorryData(int contractorId, int itemId);
+  Future<List<DriverModel>> getAllDriverData(int contractorId, int itemId);
 
 }
 
@@ -112,8 +114,14 @@ class RepositoryImpl implements Repository{
   }
 
   @override
-  Future<List<LorryModel>> getLorryData(int contractorId) {
-    return _remoteSource.getLorryData(contractorId);
+  Future<List<LorryModel>> getLorryData(int contractorId, int itemId) {
+    return _remoteSource.getLorryData(contractorId, itemId);
   }
+
+  @override
+  Future<List<DriverModel>> getAllDriverData(int contractorId, int itemId) {
+    return _remoteSource.getAllDriverData(contractorId, itemId);
+  }
+
 }
 

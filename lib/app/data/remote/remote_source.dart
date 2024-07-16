@@ -4,6 +4,7 @@ import '../../core/values/app_const.dart';
 import '../model/baseResponse_model.dart';
 import '../model/contractor_model.dart';
 import '../model/depot_model.dart';
+import '../model/driver_mode.dart';
 import '../model/home_model.dart';
 import '../model/login_model.dart';
 import '../model/lorry_model.dart';
@@ -29,7 +30,11 @@ abstract class RemoteDataSource {
   Future<List<Contractor>> getContractorData();
   Future<BaseResponseModel> assignOrder(List<AssignModel> assignModel);
   Future<BaseResponseModel> orderItemUpdate(int id, int itemId, String receivedQty);
-  Future<List<LorryModel>> getLorryData(int contractorId);}
+  Future<List<LorryModel>> getLorryData(int contractorId, int itemId);
+  Future<List<DriverModel>> getAllDriverData(int contractorId , int itemId);
+
+}
+
 
 
 class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource {
@@ -231,12 +236,24 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
   }
 
   @override
-  Future<List<LorryModel>> getLorryData(int contractorId) {
-    var dioCall = dioClient.get('${ApiEndPoint.LORRY}/$contractorId');
+  Future<List<LorryModel>> getLorryData(int contractorId , int itemId) {
+    var dioCall = dioClient.get('${ApiEndPoint.LORRY}/$contractorId', queryParameters: {'item': itemId});
 
     try {
       return callApiWithErrorParser(dioCall)
           .then((response) => _lorryResData(response));
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<DriverModel>> getAllDriverData(int contractorId, int itemId) {
+    var dioCall = dioClient.get('${ApiEndPoint.DRIVER}/$contractorId', queryParameters: {'item': itemId});
+
+    try {
+      return callApiWithErrorParser(dioCall)
+          .then((response) => _driverResData(response));
     } catch (e) {
       rethrow;
     }
@@ -286,6 +303,10 @@ class RemoteDataSourceImpl extends BaseRemoteSource implements RemoteDataSource 
 
   List<LorryModel> _lorryResData(Response<dynamic> response){
     return lorryModelFromJson(response.data);
+  }
+
+  List<DriverModel> _driverResData(Response<dynamic> response){
+    return driverModelFromJson(response.data);
   }
 
 }

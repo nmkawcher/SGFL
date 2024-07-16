@@ -1,6 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:get/get_connect/http/src/status/http_status.dart';
-
 import '../utils/dialog_helper.dart';
 import '/app/network/dio_provider.dart';
 import '/app/network/error_handlers.dart';
@@ -20,8 +18,6 @@ abstract class BaseRemoteSource {
     } on DioException catch (dioError) {
       Exception exception = handleDioError(dioError);
 
-      String? status = dioError.response?.data["status"];
-      int? statusCode = dioError.response?.data["statusCode"];
       String? errorMessage = dioError.response?.data["message"];
       DialogHelper.showErrorDialog("Something went wrong", errorMessage!);
 

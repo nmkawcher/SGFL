@@ -13,4 +13,5 @@ class ApiEndPoint{
   static const String ASSIGN = "api/orders/assign";
   static const String CONTRACTOR = "api/contractors";
   static const String LORRY = "api/lorries";
+  static const String DRIVER = "api/drivers";
 }

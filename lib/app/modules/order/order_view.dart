@@ -2,6 +2,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sgfl_sales/app/data/model/contractor_model.dart';
+import 'package:sgfl_sales/app/data/model/driver_mode.dart';
 import 'package:sgfl_sales/app/data/model/lorry_model.dart';
 import 'package:sgfl_sales/app/data/model/order_model.dart';
 import '../../core/utils/dialog_helper.dart';
@@ -129,16 +130,14 @@ class OrderView extends BaseView<OrderController> {
     );
   }
 
-
   Widget buildContractorList(List<ContractorOrder> orderList) {
     return RefreshIndicator(
       onRefresh: () async {
-        controller.orderLists[controller.requestStatus.value]!.clear();
+        controller.contractorOrderLists[controller.requestStatus.value]!.clear();
         controller.fetchOrderData(controller.requestStatus.value);
       },
       child: ListView.separated(
         itemCount: orderList.length,
-        shrinkWrap: true,
         padding: const EdgeInsets.all(8),
         separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8),
         itemBuilder: (BuildContext context, int index) {
@@ -154,11 +153,11 @@ class OrderView extends BaseView<OrderController> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: InkWell(
         onTap: (){
+          controller.lorryList.clear();
+          controller.driverList.clear();
+          controller.selectedOrderID.value = order.id!;
           if(controller.requestStatus.value =="pending" && order.lorry?.regNo == null){
-            DialogHelper.onDefaultButtonSheet(
-                bottomSheetBar(order.id!),
-                dialogHeight: Get.height * 0.33
-            );
+            controller.contractorDataLoad();
           }
         },
         child: Container(
@@ -214,7 +213,6 @@ class OrderView extends BaseView<OrderController> {
       ],
     );
   }
-
   Widget bottomSheetBar(int itemId) {
     return Container(
       margin: const EdgeInsets.only(top: 40, left: 16, right: 16),
@@ -257,7 +255,40 @@ class OrderView extends BaseView<OrderController> {
                 controller.selectedLorry.value = value!.id!;
               },
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 8),
+            DropdownSearch<DriverModel>(
+              popupProps: PopupProps.menu(
+                constraints:  const BoxConstraints.tightFor(height:250),
+                containerBuilder: (context, child) {
+                  return Container(
+                    padding: const EdgeInsets.all(16),
+                    child: child,
+                  );
+                },
+                menuProps: MenuProps(
+                    clipBehavior: Clip.antiAlias,
+                    elevation: 8,
+                    borderRadius: BorderRadius.circular(16)
+                ),
+              ),
+              dropdownDecoratorProps: DropDownDecoratorProps(
+                baseStyle: const TextStyle(fontSize: 14),
+                dropdownSearchDecoration: InputDecoration(
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                  labelText: 'Driver',
+                  prefixIcon: const Icon(Icons.person, color: AppColors.primary,),
+                  labelStyle: const TextStyle(fontSize: 18),
+                  contentPadding: const EdgeInsets.all(18),
+                ),
+              ),
+              validator: (DriverModel? value) => value == null ?  appLocalization.requiredField : null,
+              items: controller.driverList,
+              itemAsString: (DriverModel driver) => driver.name!,
+              onChanged: (value){
+                controller.selectedDriver.value = value!.id!;
+              },
+            ),
+            const SizedBox(height: 32),
             DefaultAppBtn(title: 'Submit', onClick: (){controller.saveLorryAssign(itemId);}),
           ],
         ),

@@ -188,14 +188,14 @@ class OrderDetailsView extends BaseView<OrderDetailsController> {
   @override
   Widget? bottomNavigationBar() {
       return Obx((){
-        return controller.isAdmin.value
+        return controller.isAdmin.isTrue && controller.progressStep == 0
             ? Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
             child: Row(
               children: [
                 Expanded(child: DefaultAppBtn(title: 'Cancel',backgroundColor: AppColors.red, onClick: (){controller.confirmOrder('canceled');})),
                 const SizedBox(width: 24),
-                Expanded(child: DefaultAppBtn(title: 'Confirm', onClick: (){controller.confirmOrder('confirmed');})),
+                Expanded(child: DefaultAppBtn(title: 'Approve', onClick: (){controller.confirmOrder('confirmed');})),
               ],
             )
         ):const SizedBox();
