@@ -62,8 +62,7 @@ class OrderView extends BaseView<OrderController> {
   Widget buildOrderList(List<Order> orderList) {
     return RefreshIndicator(
       onRefresh: () async {
-        controller.orderLists[controller.requestStatus.value]!.clear();
-        controller.fetchOrderData(controller.requestStatus.value);
+       controller.onRefreshAllData();
       },
       child: ListView.separated(
         itemCount: orderList.length,

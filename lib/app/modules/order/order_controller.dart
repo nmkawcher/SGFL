@@ -78,6 +78,11 @@ class OrderController extends BaseController with GetSingleTickerProviderStateMi
 
   final Repository _repository = Get.find(tag: (Repository).toString());
 
+  void onRefreshAllData() {
+    orderLists[requestStatus.value]!.clear();
+    fetchOrderData(requestStatus.value);
+  }
+
   void fetchOrderData(String type) {
     var listToCheck = isContractor.value ? contractorOrderLists[type] : orderLists[type];
     if (listToCheck!.isEmpty) {

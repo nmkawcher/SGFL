@@ -9,6 +9,7 @@ import '../../data/model/depot_model.dart';
 import '../../data/model/product_model.dart';
 import '../../data/model/requisition_model.dart';
 import '../../data/repository/repository.dart';
+import '../main/main_controller.dart';
 import '/app/core/base/base_controller.dart';
 
 class RequisitionController extends BaseController {
@@ -31,7 +32,7 @@ class RequisitionController extends BaseController {
   TextEditingController notedController = TextEditingController();
 
   final Repository _repository = Get.find(tag: (Repository).toString());
-
+  final MainController mainController = Get.find();
 
   void creteRequisition() async {
      var orgID = await preference.getInt(PreferenceManager.keyOrganizationId);
@@ -53,7 +54,9 @@ class RequisitionController extends BaseController {
   void _handleResponseSuccess(BaseResponseModel result) async {
     DialogHelper.showSuccessDialog(successDialog(), function: (){
       Get.until((route)=>Get.currentRoute == Routes.MAIN);
+      mainController.setBottomNavIndex(1);
     });
+
   }
 
 
