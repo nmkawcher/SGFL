@@ -6,7 +6,7 @@
    <application
        android:allowBackup="false"
         android:label="SGFL Sales"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
         android:requestLegacyExternalStorage="true"
        >
         <activity
