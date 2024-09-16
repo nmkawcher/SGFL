@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sgfl_sales/app/data/model/product_model.dart';
-import '../../core/values/app_colors.dart';
-import '../../core/widget/custom_app_bar.dart';
-import '../../core/widget/custom_btn.dart';
-import '../../routes/app_pages.dart';
+import '../../../core/values/app_colors.dart';
+import '../../../core/widget/custom_app_bar.dart';
+import '../../../core/widget/custom_btn.dart';
+import '../../../routes/app_pages.dart';
 import '/app/core/base/base_view.dart';
 import 'product_controller.dart';
 

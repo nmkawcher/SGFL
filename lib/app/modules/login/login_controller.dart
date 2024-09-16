@@ -63,7 +63,7 @@ class LoginController extends BaseController {
     preference.setInt(PreferenceManager.keyUserID, result.data?.id ?? 0);
     preference.setInt(PreferenceManager.keyOrganizationId, result.organisation?.id ?? 0);
     dbManager.insertItems(tableUser, result.data!.toJson());
-    if(result.data?.role != 'Admin') {
+    if(result.organisation!= null && result.data?.role != 'Admin') {
       dbManager.insertItems(tableOrganization, result.organisation!.toJson());
     }
 

@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:sgfl_sales/app/data/local/db/sqlite_table.dart';
-import '../../data/repository/repository.dart';
+import '../../../data/model/product_model.dart';
+import '../../../data/repository/repository.dart';
 import '/app/core/base/base_controller.dart';
-import '../../data/model/product_model.dart';
 
 class ProductController extends BaseController {
 

@@ -25,24 +25,27 @@ class HomeView extends BaseView<HomeController> {
   @override
   Widget body(BuildContext context) {
     return Obx((){
-      return RefreshIndicator(
-        onRefresh: () async {controller.fetchDashBoardData();},
-        child: ListView(
-          children: [
-            profileUI(),
-            totalStatusUI(),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text('RECENT ${controller.status.value}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500)).marginOnly(left: 10, top: 24),
-                const Spacer(),
-                const Icon(Icons.arrow_forward_ios, size: 20, color: AppColors.colorDark).marginOnly(right: 10, top: 24),
-              ],
-            ),
-            OrderUiModel(orderList: controller.orderList),
-          ],
+      return Container(
+        color: AppColors.bgColor,
+        child: RefreshIndicator(
+          onRefresh: () async {controller.fetchDashBoardData();},
+          child: ListView(
+            children: [
+              profileUI(),
+              totalStatusUI(),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('RECENT ${controller.status.value}', style: const TextStyle(fontSize: 16,color: AppColors.textColor, fontWeight: FontWeight.w500)).marginOnly(left: 10, top: 24),
+                  const Spacer(),
+                  const Icon(Icons.arrow_forward_ios, size: 20, color: AppColors.bodyTextColor).marginOnly(right: 10, top: 24),
+                ],
+              ),
+              OrderUiModel(orderList: controller.orderList),
+            ],
+          ),
         ),
       );
     });
@@ -50,6 +53,7 @@ class HomeView extends BaseView<HomeController> {
 
   Widget profileUI(){
     return Container(
+      //color: Colors.white,
       margin: const EdgeInsets.only(left: 8,right: 8,top: 16),
       child: ListTile(
         onTap: (){Get.toNamed(Routes.PROFILE);},
@@ -63,7 +67,7 @@ class HomeView extends BaseView<HomeController> {
             child: Image.asset(AppImages.notificationIcon, height: 24),
           ),
         ),
-        title: const Text('Welcome Back',style: TextStyle(fontSize: 12, color: AppColors.gray)),
+        title: const Text('Welcome Back',style: TextStyle(fontSize: 12, color: AppColors.tileColor)),
         subtitle: Text(controller.userName.value,
             style: const TextStyle(fontSize: 18,fontWeight: FontWeight.w600,color: AppColors.textColor)
         ),
@@ -76,9 +80,9 @@ class HomeView extends BaseView<HomeController> {
       return Container();
     }
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),side: const BorderSide(width: 1,color: AppColors.borderColor)),
       margin: const EdgeInsets.only(left: 16,right: 16,top: 16),
-      elevation: 4,
+      elevation: 0,
       child: Container(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -131,7 +135,7 @@ class HomeView extends BaseView<HomeController> {
                ],
              ),
             const SizedBox(height: 8),
-            const Divider( thickness: 1, color: AppColors.grayLight1),
+            const Divider( thickness: 1, color: AppColors.borderColor),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -150,7 +154,7 @@ class HomeView extends BaseView<HomeController> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(value, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
+        Text(value, style: const TextStyle(fontSize: 20, color:AppColors.textColor,fontWeight: FontWeight.w500)),
         Container(
           height: 3, width: 66,
           margin: const EdgeInsets.all(8),
@@ -159,7 +163,7 @@ class HomeView extends BaseView<HomeController> {
           ),
 
         ),
-        Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.gray)),
+        Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: AppColors.bodyTextColor)),
       ],
     );
   }

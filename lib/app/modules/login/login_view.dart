@@ -26,8 +26,10 @@ class LoginView extends CustomView<LoginController> {
           child: ElevatedButton(
               style: OutlinedButton.styleFrom(
                   backgroundColor: Colors.white,
+                  shadowColor: Colors.transparent,
                   side: const BorderSide(
-                    color: AppColors.accentPrimary,
+                    color: AppColors.borderColor,
+                    width: 1
                   ),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10))),

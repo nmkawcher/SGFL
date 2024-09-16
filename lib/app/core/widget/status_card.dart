@@ -34,16 +34,16 @@ class OrderUiModel extends GetView {
       itemBuilder: (context, itemIndex, pageViewIndex){
         LatestOrder order = orderList[itemIndex];
         return Card(
-          elevation: 4,
+          elevation: 0,
           clipBehavior: Clip.antiAliasWithSaveLayer,
-          margin: const EdgeInsets.only(right: 8, left: 16, top: 24,bottom: 6),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          margin: const EdgeInsets.only(right: 8, left: 16, top: 20,bottom: 6),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),side: BorderSide(color: AppColors.borderColor,width: 1)),
           child: Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [AppColors.accentPrimary,AppColors.primary,],
+                colors: [AppColors.colorWhite,AppColors.colorWhite,],
               ),
             ),
             padding: const EdgeInsets.all(16),
@@ -67,16 +67,16 @@ class OrderUiModel extends GetView {
                     Expanded(
                       child: Text('#${order.challanNo}', textAlign: TextAlign.end,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 16, color: AppColors.colorWhite, fontWeight: FontWeight.w600)
+                          style: const TextStyle(fontSize: 16, color: AppColors.textColor, fontWeight: FontWeight.w600)
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height:20),
                 Text(order.order?.customer?.name??"",
-                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.colorWhite)),
+                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textColor)),
                 const SizedBox(height: 4),
-                Text(order.order?.dipo?.address??"", style: const TextStyle(fontSize: 12, color: AppColors.colorWhite)),
+                Text(order.order?.dipo?.address??"", style: const TextStyle(fontSize: 12, color: AppColors.bodyTextColor)),
                 const SizedBox(height: 4),
                 Text(order.date??"", style: const TextStyle(fontSize: 11, color: AppColors.colorWhite)),
                 const SizedBox(height: 14),
@@ -84,8 +84,8 @@ class OrderUiModel extends GetView {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Qty: ${order.quantityLiter ?? 0.00}', style: const TextStyle(fontSize: 12, color: AppColors.orange, fontWeight: FontWeight.w600)),
-                    Text('৳ ${order.totalAmount ?? 0.00}', style: const TextStyle(fontSize: 12, color: AppColors.orange, fontWeight: FontWeight.w600)),
+                    Text('Qty: ${order.quantityLiter ?? 0.00}', style: const TextStyle(fontSize: 12, color: AppColors.bodyTextColor, fontWeight: FontWeight.w600)),
+                    Text('৳ ${order.totalAmount ?? 0.00}', style: const TextStyle(fontSize: 12, color: AppColors.bodyTextColor, fontWeight: FontWeight.w600)),
                   ],
                 ),
               ],

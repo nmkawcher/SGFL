@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:input_quantity/input_quantity.dart';
-import '../../core/widget/custom_btn.dart';
-import '../../data/model/product_model.dart';
-import '../../data/model/requisition_model.dart';
+import '../../../core/values/app_colors.dart';
+import '../../../core/widget/custom_app_bar.dart';
+import '../../../core/widget/custom_btn.dart';
+import '../../../core/widget/custom_inputField.dart';
+import '../../../data/model/product_model.dart';
+import '../../../data/model/requisition_model.dart';
 import '/app/core/base/base_view.dart';
-import '../../core/values/app_colors.dart';
-import '../../core/widget/custom_app_bar.dart';
-import '../../core/widget/custom_inputField.dart';
 import 'requisition_controller.dart';
 
 class RequisitionView extends BaseView<RequisitionController> {
@@ -30,7 +30,7 @@ class RequisitionView extends BaseView<RequisitionController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text('PRODUCT SUMMARY', style: TextStyle(fontSize: 16,
+                 Text('PRODUCT SUMMARY', style: TextStyle(fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: AppColors.colorDark)),
                 Text('Unit : Liter',
@@ -56,53 +56,7 @@ class RequisitionView extends BaseView<RequisitionController> {
 
   @override
   Widget? bottomNavigationBar() {
-    return Container(
-      height: 180,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.colorWhite,
-        borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(32),
-            topRight: Radius.circular(32)
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.colorDark.withOpacity(0.2),
-            spreadRadius: 1,
-            blurRadius: 16,
-            offset: const Offset(0, 1), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('Order Summary', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 8),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(controller.depot.name ?? "", style: const TextStyle(fontSize: 14, color: AppColors.textColor)),
-                  const SizedBox(height: 4),
-                  Text(controller.depot.address ?? "", style: const TextStyle(fontSize: 12, color: AppColors.gray)),
-                ],
-              ),
-              AppColors.circleIconBG(AppColors.primary, Icons.location_on_rounded, radius: 16, iconSize: 18)
-            ],
-          ),
-          const SizedBox(height: 24),
-          DefaultAppBtn(title: appLocalization.submit,
-              onClick: () {
-                controller.creteRequisition();
-              }
-          ),
-        ],
-      ),
-    );
+    return null;
   }
 
   Widget requisitionSummaryTable() {

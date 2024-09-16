@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       supportedLocales: _getSupportedLocal(),
       theme: ThemeData(
         useMaterial3: false,
-        primarySwatch: AppColors.colorPrimarySwatch,
+        primarySwatch: AppColors.getMaterialColor(AppColors.primary),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         brightness: Brightness.light,
         primaryColor: AppColors.primary,

@@ -1,6 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sgfl_sales/app/core/utils/util.dart';
 import 'package:sgfl_sales/app/data/model/contractor_model.dart';
 import 'package:sgfl_sales/app/data/model/driver_mode.dart';
 import 'package:sgfl_sales/app/data/model/lorry_model.dart';
@@ -19,7 +20,7 @@ class OrderView extends BaseView<OrderController> {
         title: Text(controller.title, style: const TextStyle(fontSize: 20, color: AppColors.colorDark, fontWeight: FontWeight.w500)),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: AppColors.colorGrayBG,
+        backgroundColor: AppColors.bgColor,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight - 8.0),
           child: Container(
@@ -27,7 +28,7 @@ class OrderView extends BaseView<OrderController> {
             clipBehavior: Clip.antiAlias,
             margin: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.10),
+              color: AppColors.bgColor2.withOpacity(.7),
               borderRadius: BorderRadius.circular(32),
             ),
             child: TabBar(
@@ -52,6 +53,7 @@ class OrderView extends BaseView<OrderController> {
     return Obx(() {
       return TabBarView(
         controller: controller.tabController,
+
         children: controller.isContractor.value
             ? controller.tabs.map((tab) => buildContractorList(controller.getContractorOrderList(tab.text!.toLowerCase()))).toList()
             : controller.tabs.map((tab) => buildOrderList(controller.getOrderList(tab.text!.toLowerCase()))).toList(),
@@ -68,7 +70,7 @@ class OrderView extends BaseView<OrderController> {
         itemCount: orderList.length,
         shrinkWrap: true,
         padding: const EdgeInsets.all(8),
-        separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 8),
+        separatorBuilder: (BuildContext context, int index) => const SizedBox(height: 5),
         itemBuilder: (BuildContext context, int index) {
           return orderItemUI(orderList[index]);
         },
@@ -78,50 +80,58 @@ class OrderView extends BaseView<OrderController> {
   Widget orderItemUI(Order order) {
     return Card(
       clipBehavior: Clip.antiAlias,
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
       child: InkWell(
         onTap: (){controller.gotoOrderDetails(order);},
         child: Container(
           padding: const EdgeInsets.all(8),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children:[
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(order.orderNo ?? "", style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.primary)),
-                    const SizedBox(height: 2),
-                    Text(order.customer?.name??'', style: const TextStyle(fontSize: 13, color: AppColors.gray, fontWeight: FontWeight.normal)),
-                    Text(order.dipo?.name??'',  style: const TextStyle(fontSize: 12, color: AppColors.gray)),
-                    Container(
-                        margin: const EdgeInsets.only(top: 4),
-                        padding: const EdgeInsets.all(4),
-                        decoration: BoxDecoration(
-                          color: AppColors.orange.withOpacity(0.15),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child:  Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text('${order.quantityLiter} (Ltr)', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.grayDark)),
-                            Text(' / ৳ ${order.totalAmount ?? 0.00}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.gray)),
-                          ],
-                        )
-                    )
-                  ],
-                ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.min,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(order.status?.toUpperCase()??'', style: const TextStyle(fontSize: 12, color: AppColors.orange, fontWeight: FontWeight.w600)),
-                  const SizedBox(height: 2),
-                  Text('${order.date}', style: const TextStyle(fontSize: 13, color: AppColors.gray, fontWeight: FontWeight.w400)),
+                children:[
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(order.orderNo ?? "", style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.primary)),
+                        const SizedBox(height: 2),
+                        Text(order.customer?.name??'', style: const TextStyle(fontSize: 13, color: AppColors.tileColor, fontWeight: FontWeight.normal)),
+                        Text(order.dipo?.name??'',  style: const TextStyle(fontSize: 12, color: AppColors.bodyTextColor)),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(order.status?.toUpperCase()??'', style: const TextStyle(fontSize: 12, color: AppColors.orange, fontWeight: FontWeight.w600)),
+                      const SizedBox(height: 2),
+                      Text('${order.date}', style: const TextStyle(fontSize: 13, color: AppColors.gray, fontWeight: FontWeight.w400)),
+                    ],
+                  ),
                 ],
               ),
+              const Divider(thickness: 1,color: AppColors.borderColor,),
+              Container(
+                  margin: const EdgeInsets.only(top: 4),
+                  padding: const EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                      color: AppColors.colorWhite,
+                      borderRadius: BorderRadius.circular(4),
+                      boxShadow: MyUtils.getCardShadow(),
+                     // border: Border.all(color: AppColors.borderColor,width: 1)
+                  ),
+                  child:  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('${order.quantityLiter} (Ltr)', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.bodyTextColor)),
+                      Text(' / ৳ ${order.totalAmount ?? 0.00}', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.bodyTextColor)),
+                    ],
+                  )
+              )
             ],
           ),
         ),

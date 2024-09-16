@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:sgfl_sales/app/core/utils/dialog_helper.dart';
 import 'package:sgfl_sales/app/data/model/baseResponse_model.dart';
 import 'package:sgfl_sales/app/routes/app_pages.dart';
-import '../../core/values/app_colors.dart';
-import '../../data/local/preference/preference_manager.dart';
-import '../../data/model/depot_model.dart';
-import '../../data/model/product_model.dart';
-import '../../data/model/requisition_model.dart';
-import '../../data/repository/repository.dart';
-import '../main/main_controller.dart';
+import '../../../core/values/app_colors.dart';
+import '../../../data/local/preference/preference_manager.dart';
+import '../../../data/model/depot_model.dart';
+import '../../../data/model/product_model.dart';
+import '../../../data/model/requisition_model.dart';
+import '../../../data/repository/repository.dart';
+import '../../main/main_controller.dart';
 import '/app/core/base/base_controller.dart';
 
 class RequisitionController extends BaseController {
@@ -66,9 +66,9 @@ class RequisitionController extends BaseController {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.oil_barrel_outlined,size:50, color: AppColors.primary,),
-          SizedBox(height: 16),
-          Text("Your order has been\nPlaced successfully",
+           Icon(Icons.oil_barrel_outlined,size:50, color: AppColors.primary,),
+           SizedBox(height: 16),
+           Text("Your order has been\nPlaced successfully",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 24,fontWeight: FontWeight.w500,
                   color: AppColors.accentPrimary)

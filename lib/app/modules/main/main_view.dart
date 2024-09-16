@@ -17,12 +17,9 @@ class MainView extends BaseView<MainController> {
 
   @override
   Widget body(BuildContext context) {
-    return Container(
-      key: UniqueKey(),
-      child: Obx((){
-        return pageView(controller.bottomNavIndex.value);
-      }),
-    );
+    return Obx((){
+      return pageView(controller.bottomNavIndex.value);
+    });
   }
 
   @override
@@ -36,7 +33,7 @@ class MainView extends BaseView<MainController> {
                     ? Get.toNamed(Routes.CONTRACTOR_ASSIGN)
                     : Get.toNamed(Routes.DEPOT);
                 },
-              backgroundColor: AppColors.orange,
+              backgroundColor: AppColors.primary,
               child: controller.isAdmin.value
                   ? const Icon(Icons.person_add_rounded)
                   : const Icon(Icons.add),
@@ -65,6 +62,12 @@ class MainView extends BaseView<MainController> {
         activeIndex: controller.bottomNavIndex.value,
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.softEdge,
+        shadow: null,
+        elevation: 0,
+        borderColor: AppColors.borderColor,
+        backgroundColor: AppColors.colorWhite,
+        splashColor: Colors.transparent,
+        borderWidth: .5,
         height: 60,
         leftCornerRadius: 32,
         rightCornerRadius: 32,
